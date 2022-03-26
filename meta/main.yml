@@ -1,0 +1,24 @@
+---
+galaxy_info:
+  author: Scott Harwell
+  namespace: scottharwell
+  description: Configures demo environments for Ansible on Clouds
+  company: Red Hat
+  license: GPL-3.0-only
+  min_ansible_version: "2.12"
+
+  # If this a Container Enabled role, provide the minimum Ansible Container version.
+  # min_ansible_container_version:
+
+  platforms:
+    - name: GenericLinux
+      versions:
+          - all
+
+  galaxy_tags: 
+    - azure
+    - ansibleonclouds
+
+dependencies: 
+  - role: awx.awx
+  - role: community.general
