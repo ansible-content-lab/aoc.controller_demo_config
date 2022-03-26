@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Scott Harwell
-  namespace: scottharwell
+  namespace: ansible_on_clouds
   description: Configures demo environments for Ansible on Clouds
   company: Red Hat
   license: GPL-3.0-only
