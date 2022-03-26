@@ -1,5 +1,6 @@
 ---
 - hosts: localhost
-  remote_user: root
+  become: false
+  gather_facts: false
   roles:
-    - aoc_demo_setup
+    - "../aoc_demo_setup"

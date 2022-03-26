@@ -19,6 +19,6 @@ galaxy_info:
     - azure
     - ansibleonclouds
 
-dependencies: 
-  - role: awx.awx
-  - role: community.general
+dependencies: []
+  # - role: awx.awx
+  # - role: community.general

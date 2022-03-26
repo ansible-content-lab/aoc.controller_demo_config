@@ -1,2 +1,3 @@
 ---
-# tasks file for aoc_demo_setup
+- name: Ansible Controller Tasks
+  include_tasks: awx.yml

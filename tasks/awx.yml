@@ -1,0 +1,7 @@
+---
+- name: delete native job template
+  become: false
+  awx.awx.job_template:
+    name: "Demo Job Template"
+    state: "absent"
+    controller_host: "{{ controller_host }}"

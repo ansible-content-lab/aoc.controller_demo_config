@@ -4,6 +4,9 @@
 ### dotenv ###
 .env
 
+### logs ###
+*.log
+
 ### Emacs ###
 # -*- mode: gitignore; -*-
 *~
