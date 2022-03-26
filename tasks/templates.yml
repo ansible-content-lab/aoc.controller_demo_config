@@ -1,0 +1,25 @@
+---
+- name: Delete Demo Template
+  become: false
+  awx.awx.job_template:
+    name: Demo Job Template
+    state: absent
+    controller_host: "{{ controller_host }}"
+  when: (delete_demo_project is defined) and (delete_demo_project|bool == True)
+
+- name: Create Templates
+  become: false
+  awx.awx.job_template:
+    name: "{{ item.name }}"
+    job_type: "run"
+    organization: "{{ azure_demo_organization | default('Default') }}"
+    inventory: "{{ azure_demo_inventory | default('Demo Inventory') }}"
+    project: "{{ azure_demo_project_name | default('Azure Demo') }}"
+    extra_vars: "{{ item.extra_vars }}"
+    playbook: "project/{{ item.playbook }}"
+    credentials:
+      - "{{ azure_credential_name | default('Azure Service Principal') }}"
+    execution_environment: "{{ azure_ee_name | default('Microsoft Azure Execution Environment') }}"
+    state: "present"
+    controller_host: "{{ controller_host }}"
+  with_items: "{{ azure_demo_templates }}"

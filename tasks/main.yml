@@ -1,3 +1,12 @@
 ---
-- name: Ansible Controller Tasks
-  include_tasks: awx.yml
+- name: Configure Execution Environments
+  include_tasks: execution_envs.yml
+
+- name: Configure Credentials
+  include_tasks: credentials.yml
+
+- name: Configure Projects
+  include_tasks: projects.yml
+
+- name: Configure Templates
+  include_tasks: templates.yml
