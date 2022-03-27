@@ -1,5 +1,6 @@
 ---
 azure_ee_registry_credential_name: Default Execution Environment Registry Credential
+azure_demo_organization: Default
 azure_demo_templates:
   - name: 'Azure - Create Resource Group'
     playbook: 'create_resource_group.yml'
