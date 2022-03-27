@@ -1,0 +1,27 @@
+---
+- name: Create Extra Inventories
+  become: false
+  awx.awx.inventory:
+    name: "{{ item.name }}"
+    description: "{{ item.description | default('') }}"
+    organization: "{{ item.organization | default('') }}"
+    project: "{{ item.project }}"
+    state: "present"
+    controller_host: "{{ controller_host }}"
+  loop: "{{ extra_inventories }}"
+  when: (extra_inventories is defined) and (extra_inventories | length > 0)
+- name: Create Extra Inventory Sources
+  become: false
+  awx.awx.inventory_source:
+    name: "{{ item.name }}"
+    description: "{{ item.description | default('') }}"
+    organization: "{{ item.organization | default('') }}"
+    inventory: "{{ item.inventory }}"
+    credential: "{{ item.credential | default('') }}"
+    overwrite: "{{ item.overwrite | default(true) }}"
+    update_on_launch: "{{ item.update_on_launch | default(true) }}"
+    source_vars: "{{ item.source_vars | default([]) }}"
+    state: "present"
+    controller_host: "{{ controller_host }}"
+  loop: "{{ extra_inventories }}"
+  when: (extra_inventory_sources is defined) and (extra_inventory_sources | length > 0)

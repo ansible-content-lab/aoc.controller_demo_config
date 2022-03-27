@@ -8,5 +8,8 @@
 - name: Configure Projects
   include_tasks: projects.yml
 
+- name: Configure Inventories
+  include_tasks: inventories.yml
+
 - name: Configure Templates
   include_tasks: templates.yml

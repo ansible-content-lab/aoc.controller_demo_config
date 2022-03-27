@@ -18,4 +18,4 @@
     state: present
     controller_host: "{{ controller_host }}"
   loop: "{{ execution_environments }}"
-  when: (execution_environments is defined) and (execution_environments | length > 0)
+  when: (extra_execution_environments is defined) and (extra_execution_environments | length > 0)
