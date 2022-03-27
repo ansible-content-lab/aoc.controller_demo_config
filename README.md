@@ -1,3 +1,5 @@
+[![validation-checks](https://github.com/scottharwell/aoc_demo_setup/actions/workflows/on-push.yml/badge.svg)](https://github.com/scottharwell/aoc_demo_setup/actions/workflows/on-push.yml)
+
 # Ansible on Clouds Demo Configuration
 
 This role is for the Ansible on Clouds team to quickly spin up reusable Ansible Controller configurations. It configures the following components in Ansible Automation Controller:
