@@ -1,9 +1,9 @@
 ---
-- name: Configure Execution Environments
-  include_tasks: execution_envs.yml
-
 - name: Configure Credentials
   include_tasks: credentials.yml
+  
+- name: Configure Execution Environments
+  include_tasks: execution_envs.yml
 
 - name: Configure Projects
   include_tasks: projects.yml

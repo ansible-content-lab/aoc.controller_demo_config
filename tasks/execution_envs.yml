@@ -2,7 +2,20 @@
 - name: Add Custom Azure Execution Environment
   awx.awx.execution_environment:
     name: "{{ azure_ee_name | default('Microsoft Azure Execution Environment') }}"
+    description: "{{ azure_ee_description | default('Microsoft Azure Execution Environment') }}"
+    organization: "{{ azure_ee_organization | default('') }}"
     image: "{{ azure_ee_image | default('registry.redhat.io/ansible-automation-platform-21/ee-cloud-services-rhel8:latest') }}"
-    credential: "{{ azure_ee_registry_credential_name }}"
+    credential: "{{ azure_ee_registry_credential | default('') }}"
     state: present
     controller_host: "{{ controller_host }}"
+- name: Add Other Execution Environments
+  awx.awx.execution_environment:
+    name: "{{ item.name') }}"
+    description: "{{ item.description | default('') }}"
+    organization: "{{ item.organization | default('') }}"
+    image: "{{ item.image }}"
+    credential: "{{ item.credential }}"
+    state: present
+    controller_host: "{{ controller_host }}"
+  loop: "{{ execution_environments }}"
+  when: (execution_environments is defined) and (execution_environments | length > 0)

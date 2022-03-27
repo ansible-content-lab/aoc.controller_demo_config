@@ -22,4 +22,4 @@
     execution_environment: "{{ azure_ee_name | default('Microsoft Azure Execution Environment') }}"
     state: "present"
     controller_host: "{{ controller_host }}"
-  with_items: "{{ azure_demo_templates }}"
+  loop: "{{ azure_demo_templates }}"

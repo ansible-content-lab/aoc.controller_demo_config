@@ -9,8 +9,19 @@
   awx.awx.project:
     name: "{{ azure_demo_project_name | default('Azure Demo') }}"
     description: "{{ azure_demo_project_description | default('Azure Demo') }}"
-    organization: "{{ azure_demo_organization | default('Default') }}"
+    organization: "{{ azure_demo_organization | default('') }}"
     scm_type: git
     scm_url: "{{ azure_demo_project_url | default('https://github.com/ansible-cloud/azure.git') }}"
     state: present
     controller_host: "{{ controller_host }}"
+- name: Add Other Projects
+  awx.awx.project:
+    name: "{{ item.name }}"
+    description: "{{ item.description | default('') }}"
+    organization: "{{ item.organization | default('') }}"
+    scm_type: "{{ item.scm | default('git') }}"
+    scm_url: "{{ item.scm_url }}"
+    state: present
+    controller_host: "{{ controller_host }}"
+  loop: "{{ extra_projects }}"
+  when: (extra_projects is defined) and (extra_projects | length > 0)
