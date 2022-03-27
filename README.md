@@ -1,38 +1,193 @@
-Role Name
-=========
+# Ansible on Clouds Demo Configuration
 
-A brief description of the role goes here.
+This role is for the Ansible on Clouds team to quickly spin up reusable Ansible Controller configurations. It configures the following components in Ansible Automation Controller:
 
-Requirements
-------------
+- Execution Environments
+- Credentials
+- Projects
+- Inventories
+- Templates
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role is not published to Ansible Galaxy and therefor must be used directly from scm URLs or through an Execution Environment that has it installed.
 
-Role Variables
---------------
+## Requirements
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+This role will work with any Ansible Automation Platform 2.1 version of Ansible Controller, but is intended to be used with Ansible on Clouds deployments.
 
-Dependencies
-------------
+## Role Variables
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+There are many variables that can be set, with the required variables defined in `defaults/main.yml`.  Below is an example of what is in the file.  Of all the variables set by default, there is one that **must** be set in your execution:
 
-Example Playbook
-----------------
+- `rhel_public_key` when using the "Azure - Create RHEL 8 VM" play / template.  Inject an RSA public key string that will be used as the default key by the RHEL host.
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```yaml
+---
+azure_ee_registry_credential_name: Default Execution Environment Registry Credential
+azure_demo_templates:
+  - name: 'Azure - Create Resource Group'
+    playbook: 'create_resource_group.yml'
+    extra_vars:
+      resource_group_name: "ansible_test"
+      region: "eastus"
+  - name: 'Azure - Create RHEL 8 VM'
+    playbook: 'create_rhel_vm_demo.yml'
+    extra_vars:
+      resource_group_name: "ansible_test"
+      region: "eastus"
+      vnet_cidr: "172.16.192.0/24"
+      subnet_cidr: "172.16.192.0/25"
+      vnet_name: "demo_vnet"
+      subnet_name: "demo_subnet"
+      network_sec_group_name: "demo_sec_group"
+      rhel_public_ip_name: "rhel_demo_ip"
+      rhel_nic_name: "rhel_demo_nic"
+      rhel_vm_name: "RHEL8-ansible"
+      rhel_vm_size: "Standard_DS1_v2"
+      rhel_vm_sku: "8_5"
+      rhel_admin_user: "azureuser"
+      rhel_public_key: ""  # Add your RSA SSH public key in extra vars
+      survey_public_ip: "True"
+  - name: 'Azure - Create Windows Server 2022 VM'
+    playbook: 'create_windows_vm_demo.yml'
+    extra_vars:
+      resource_group_name: "azure-demo"
+      region: "eastus"
+      vnet_cidr: "172.16.192.0/24"
+      subnet_cidr: "172.16.192.0/25"
+      vnet_name: "demo_vnet"
+      subnet_name: "demo_subnet"
+      network_sec_group_name: "demo_sec_group"
+      win_vm_name: "WIN-ansible"
+      win_vm_size: "Standard_DS1_v2"
+      win_vm_sku: "2022-Datacenter"
+      win_public_ip_name: "win_demo_ip"
+      win_nic_name: "win_demo_nic"
+      win_admin_user: "azureuser"
+      win_admin_password: "ansible123!"
+  - name: 'Azure - Destroy Resource Group'
+    playbook: 'destroy_resource_group.yml'
+    extra_vars:
+      resource_group_name: "ansible_test"
+      region: "eastus"
+```
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Each of the supported components has an `extra_` key which can be used to supply lists of extra items to configure.  
 
-License
--------
+- `extra_execution_environments`
+- `extra_inventories`
+- `extra_inventory_sources`
+- `extra_credentials`
+- `extra_projects`
+- `extra_templates`
 
-GPL v3
+For instance, if you wanted to add extra credentials, then you would configure the following in your `extra_vars`:
 
-Author Information
-------------------
+```yaml
+---
+extra_credentials:
+  - name: Local Container Registry
+    description: Local Container Registry
+    credential_type: Container Registry
+    inputs:
+      username: scott
+      password: "{{ lookup('env', 'REGISTRY_PASS') }}"
+```
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+## Dependencies
+
+- `awx.awx`
+
+## Examples
+
+### Testing
+
+#### Requirements 
+
+The molecule testing configuration is not well defined in this role yet.  In order to test locally, ensure that you have the following installed locally:
+
+- Ansible 2.12 or later
+- Ansible Lint 5.4.0 or later
+- Ansible Navigator 1.1.0 or later
+
+To install, run:
+
+```bash
+# Ensure pip is at the latest version
+pip3 install pip --upgrade
+# Install Ansible
+pip3 install ansible-core ansible-lint ansible-navigator
+```
+
+Next, set the environment variables on your local machine that are required for variables that will be added to Ansible Controller:
+
+- **CONTROLLER_USERNAME** - Used to authenticate against the AAP Controller API
+- **CONTROLLER_PASSWORD** - Used to authenticate against the AAP Controller API
+- **AZURE_TENANT_ID** - Used to configure the Azure subscription credential in Automation Controller
+- **AZURE_SUBSCRIPTION_ID** - Used to configure the Azure subscription credential in Automation Controller
+- **AZURE_CLIENT_ID** - Used to configure the Azure subscription credential in Automation Controller
+- **AZURE_CLIENT_SECRET** - Used to configure the Azure subscription credential in Automation Controller
+- **RED_HAT_ACCOUNT** - Used to configure the Azure subscription credential in Automation Controller
+- **RED_HAT_PASSWORD** - Used to configure the Azure subscription credential in Automation Controller
+
+You can set the variables in your shell with a one-liner:
+
+```bash
+export CONTROLLER_USERNAME="username" CONTROLLER_PASSWORD="password" AZURE_TENANT_ID="" AZURE_SUBSCRIPTION_ID="" AZURE_CLIENT_ID="" AZURE_CLIENT_SECRET="" RED_HAT_ACCOUNT="" RED_HAT_PASSWORD=""
+```
+
+Run the test playbook with `ansible_navigator`.  This will run locally on your PC without containers.
+
+```bash
+ansible-navigator run tests/test.yml \
+-i tests/inventory \
+--pae false \
+--mode stdout \
+--ee false \
+--penv CONTROLLER_USERNAME \
+--penv CONTROLLER_PASSWORD \
+--penv AZURE_TENANT_ID \
+--penv AZURE_SUBSCRIPTION_ID \
+--penv AZURE_CLIENT_ID \
+--penv AZURE_CLIENT_SECRET \
+--penv RED_HAT_ACCOUNT \
+--penv RED_HAT_PASSWORD \
+--penv DOCKER_REG_PASS
+```
+
+You may create an `extra_vars` file at `tests/extra_vars` and include that your test run to change configurations from the defaults that are set in `defaults/main.yml`.  If you do that, then the command above will change to the following:
+
+```bash
+ansible-navigator run tests/test.yml \
+-i tests/inventory \
+--pae false \
+--mode stdout \
+--ee false \
+--extra-vars "@tests/extra_vars" \
+--penv CONTROLLER_USERNAME \
+--penv CONTROLLER_PASSWORD \
+--penv AZURE_TENANT_ID \
+--penv AZURE_SUBSCRIPTION_ID \
+--penv AZURE_CLIENT_ID \
+--penv AZURE_CLIENT_SECRET \
+--penv RED_HAT_ACCOUNT \
+--penv RED_HAT_PASSWORD \
+--penv DOCKER_REG_PASS
+```
+
+### Playbook Use
+
+As mentioned earlier, this role is not available on Ansible Galaxy, so you will need to have the role available for a playbook either through an Execution Environment or manual installation.  Once available, referencing the role happens just like any other Ansible role.
+
+```yaml
+- hosts: localhost
+  roles:
+      - role: ansible_on_clouds.aoc_demo_setup
+```
+
+## License
+
+GPLv3
+
+## Author
+
+This role was originally written by Scott Harwell and Hicham Mourad from the Ansible team at Red Hat.
