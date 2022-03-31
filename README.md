@@ -124,8 +124,8 @@ Next, set the environment variables on your local machine that are required for 
 
 | Variable Name             | Description                                                                  |
 | ------------------------- | ---------------------------------------------------------------------------- |
-| CONTROLLER_USERNAME       | Used to authenticate against the AWX API                                     |
-| CONTROLLER_PASSWORD       | Used to authenticate against the AWX API                                     |
+| CONTROLLER_USERNAME       | Used to authenticate against the Ansible Controller API                                     |
+| CONTROLLER_PASSWORD       | Used to authenticate against the Ansible Controller API                                     |
 | AZURE_TENANT_ID           | Used to configure the Azure subscription credential in Automation Controller |
 | AZURE_SUBSCRIPTION_ID     | Used to configure the Azure subscription credential in Automation Controller |
 | AZURE_CLIENT_ID           | Used to configure the Azure subscription credential in Automation Controller |
