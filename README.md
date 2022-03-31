@@ -122,14 +122,16 @@ pip3 install ansible-core ansible-lint ansible-navigator
 
 Next, set the environment variables on your local machine that are required for variables that will be added to Ansible Controller:
 
-- **CONTROLLER_USERNAME** - Used to authenticate against the AAP Controller API
-- **CONTROLLER_PASSWORD** - Used to authenticate against the AAP Controller API
-- **AZURE_TENANT_ID** - Used to configure the Azure subscription credential in Automation Controller
-- **AZURE_SUBSCRIPTION_ID** - Used to configure the Azure subscription credential in Automation Controller
-- **AZURE_CLIENT_ID** - Used to configure the Azure subscription credential in Automation Controller
-- **AZURE_CLIENT_SECRET** - Used to configure the Azure subscription credential in Automation Controller
-- **RED_HAT_ACCOUNT** - Used to configure the Azure subscription credential in Automation Controller
-- **RED_HAT_PASSWORD** - Used to configure the Azure subscription credential in Automation Controller
+| Variable Name             | Description                                                                  |
+| ------------------------- | ---------------------------------------------------------------------------- |
+| CONTROLLER_USERNAME       | Used to authenticate against the AWX API                                     |
+| CONTROLLER_PASSWORD       | Used to authenticate against the AWX API                                     |
+| AZURE_TENANT_ID           | Used to configure the Azure subscription credential in Automation Controller |
+| AZURE_SUBSCRIPTION_ID     | Used to configure the Azure subscription credential in Automation Controller |
+| AZURE_CLIENT_ID           | Used to configure the Azure subscription credential in Automation Controller |
+| AZURE_CLIENT_SECRET       | Used to configure the Azure subscription credential in Automation Controller |
+| RED_HAT_ACCOUNT           | Used to configure the Azure subscription credential in Automation Controller |
+| RED_HAT_PASSWORD          | Used to configure the Azure subscription credential in Automation Controller |
 
 You can set the variables in your shell with a one-liner:
 
