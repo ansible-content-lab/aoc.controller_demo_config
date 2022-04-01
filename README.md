@@ -18,6 +18,8 @@ This role will work with any Ansible Automation Platform 2.1 version of Ansible 
 
 ## Role Variables
 
+### Extra Vars
+
 There are many variables that can be set, with the required variables defined in `defaults/main.yml`.  Below is an example of what is in the file.  Of all the variables set by default, there is one that **must** be set in your execution:
 
 - `rhel_public_key` when using the "Azure - Create RHEL 8 VM" play / template.  Inject an RSA public key string that will be used as the default key by the RHEL host.
@@ -95,6 +97,27 @@ extra_credentials:
       password: "{{ lookup('env', 'REGISTRY_PASS') }}"
 ```
 
+### Environment Vars
+
+Set the environment variables on your local machine that are required for variables that will be added to Ansible Controller:
+
+| Variable Name         | Description                                                                  |
+| --------------------- | ---------------------------------------------------------------------------- |
+| CONTROLLER_USERNAME   | Used to authenticate against the Ansible Controller API                      |
+| CONTROLLER_PASSWORD   | Used to authenticate against the Ansible Controller API                      |
+| AZURE_TENANT_ID       | Used to configure the Azure subscription credential in Automation Controller |
+| AZURE_SUBSCRIPTION_ID | Used to configure the Azure subscription credential in Automation Controller |
+| AZURE_CLIENT_ID       | Used to configure the Azure subscription credential in Automation Controller |
+| AZURE_CLIENT_SECRET   | Used to configure the Azure subscription credential in Automation Controller |
+| RED_HAT_ACCOUNT       | Used to configure the Azure subscription credential in Automation Controller |
+| RED_HAT_PASSWORD      | Used to configure the Azure subscription credential in Automation Controller |
+
+You can set the variables in your shell with a one-liner:
+
+```bash
+export CONTROLLER_USERNAME="username" CONTROLLER_PASSWORD="password" AZURE_TENANT_ID="" AZURE_SUBSCRIPTION_ID="" AZURE_CLIENT_ID="" AZURE_CLIENT_SECRET="" RED_HAT_ACCOUNT="" RED_HAT_PASSWORD=""
+```
+
 ## Dependencies
 
 - `awx.awx`
@@ -118,25 +141,6 @@ To install, run:
 pip3 install pip --upgrade
 # Install Ansible
 pip3 install ansible-core ansible-lint ansible-navigator
-```
-
-Next, set the environment variables on your local machine that are required for variables that will be added to Ansible Controller:
-
-| Variable Name             | Description                                                                  |
-| ------------------------- | ---------------------------------------------------------------------------- |
-| CONTROLLER_USERNAME       | Used to authenticate against the Ansible Controller API                                     |
-| CONTROLLER_PASSWORD       | Used to authenticate against the Ansible Controller API                                     |
-| AZURE_TENANT_ID           | Used to configure the Azure subscription credential in Automation Controller |
-| AZURE_SUBSCRIPTION_ID     | Used to configure the Azure subscription credential in Automation Controller |
-| AZURE_CLIENT_ID           | Used to configure the Azure subscription credential in Automation Controller |
-| AZURE_CLIENT_SECRET       | Used to configure the Azure subscription credential in Automation Controller |
-| RED_HAT_ACCOUNT           | Used to configure the Azure subscription credential in Automation Controller |
-| RED_HAT_PASSWORD          | Used to configure the Azure subscription credential in Automation Controller |
-
-You can set the variables in your shell with a one-liner:
-
-```bash
-export CONTROLLER_USERNAME="username" CONTROLLER_PASSWORD="password" AZURE_TENANT_ID="" AZURE_SUBSCRIPTION_ID="" AZURE_CLIENT_ID="" AZURE_CLIENT_SECRET="" RED_HAT_ACCOUNT="" RED_HAT_PASSWORD=""
 ```
 
 Run the test playbook with `ansible_navigator`.  This will run locally on your PC without containers.
