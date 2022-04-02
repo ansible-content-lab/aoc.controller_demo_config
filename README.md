@@ -158,8 +158,7 @@ ansible-navigator run tests/test.yml \
 --penv AZURE_CLIENT_ID \
 --penv AZURE_CLIENT_SECRET \
 --penv RED_HAT_ACCOUNT \
---penv RED_HAT_PASSWORD \
---penv DOCKER_REG_PASS
+--penv RED_HAT_PASSWORD
 ```
 
 You may create an `extra_vars` file at `tests/extra_vars` and include that your test run to change configurations from the defaults that are set in `defaults/main.yml`.  If you do that, then the command above will change to the following:
@@ -178,8 +177,7 @@ ansible-navigator run tests/test.yml \
 --penv AZURE_CLIENT_ID \
 --penv AZURE_CLIENT_SECRET \
 --penv RED_HAT_ACCOUNT \
---penv RED_HAT_PASSWORD \
---penv DOCKER_REG_PASS
+--penv RED_HAT_PASSWORD
 ```
 
 ### Playbook Use
