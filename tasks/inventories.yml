@@ -5,7 +5,7 @@
     name: "{{ item.name }}"
     description: "{{ item.description | default('') }}"
     organization: "{{ item.organization | default('') }}"
-    state: "present"
+    state: present
     controller_host: "{{ controller_host }}"
   loop: "{{ extra_inventories }}"
   when: (extra_inventories is defined) and (extra_inventories | length > 0)
@@ -25,7 +25,7 @@
     update_on_launch: "{{ item.update_on_launch | default(true) }}"
     update_on_project_update: "{{ item.update_on_project_update | default(true) }}"
     source_vars: "{{ item.source_vars | default([]) }}"
-    state: "present"
+    state: present
     controller_host: "{{ controller_host }}"
   loop: "{{ extra_inventories }}"
   when: (extra_inventory_sources is defined) and (extra_inventory_sources | length > 0)
