@@ -5,7 +5,7 @@
     name: Demo Job Template
     state: absent
     controller_host: "{{ controller_host }}"
-  when: (delete_demo_project is defined) and (delete_demo_project|bool == True)
+  when: (delete_demo_project is defined) and (delete_demo_project|bool)
 - name: Create Templates
   become: false
   awx.awx.job_template:

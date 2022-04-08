@@ -4,7 +4,7 @@
     name: Demo Project
     state: absent
     controller_host: "{{ controller_host }}"
-  when: (delete_demo_project is defined) and (delete_demo_project|bool == True)
+  when: (delete_demo_project is defined) and (delete_demo_project|bool)
 - name: Add Azure Project
   awx.awx.project:
     name: "{{ azure_demo_project_name | default('Azure Demo') }}"
