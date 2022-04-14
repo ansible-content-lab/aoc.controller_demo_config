@@ -16,8 +16,7 @@
     project: "{{ azure_demo_project_name | default('Azure Demo') }}"
     extra_vars: "{{ item.extra_vars }}"
     playbook: "project/{{ item.playbook }}"
-    credentials:
-      - "{{ azure_credential_name | default('Azure Service Principal') }}"
+    credentials: "{{ item.credentials | default(['Azure Service Principal']) }}"
     execution_environment: "{{ azure_ee_name | default('Microsoft Azure Execution Environment') }}"
     state: "present"
     controller_host: "{{ controller_host }}"
