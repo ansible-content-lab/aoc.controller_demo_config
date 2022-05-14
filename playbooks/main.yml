@@ -5,6 +5,6 @@
   connection: local
   gather_facts: false
   tasks:
-    - name: Configure Credentials
+    - name: Configure Demo Site
       include_role:
         name: ansible_on_clouds.aoc_demo_setup
