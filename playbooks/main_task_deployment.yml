@@ -1,0 +1,41 @@
+---
+# This playbook calls role tasks individually
+- name: Deploy Demo AoC Site
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Configure Credentials
+      include_role:
+        name: ansible_on_clouds.aoc_demo_setup
+        tasks_from: credentials
+      tags:
+        - credentials
+
+    - name: Configure Execution Environments
+      include_role:
+        name: ansible_on_clouds.aoc_demo_setup
+        tasks_from: execution_environments
+      tags:
+        - ees
+
+    - name: Configure Projects
+      include_role:
+        name: ansible_on_clouds.aoc_demo_setup
+        tasks_from: projects
+      tags:
+        - projects
+
+    - name: Configure Inventories
+      include_role:
+        name: ansible_on_clouds.aoc_demo_setup
+        tasks_from: inventories
+      tags:
+        - inventories
+
+    - name: Configure Templates
+      include_role:
+        name: ansible_on_clouds.aoc_demo_setup
+        tasks_from: templates
+      tags:
+        - templates

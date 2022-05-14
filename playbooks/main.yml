@@ -1,30 +1,10 @@
 ---
-- name: Deploy Demo Site
+# This playbook calls the full role
+- name: Deploy Demo AoC Site
   hosts: localhost
   connection: local
   gather_facts: false
   tasks:
     - name: Configure Credentials
-      include_tasks: ../tasks/credentials.yml
-      tags:
-        - credentials
-
-    - name: Configure Execution Environments
-      include_tasks: ../tasks/execution_envs.yml
-      tags:
-        - ees
-
-    - name: Configure Projects
-      include_tasks: ../tasks/projects.yml
-      tags:
-        - projects
-
-    - name: Configure Inventories
-      include_tasks: ../tasks/inventories.yml
-      tags:
-        - inventories
-
-    - name: Configure Templates
-      include_tasks: ../tasks/templates.yml
-      tags:
-        - templates
+      include_role:
+        name: ansible_on_clouds.aoc_demo_setup

@@ -1,0 +1,25 @@
+---
+- name: Configure Credentials
+  include_tasks: credentials.yml
+  tags:
+    - credentials
+
+- name: Configure Execution Environments
+  include_tasks: execution_environments.yml
+  tags:
+    - ees
+
+- name: Configure Projects
+  include_tasks: projects.yml
+  tags:
+    - projects
+
+- name: Configure Inventories
+  include_tasks: inventories.yml
+  tags:
+    - inventories
+
+- name: Configure Templates
+  include_tasks: templates.yml
+  tags:
+    - templates
