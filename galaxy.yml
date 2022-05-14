@@ -1,0 +1,24 @@
+---
+namespace: ansible_on_clouds
+name: aoc_demo_setup
+version: 1.0.0
+authors:
+  - Scott Harwell (@scottharwell)
+description: A collection of content for setting up Ansible on Cloud demos rapidly.
+documentation: ''
+homepage: https://github.com/scottharwell/aoc_demo_setup
+issues: https://github.com/scottharwell/aoc_demo_setup/issues
+license_file: LICENSE
+readme: README.md
+repository: https://github.com/scottharwell/aoc_demo_setup.git
+tags:
+  - cloud
+  - azure
+  - infrastructure
+dependencies:
+  awx.awx: '*'
+build_ignore:
+  - '.tox'
+  - '.git'
+  - '.github'
+  - '.gitignore'
