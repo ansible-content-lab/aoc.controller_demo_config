@@ -75,7 +75,7 @@ azure_demo_templates:
       region: "eastus"
 ```
 
-Each of the supported components has an `extra_` key which can be used to supply lists of extra items to configure.  
+Each of the supported components has an `extra_` key which can be used to supply lists of extra items to configure.  For more granular control, simply create a new playbook instead of using extra vars.
 
 - `extra_execution_environments`
 - `extra_inventories`
@@ -143,11 +143,11 @@ pip3 install pip --upgrade
 pip3 install ansible-core ansible-lint ansible-navigator
 ```
 
-Run the test playbook with `ansible_navigator`.  This will run locally on your PC without containers.
+Run the main playbook with `ansible_navigator`.  This will run locally on your PC without containers.
 
 ```bash
-ansible-navigator run tests/test.yml \
--i tests/inventory \
+ansible-navigator run playbooks/main.yml \
+-i playbooks/inventory/hosts \
 --pae false \
 --mode stdout \
 --ee false \
@@ -161,15 +161,15 @@ ansible-navigator run tests/test.yml \
 --penv RED_HAT_PASSWORD
 ```
 
-You may create an `extra_vars` file at `tests/extra_vars` and include that your test run to change configurations from the defaults that are set in `defaults/main.yml`.  If you do that, then the command above will change to the following:
+You may create an `extra_vars` file at `playbooks/vars/extra_vars` and include that your test run to change configurations from the defaults that are set in `defaults/main.yml`.  If you do that, then the command above will change to the following:
 
 ```bash
-ansible-navigator run tests/test.yml \
--i tests/inventory \
+ansible-navigator run playbooks/main.yml \
+-i playbooks/inventory/hosts \
 --pae false \
 --mode stdout \
 --ee false \
---extra-vars "@tests/extra_vars" \
+--extra-vars "@playbooks/vars/extra_vars" \
 --penv CONTROLLER_USERNAME \
 --penv CONTROLLER_PASSWORD \
 --penv AZURE_TENANT_ID \
@@ -178,6 +178,7 @@ ansible-navigator run tests/test.yml \
 --penv AZURE_CLIENT_SECRET \
 --penv RED_HAT_ACCOUNT \
 --penv RED_HAT_PASSWORD
+--eev $HOME/.ssh:/home/runner/.ssh # for ssh key lookups
 ```
 
 ### Playbook Use
