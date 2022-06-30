@@ -1,7 +1,7 @@
 ---
 namespace: ansible_on_clouds
 name: setup_and_config
-version: 1.0.0
+version: 2.0.0
 authors:
   - Scott Harwell (@scottharwell)
 description: A collection of content for setting up Ansible on Cloud demos rapidly.
