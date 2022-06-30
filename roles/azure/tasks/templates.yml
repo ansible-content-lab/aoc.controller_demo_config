@@ -1,0 +1,169 @@
+---
+- name: Delete Demo Template
+  awx.awx.job_template:
+    name: Demo Job Template
+    state: absent
+  when: (delete_demo_project is defined) and (delete_demo_project|bool)
+
+- name: Azure - Create Resource Group
+  awx.awx.job_template:
+    name: Azure - Create Resource Group
+    inventory: localhost
+    playbook: project/create_resource_group.yml
+    project: Azure Demo
+    extra_vars:
+      resource_group_name: "{{ azure_resource_group }}"
+      region: "{{ azure_region }}"
+    credentials:
+      - Azure Service Principal
+
+- name: Azure - Create RHEL 8 VM
+  awx.awx.job_template:
+    name: Azure - Create RHEL 8 VM
+    inventory: localhost
+    playbook: project/create_rhel_vm_demo.yml
+    project: Azure Demo
+    extra_vars:
+      resource_group_name: "{{ azure_resource_group }}"
+      region: "{{ azure_region }}"
+      vnet_cidr: 172.16.192.0/24
+      subnet_cidr: 172.16.192.0/25
+      vnet_name: demo_vnet
+      subnet_name: demo_subnet
+      network_sec_group_name: demo_sec_group
+      rhel_public_ip_name: rhel_demo_ip
+      rhel_nic_name: rhel_demo_nic
+      rhel_vm_name: RHEL8-ansible
+      rhel_vm_size: Standard_DS1_v2
+      rhel_vm_sku: 8_5
+      rhel_admin_user: azureuser
+      rhel_public_key: "{{ ssh_public_key }}"
+      survey_public_ip: true
+    ask_variables_on_launch: true
+    credentials:
+      - Azure Service Principal
+
+- name: Azure - Create Windows Server 2022 VM
+  awx.awx.job_template:
+    name: Azure - Create Windows Server 2022 VM
+    inventory: localhost
+    playbook: project/create_windows_vm_demo.yml
+    project: Azure Demo
+    extra_vars:
+      resource_group_name: azure-demo
+      region: "{{ azure_region }}"
+      vnet_cidr: 172.16.192.0/24
+      subnet_cidr: 172.16.192.0/25
+      vnet_name: demo_vnet
+      subnet_name: demo_subnet
+      network_sec_group_name: demo_sec_group
+      win_vm_name: WIN-ansible
+      win_vm_size: Standard_DS1_v2
+      win_vm_sku: 2022-Datacenter
+      win_public_ip_name: win_demo_ip
+      win_nic_name: win_demo_nic
+      win_admin_user: azureuser
+      win_admin_password: "{{ windows_admin_password }}"
+    ask_variables_on_launch: true
+    credentials:
+      - Azure Service Principal
+
+- name: Azure - Destroy Resource Group
+  awx.awx.job_template:
+    name: Azure - Destroy Resource Group
+    inventory: localhost
+    playbook: project/destroy_resource_group.yml
+    project: Azure Demo
+    extra_vars:
+      resource_group_name: "{{ azure_resource_group }}"
+      region: "{{ azure_region }}"
+    credentials:
+      - Azure Service Principal
+
+- name: Azure - Create Network Peering Demo
+  awx.awx.job_template:
+    name: Azure - Create Network Peering Demo
+    inventory: localhost
+    playbook: project/create_peer_network_demo.yml
+    project: Azure Demo
+    extra_vars:
+      # Required
+      debug: false
+      resource_group_name: rg-peering-demo
+      region: eastus
+      hub_vnet_name: hub-vnet
+      hub_vnet_cidr: "172.16.0.0/23"
+      hub_subnet_name: hub-subnet
+      hub_subnet_cidr: "172.16.0.0/24"
+      spoke1_vnet_name: spoke-1-vnet
+      spoke1_vnet_cidr: "172.16.2.0/24"
+      spoke1_subnet_name: spoke-1-subnet
+      spoke1_subnet_cidr: "172.16.2.0/24"
+      spoke2_vnet_name: spoke-2-vnet
+      spoke2_vnet_cidr: "172.16.3.0/24"
+      spoke2_subnet_name: spoke-2-subnet
+      spoke2_subnet_cidr: "172.16.3.0/24"
+      virtual_gw_name: hub-gateway
+      virtual_gw_sku: Basic
+      virtual_gw_subnet_cidr: "172.16.1.0/26"
+      virtual_gw_vpn_type: route_based
+      route_table_name: "hub-and-spoke-route-table"
+      ssh_security_group_name: ssh-security-group
+      rhel_vm_sku: "8_5"
+      vm_size: "Standard_A1_v2"
+      vm_username: azureuser
+      ssh_pub_key: "{{ ssh_public_key }}"
+      # Optional
+      # managed_app_node_pool_rg: ""  # Name of the managed app node pool resource group
+      # managed_app_vnet_name: ""  # Name of the managed app node pool vnet
+      # managed_app_cidr: ""  # CIDR of the managed app node pool vnet
+      # managed_app_route_table: ""  # The route table name for the managed app node pool vnet
+      # vpn_cidr: ""  # the CIDR range of your local VPN that could also be connected as a spoke to the newly created virtual gateway
+    ask_variables_on_launch: true
+    credentials:
+      - Azure Service Principal
+
+- name: Azure - Destroy Network Peering Demo
+  awx.awx.job_template:
+    name: Azure - Destroy Network Peering Demo
+    project: Azure Demo
+    playbook: project/destroy_peer_network_demo.yml
+    inventory: localhost
+    extra_vars:
+      resource_group_name: rg-peering-demo
+      region: eastus
+      node_pool_rg: ""  # Name of the node pool resource group that contains the route table for the AKS cluster
+      managed_app_rg: ""  # Name of the managed app resource group
+      managed_app_vnet_name: ""  # Name of the managed app node pool vnet
+      managed_app_route_table: ""  # The route table name for the managed app node pool vnet
+    ask_variables_on_launch: true
+    credentials:
+      - Azure Service Principal
+
+- name: Run DNF Update (Azure Demo)
+  awx.awx.job_template:
+    name: Run DNF Update (Azure Demo)
+    job_type: run
+    project: Azure Demo
+    playbook: project/update_rhel_vms.yml
+    inventory: localhost
+    credentials:
+      - Azure VM SSH Credential
+    become_enabled: true
+    job_slice_count: 1
+    state: present
+
+- name: Run Ephemeral Workload Test
+  awx.awx.job_template:
+    name: Azure - Ephemeral Workload Test
+    job_type: run
+    project: Azure Demo
+    playbook: project/emphemeral_workload_test.yml
+    inventory: localhost
+    credentials:
+      - Ansible Automation Controller
+      - Azure Service Principal
+      - Azure VM SSH Credential
+    become_enabled: true
+    job_slice_count: 1
+    state: present

@@ -2,7 +2,7 @@
 
 # Ansible on Clouds Demo Configuration
 
-This role is for the Ansible on Clouds team to quickly spin up reusable Ansible Controller configurations. It configures the following components in Ansible Automation Controller:
+This collections is for the Ansible on Clouds team to quickly spin up reusable Ansible Controller configurations. It configures the following components in Ansible Automation Controller:
 
 - Execution Environments
 - Credentials
@@ -14,95 +14,38 @@ This role is not published to Ansible Galaxy and therefor must be used directly 
 
 ## Requirements
 
-This role will work with any Ansible Automation Platform 2.1 version of Ansible Controller, but is intended to be used with Ansible on Clouds deployments.
+This role will work with any Ansible Automation Platform 2.1+ version of Ansible Controller, but is intended to be used with Ansible on Clouds deployments.
 
 ## Role Variables
 
 ### Extra Vars
 
-There are many variables that can be set, with the required variables defined in `defaults/main.yml`.  Below is an example of what is in the file.  Of all the variables set by default, there is one that **must** be set in your execution:
+There are many variables that can be set, with the required variables defined in `defaults/main.yml`.  Below is an example of what is in the file.  Of all the variables set by default, there is one that **must** be set in your extra vars:
 
-- `rhel_public_key` when using the "Azure - Create RHEL 8 VM" play / template.  Inject an RSA public key string that will be used as the default key by the RHEL host.
+| Key               | Description                                                                                                                  |
+|-------------------|------------------------------------------------------------------------------------------------------------------------------|
+| `ssh_public_key`  | The public key used to connect to and manage Linux VMs created in certain playbooks.                                         |
 
-```yaml
----
-azure_ee_registry_credential_name: Default Execution Environment Registry Credential
-azure_demo_templates:
-  - name: 'Azure - Create Resource Group'
-    playbook: 'create_resource_group.yml'
-    extra_vars:
-      resource_group_name: "ansible_test"
-      region: "eastus"
-  - name: 'Azure - Create RHEL 8 VM'
-    playbook: 'create_rhel_vm_demo.yml'
-    extra_vars:
-      resource_group_name: "ansible_test"
-      region: "eastus"
-      vnet_cidr: "172.16.192.0/24"
-      subnet_cidr: "172.16.192.0/25"
-      vnet_name: "demo_vnet"
-      subnet_name: "demo_subnet"
-      network_sec_group_name: "demo_sec_group"
-      rhel_public_ip_name: "rhel_demo_ip"
-      rhel_nic_name: "rhel_demo_nic"
-      rhel_vm_name: "RHEL8-ansible"
-      rhel_vm_size: "Standard_DS1_v2"
-      rhel_vm_sku: "8_5"
-      rhel_admin_user: "azureuser"
-      rhel_public_key: ""  # Add your RSA SSH public key in extra vars
-      survey_public_ip: "True"
-  - name: 'Azure - Create Windows Server 2022 VM'
-    playbook: 'create_windows_vm_demo.yml'
-    extra_vars:
-      resource_group_name: "azure-demo"
-      region: "eastus"
-      vnet_cidr: "172.16.192.0/24"
-      subnet_cidr: "172.16.192.0/25"
-      vnet_name: "demo_vnet"
-      subnet_name: "demo_subnet"
-      network_sec_group_name: "demo_sec_group"
-      win_vm_name: "WIN-ansible"
-      win_vm_size: "Standard_DS1_v2"
-      win_vm_sku: "2022-Datacenter"
-      win_public_ip_name: "win_demo_ip"
-      win_nic_name: "win_demo_nic"
-      win_admin_user: "azureuser"
-      win_admin_password: "ansible123!"
-  - name: 'Azure - Destroy Resource Group'
-    playbook: 'destroy_resource_group.yml'
-    extra_vars:
-      resource_group_name: "ansible_test"
-      region: "eastus"
-```
-
-Each of the supported components has an `extra_` key which can be used to supply lists of extra items to configure.  For more granular control, simply create a new playbook instead of using extra vars.
-
-- `extra_execution_environments`
-- `extra_inventories`
-- `extra_inventory_sources`
-- `extra_credentials`
-- `extra_projects`
-- `extra_templates`
-
-For instance, if you wanted to add extra credentials, then you would configure the following in your `extra_vars`:
 
 ```yaml
 ---
-extra_credentials:
-  - name: Local Container Registry
-    description: Local Container Registry
-    credential_type: Container Registry
-    inputs:
-      username: scott
-      password: "{{ lookup('env', 'REGISTRY_PASS') }}"
+# Required
+ssh_public_key: "ssh-rsa AAAAB3NzaC1yc2EA..."
+
+# Optional
+awx_organization: Default
+azure_region: eastus
+azure_resource_group: ansible_test
+windows_admin_password: ansible12345!
 ```
 
 ### Environment Vars
 
-Set the environment variables on your local machine that are required for variables that will be added to Ansible Controller:
+Set the environment variables on your local machine that are required for credentials that will be added to Ansible Controller:
 
 | Variable Name         | Description                                                                  |
-| --------------------- | ---------------------------------------------------------------------------- |
+|-----------------------|------------------------------------------------------------------------------|
+| CONTROLLER_HOST       | The hostname of AAP controller to automate against                           |
 | CONTROLLER_USERNAME   | Used to authenticate against the Ansible Controller API                      |
 | CONTROLLER_PASSWORD   | Used to authenticate against the Ansible Controller API                      |
 | AZURE_TENANT_ID       | Used to configure the Azure subscription credential in Automation Controller |
@@ -111,11 +54,12 @@ Set the environment variables on your local machine that are required for variab
 | AZURE_CLIENT_SECRET   | Used to configure the Azure subscription credential in Automation Controller |
 | RED_HAT_ACCOUNT       | Used to configure the Azure subscription credential in Automation Controller |
 | RED_HAT_PASSWORD      | Used to configure the Azure subscription credential in Automation Controller |
+| SSH_PRIV_KEY          | Private key used for credential to connect to Linux VMs.                     |
 
 You can set the variables in your shell with a one-liner:
 
 ```bash
-export CONTROLLER_USERNAME="username" CONTROLLER_PASSWORD="password" AZURE_TENANT_ID="" AZURE_SUBSCRIPTION_ID="" AZURE_CLIENT_ID="" AZURE_CLIENT_SECRET="" RED_HAT_ACCOUNT="" RED_HAT_PASSWORD=""
+export CONTROLLER_HOST="" CONTROLLER_USERNAME="username" CONTROLLER_PASSWORD="password" AZURE_TENANT_ID="" AZURE_SUBSCRIPTION_ID="" AZURE_CLIENT_ID="" AZURE_CLIENT_SECRET="" RED_HAT_ACCOUNT="" RED_HAT_PASSWORD="" SSH_PRIV_KEY=""
 ```
 
 ## Dependencies
@@ -147,10 +91,10 @@ Run the main playbook with `ansible_navigator`.  This will run locally on your P
 
 ```bash
 ansible-navigator run playbooks/main.yml \
--i playbooks/inventory/hosts \
 --pae false \
 --mode stdout \
 --ee false \
+--penv CONTROLLER_HOST \
 --penv CONTROLLER_USERNAME \
 --penv CONTROLLER_PASSWORD \
 --penv AZURE_TENANT_ID \
@@ -158,18 +102,19 @@ ansible-navigator run playbooks/main.yml \
 --penv AZURE_CLIENT_ID \
 --penv AZURE_CLIENT_SECRET \
 --penv RED_HAT_ACCOUNT \
---penv RED_HAT_PASSWORD
+--penv RED_HAT_PASSWORD \
+--penv SSH_PRIV_KEY
 ```
 
-You may create an `extra_vars` file at `playbooks/vars/extra_vars` and include that your test run to change configurations from the defaults that are set in `defaults/main.yml`.  If you do that, then the command above will change to the following:
+You may create an `extra_vars` file include that your test run to change configurations from the defaults that are set in a role's `defaults/main.yml` file.  If you do that, then the command above will change to the following:
 
 ```bash
 ansible-navigator run playbooks/main.yml \
--i playbooks/inventory/hosts \
 --pae false \
 --mode stdout \
 --ee false \
---extra-vars "@playbooks/vars/extra_vars" \
+--extra-vars "@playbooks/env/extra_vars" \
+--penv CONTROLLER_HOST \
 --penv CONTROLLER_USERNAME \
 --penv CONTROLLER_PASSWORD \
 --penv AZURE_TENANT_ID \
@@ -177,18 +122,37 @@ ansible-navigator run playbooks/main.yml \
 --penv AZURE_CLIENT_ID \
 --penv AZURE_CLIENT_SECRET \
 --penv RED_HAT_ACCOUNT \
---penv RED_HAT_PASSWORD
+--penv RED_HAT_PASSWORD \
+--penv SSH_PRIV_KEY \
 --eev $HOME/.ssh:/home/runner/.ssh # for ssh key lookups
+```
+
+## Installation and Usage
+
+### Installing the Collection with the Ansible Galaxy CLI
+
+Before using the this collection, you need to install it with the Ansible Galaxy CLI:
+
+`ansible-galaxy collection install git+https://github.com/scottharwell/aoc_demo_setup.git`
+
+You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml`, using the format:
+
+```yaml
+---
+collections:
+  - name: https://github.com/scottharwell/aoc_demo_setup.git
+    type: git
+    version: main
 ```
 
 ### Playbook Use
 
-As mentioned earlier, this role is not available on Ansible Galaxy, so you will need to have the role available for a playbook either through an Execution Environment or manual installation.  Once available, referencing the role happens just like any other Ansible role.
+As mentioned earlier, this collection is not available on Ansible Galaxy, so you will need to have it available for a playbook either through an Execution Environment or manual installation.  Once available, referencing the role happens just like any other Ansible role.
 
 ```yaml
 - hosts: localhost
   roles:
-      - role: ansible_on_clouds.aoc_demo_setup
+    - role: ansible_on_clouds.setup_and_config.aoc_demo_setup
 ```
 
 ## License

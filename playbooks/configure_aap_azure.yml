@@ -1,10 +1,12 @@
 ---
-# This playbook calls the full role
 - name: Deploy Demo AoC Site
   hosts: localhost
   connection: local
   gather_facts: false
+  collections:
+    - awx.awx
   tasks:
+  
     - name: Configure Demo Site
-      include_role:
-        name: ansible_on_clouds.aoc_demo_setup
+      ansible.builtin.import_role:
+        name: roles/azure

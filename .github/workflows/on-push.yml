@@ -1,12 +1,27 @@
 ---
 name: validation-checks
-on: [push]
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*.*.*"
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+
 jobs:
-  lint-check:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Check out yamllint
-        uses: actions/checkout@1.0.0
-      - name: Run yamllint
-        uses: actionshub/yamllint@1.0.0
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install ansible-lint and yamllint
+        run: sudo pip3 install ansible-lint yamllint
+
+      - name: Run ansiblelint
+        run: ansible-lint

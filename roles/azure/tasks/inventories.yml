@@ -1,0 +1,32 @@
+---
+- name: Create localhost inventory
+  awx.awx.inventory:
+    name: localhost
+    description: localhost
+    organization: "{{ awx_organization }}"
+    state: present
+
+- name: Add localhost host to inventory
+  awx.awx.host:
+    name: localhost
+    inventory: localhost
+    state: present
+
+- name: Create Azure Inventory
+  awx.awx.inventory:
+    name: Azure
+    description: Azure Inventory
+    organization: "{{ awx_organization }}"
+    state: present
+
+- name: Add Azure inventory source
+  awx.awx.inventory_source:
+    name: Azure Dynamic Inventory
+    description: Creates inventory from Azure sources
+    inventory: Azure
+    credential: Azure Service Principal
+    execution_environment: Cloud Services Execution Environment
+    overwrite: true
+    update_on_launch: true
+    organization: "{{ awx_organization }}"
+    source: azure_rm

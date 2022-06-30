@@ -1,0 +1,5 @@
+---
+awx_organization: Default
+azure_region: eastus
+azure_resource_group: ansible_test
+windows_admin_password: ansible12345!

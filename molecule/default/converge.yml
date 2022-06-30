@@ -1,7 +1,0 @@
----
-- name: Converge
-  hosts: all
-  tasks:
-    - name: "Include ansible_on_clouds.aoc_demo_setup"
-      include_role:
-        name: "ansible_on_clouds.aoc_demo_setup"
