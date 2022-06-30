@@ -1,4 +1,4 @@
-[![validation-checks](https://github.com/scottharwell/aoc_demo_setup/actions/workflows/on-push.yml/badge.svg)](https://github.com/scottharwell/aoc_demo_setup/actions/workflows/on-push.yml)
+[![validation-checks](https://github.com/scottharwell/ansible_on_clouds.setup_and_config/actions/workflows/on-push.yml/badge.svg)](https://github.com/scottharwell/ansible_on_clouds.setup_and_config/actions/workflows/on-push.yml)
 
 # Ansible on Clouds Demo Configuration
 
