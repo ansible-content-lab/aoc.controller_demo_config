@@ -133,14 +133,14 @@ ansible-navigator run playbooks/main.yml \
 
 Before using the this collection, you need to install it with the Ansible Galaxy CLI:
 
-`ansible-galaxy collection install git+https://github.com/scottharwell/aoc_demo_setup.git`
+`ansible-galaxy collection install git+https://github.com/scottharwell/ansible_on_clouds.setup_and_config.git`
 
 You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml`, using the format:
 
 ```yaml
 ---
 collections:
-  - name: https://github.com/scottharwell/aoc_demo_setup.git
+  - name: https://github.com/scottharwell/ansible_on_clouds.setup_and_config
     type: git
     version: main
 ```
