@@ -91,7 +91,6 @@ ansible-navigator run playbooks/configure_aap_azure.yml \
 --mode stdout \
 --eei quay.io/scottharwell/cloud-ee:latest \
 --eev $HOME/.ssh:/home/runner/.ssh \
---extra-vars "@env/extra_vars" \
 --penv CONTROLLER_HOST \
 --penv CONTROLLER_USERNAME \
 --penv CONTROLLER_PASSWORD \
@@ -101,6 +100,6 @@ ansible-navigator run playbooks/configure_aap_azure.yml \
 --penv AZURE_CLIENT_SECRET \
 --penv RED_HAT_ACCOUNT \
 --penv RED_HAT_PASSWORD \
---senv "SSH_PRIV_KEY={{ lookup('file','~/.ssh/id_rsa_azure_demo') }}" \ \
+--senv "SSH_PRIV_KEY={{ lookup('file','~/.ssh/id_rsa_azure_demo') }}" \
 --extra-vars "ssh_public_key={{ lookup('file','~/.ssh/id_rsa_azure_demo.pub') }}"
 ```

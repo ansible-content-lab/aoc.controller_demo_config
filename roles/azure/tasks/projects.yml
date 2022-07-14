@@ -7,7 +7,7 @@
 
 - name: Add Azure Demo Project
   awx.awx.project:
-    name: Azure Demo
+    name: Ansible - Azure Demo
     description: Azure Demo
     default_environment: Cloud Services Execution Environment
     organization: "{{ awx_organization | default('Default') }}"  # Organization is required in projects

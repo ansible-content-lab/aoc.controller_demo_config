@@ -25,10 +25,11 @@
     description: Creates inventory from Azure sources
     inventory: Azure
     credential: Azure Service Principal
-    execution_environment: Cloud Services Execution Environment
+    execution_environment: Harwell - Cloud EE
     overwrite: true
     update_on_launch: true
     organization: "{{ awx_organization }}"
     source: scm
     source_project: Ansible Cloud Content Lab - Azure Roles
     source_path: inventory/inventory.azure_rm.yml
+    verbosity: 0
