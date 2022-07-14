@@ -29,4 +29,6 @@
     overwrite: true
     update_on_launch: true
     organization: "{{ awx_organization }}"
-    source: azure_rm
+    source: scm
+    source_project: Ansible Cloud Content Lab - Azure Roles
+    source_path: inventory/inventory.azure_rm.yml
