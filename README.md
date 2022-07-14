@@ -13,7 +13,7 @@ Click on the role name to be directed to the README specifically for that role.
 
 | Name                                                                                                                                                  | Description                                                                          |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| [ansible_on_clouds.setup_and_config.azure](https://github.com/ansible-content-lab/ansible_on_clouds.setup_and_config/blob/main/roles/azure/README.md) | Role that deploys a demo configuration of job templates, projects, inventories, etc. |
+| [ansible_on_clouds.setup_and_config.azure](https://github.com/scottharwell/ansible_on_clouds.setup_and_config/blob/main/roles/azure/README.md) | Role that deploys a demo configuration of job templates, projects, inventories, etc. |
 
 ### Playbooks
 
