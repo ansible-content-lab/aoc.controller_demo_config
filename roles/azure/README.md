@@ -82,23 +82,3 @@ pip3 install pip --upgrade
 # Install Ansible
 pip3 install ansible-core ansible-lint ansible-navigator
 ```
-
-Run the main playbook with `ansible_navigator` using an execution environment with the Azure collection installed.
-
-```bash
-ansible-navigator run playbooks/configure_aap_azure.yml \
---pae false \
---mode stdout \
---eei quay.io/scottharwell/cloud-ee:latest \
---eev $HOME/.ssh:/home/runner/.ssh \
---penv CONTROLLER_HOST \
---penv CONTROLLER_USERNAME \
---penv CONTROLLER_PASSWORD \
---penv AZURE_TENANT_ID \
---penv AZURE_SUBSCRIPTION_ID \
---penv AZURE_CLIENT_ID \
---penv AZURE_CLIENT_SECRET \
---penv RED_HAT_ACCOUNT \
---penv RED_HAT_PASSWORD \
---extra-vars "ssh_public_key={{ lookup('file','~/.ssh/id_rsa_azure_demo.pub') }}"
-```

@@ -21,6 +21,28 @@ Click on the role name to be directed to the README specifically for that role.
 |--------------------------------------------------------------|---------------|-----------------------------------------------------------|
 | `ansible_on_clouds.setup_and_config.configure_aap_azure.yml` | `roles.azure` | A playbook that runs the AAP on Azure configuration role. |
 
+#### Running Configure AAP Azure
+
+Run the `ansible_on_clouds.setup_and_config.configure_aap_azure.yml` playbook with `ansible_navigator` from the root directory of this repository.  The role expects that there is an ssh key called `id_rsa_azure_demo` that exists in your `~/.ssh` directory.  The following command maps that folder into the EE container for access to that key and its public key. 
+
+```bash
+ansible-navigator run playbooks/configure_aap_azure.yml \
+--pae false \
+--mode stdout \
+--eei quay.io/scottharwell/cloud-ee:latest \
+--eev $HOME/.ssh:/home/runner/.ssh \
+--penv CONTROLLER_HOST \
+--penv CONTROLLER_USERNAME \
+--penv CONTROLLER_PASSWORD \
+--penv AZURE_TENANT_ID \
+--penv AZURE_SUBSCRIPTION_ID \
+--penv AZURE_CLIENT_ID \
+--penv AZURE_CLIENT_SECRET \
+--penv RED_HAT_ACCOUNT \
+--penv RED_HAT_PASSWORD \
+--extra-vars "ssh_public_key={{ lookup('file','~/.ssh/id_rsa_azure_demo.pub') }}"
+```
+
 ## Installation and Usage
 
 ### Installing the Collection with the Ansible Galaxy CLI
