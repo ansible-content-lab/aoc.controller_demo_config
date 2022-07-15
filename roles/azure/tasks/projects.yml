@@ -9,7 +9,7 @@
   awx.awx.project:
     name: Ansible - Azure Demo
     description: Azure Demo
-    default_environment: Cloud Services Execution Environment
+    default_environment: Harwell - Cloud EE
     organization: "{{ awx_organization | default('Default') }}"  # Organization is required in projects
     scm_type: git
     scm_url: "{{ azure_demo_project_url | default('https://github.com/ansible-cloud/azure.git') }}"

@@ -1,0 +1,30 @@
+---
+- name: Create a workflow to create a RHEL VM, run an automation against the VM, and then destroy the VM
+  awx.awx.workflow_job_template:
+    name: ansible_on_clouds.setup_and_config.ephemeral_vm_workload
+    inventory: localhost
+    workflow_nodes:
+      - identifier: Create VM
+        unified_job_template:
+          name: lab.azure_roles.create_rhel_vm
+          type: job_template
+        related:
+          success_nodes:
+            - identifier: Run DNF Update
+          failure_nodes:
+            - identifier: Delete VM
+
+      - identifier: Run DNF Update
+        unified_job_template:
+          name: lab.azure_roles.update_rhel_vms
+          type: job_template
+        related:
+          always_nodes:
+            - identifier: Delete VM
+
+      - identifier: Delete VM
+        all_parents_must_converge: false
+        unified_job_template:
+          name: lab.azure_roles.delete_rhel_vm
+          type: job_template
+  register: result

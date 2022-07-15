@@ -33,8 +33,20 @@
       vnet_name: spoke-1-vnet
       subnet_name: spoke-1-subnet
       create_public_ip: true
-      ssh_public_key: "" # Copy value into this field
+      ssh_public_key:  "{{ ssh_public_key | default('') }}" # Copy value into this field
+      admin_password: "{{ admin_password | default('') }}" # Set a password value
     ask_variables_on_launch: true
+    credentials:
+      - Azure Service Principal
+
+- name: Azure - Delete RHEL VM
+  awx.awx.job_template:
+    name: lab.azure_roles.delete_rhel_vm
+    inventory: localhost
+    playbook: playbooks/delete_rhel_vm.yml
+    project: Ansible Cloud Content Lab - Azure Roles
+    extra_vars:
+      resource_group_name: "{{ azure_resource_group }}"
     credentials:
       - Azure Service Principal
 
@@ -54,9 +66,19 @@
       vnet_name: spoke-1-vnet
       subnet_name: spoke-1-subnet
       create_public_ip: true
-      ssh_public_key:  "" # Copy value into this field
-      admin_password: "" # Set a password value
+      admin_password: "{{ admin_password | default('') }}" # Set a password value
     ask_variables_on_launch: true
+    credentials:
+      - Azure Service Principal
+
+- name: Azure - Delete Windows VM
+  awx.awx.job_template:
+    name: lab.azure_roles.delete_windows_vm
+    inventory: localhost
+    playbook: playbooks/delete_windows_vm.yml
+    project: Ansible Cloud Content Lab - Azure Roles
+    extra_vars:
+      resource_group_name: "{{ azure_resource_group }}"
     credentials:
       - Azure Service Principal
 
@@ -108,8 +130,8 @@
     job_type: run
     project: Ansible Cloud Content Lab - Azure Roles
     playbook: playbooks/update_rhel_vms.yml
-    inventory: localhost
-    limit: RHEL
+    inventory: Azure
+    limit: rhel
     credentials:
       - Azure VM SSH Credential
     become_enabled: true

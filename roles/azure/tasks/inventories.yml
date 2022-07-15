@@ -5,6 +5,8 @@
     description: localhost
     organization: "{{ awx_organization }}"
     state: present
+    variables:
+      ansible_python_interpreter: /usr/bin/python3
 
 - name: Add localhost host to inventory
   awx.awx.host:

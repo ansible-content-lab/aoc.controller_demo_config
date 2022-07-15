@@ -20,6 +20,11 @@
     - inventories
 
 - name: Configure Templates
-  include_tasks: templates.yml
+  include_tasks: job_templates.yml
   tags:
     - templates
+
+- name: Configure Workflows
+  include_tasks: workflows.yml
+  tags:
+    - workflows

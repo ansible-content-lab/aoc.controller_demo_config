@@ -7,6 +7,7 @@ This role configures the following components in Ansible Automation Controller t
 - Projects
 - Inventories
 - Templates
+- Workflows
 
 ## Requirements
 
@@ -50,12 +51,11 @@ Set the environment variables on your local machine that are required for creden
 | `AZURE_CLIENT_SECRET`   | Used to configure the Azure subscription credential in Automation Controller |
 | `RED_HAT_ACCOUNT`       | Used to configure the Azure subscription credential in Automation Controller |
 | `RED_HAT_PASSWORD`      | Used to configure the Azure subscription credential in Automation Controller |
-| `SSH_PRIV_KEY`          | Private key used for credential to connect to Linux VMs.                     |
 
 You can set the variables in your shell with a one-liner:
 
 ```bash
-export CONTROLLER_HOST="" CONTROLLER_USERNAME="username" CONTROLLER_PASSWORD="password" AZURE_TENANT_ID="" AZURE_SUBSCRIPTION_ID="" AZURE_CLIENT_ID="" AZURE_CLIENT_SECRET="" RED_HAT_ACCOUNT="" RED_HAT_PASSWORD="" SSH_PRIV_KEY=""
+export CONTROLLER_HOST="" CONTROLLER_USERNAME="username" CONTROLLER_PASSWORD="password" AZURE_TENANT_ID="" AZURE_SUBSCRIPTION_ID="" AZURE_CLIENT_ID="" AZURE_CLIENT_SECRET="" RED_HAT_ACCOUNT="" RED_HAT_PASSWORD=""
 ```
 
 ## Dependencies
