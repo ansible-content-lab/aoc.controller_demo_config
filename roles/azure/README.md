@@ -18,15 +18,15 @@ This role will work with any Ansible Automation Platform 2.1+ version of Ansible
 
 There are many variables that can be set, with the required variables defined in `defaults/main.yml`.  Below is an example of what is in the file.  Of all the variables set by default, there is one that **must** be set in your extra vars:
 
-| Key               | Description                                                                                                                  |
-|-------------------|------------------------------------------------------------------------------------------------------------------------------|
-| `ssh_public_key`  | The public key used to connect to and manage Linux VMs created in certain playbooks.                                         |
+| Key              | Description                                                                          |
+|------------------|--------------------------------------------------------------------------------------|
+| `ssh_public_key` | The public key used to connect to and manage Linux VMs created in certain playbooks. |
 
 
 ```yaml
 ---
 # Required
-ssh_public_key: "ssh-rsa AAAAB3NzaC1yc2EA..."
+ssh_public_key: "{{ lookup('file', '~/.ssh/id_rsa_azure_demo.pub') }}"
 
 # Optional
 awx_organization: Default
@@ -39,18 +39,18 @@ windows_admin_password: ansible12345!
 
 Set the environment variables on your local machine that are required for credentials that will be added to Ansible Controller:
 
-| Variable Name         | Description                                                                  |
-|-----------------------|------------------------------------------------------------------------------|
-| CONTROLLER_HOST       | The hostname of AAP controller to automate against                           |
-| CONTROLLER_USERNAME   | Used to authenticate against the Ansible Controller API                      |
-| CONTROLLER_PASSWORD   | Used to authenticate against the Ansible Controller API                      |
-| AZURE_TENANT_ID       | Used to configure the Azure subscription credential in Automation Controller |
-| AZURE_SUBSCRIPTION_ID | Used to configure the Azure subscription credential in Automation Controller |
-| AZURE_CLIENT_ID       | Used to configure the Azure subscription credential in Automation Controller |
-| AZURE_CLIENT_SECRET   | Used to configure the Azure subscription credential in Automation Controller |
-| RED_HAT_ACCOUNT       | Used to configure the Azure subscription credential in Automation Controller |
-| RED_HAT_PASSWORD      | Used to configure the Azure subscription credential in Automation Controller |
-| SSH_PRIV_KEY          | Private key used for credential to connect to Linux VMs.                     |
+| Variable Name           | Description                                                                  |
+|-------------------------|------------------------------------------------------------------------------|
+| `CONTROLLER_HOST`       | The hostname of AAP controller to automate against                           |
+| `CONTROLLER_USERNAME`   | Used to authenticate against the Ansible Controller API                      |
+| `CONTROLLER_PASSWORD`   | Used to authenticate against the Ansible Controller API                      |
+| `AZURE_TENANT_ID`       | Used to configure the Azure subscription credential in Automation Controller |
+| `AZURE_SUBSCRIPTION_ID` | Used to configure the Azure subscription credential in Automation Controller |
+| `AZURE_CLIENT_ID`       | Used to configure the Azure subscription credential in Automation Controller |
+| `AZURE_CLIENT_SECRET`   | Used to configure the Azure subscription credential in Automation Controller |
+| `RED_HAT_ACCOUNT`       | Used to configure the Azure subscription credential in Automation Controller |
+| `RED_HAT_PASSWORD`      | Used to configure the Azure subscription credential in Automation Controller |
+| `SSH_PRIV_KEY`          | Private key used for credential to connect to Linux VMs.                     |
 
 You can set the variables in your shell with a one-liner:
 
