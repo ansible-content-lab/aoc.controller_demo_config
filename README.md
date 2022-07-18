@@ -2,7 +2,7 @@
 
 # Ansible on Clouds Controller Setup and Configuration
 
-This collection contains playbooks and roles that demonstrate using configuration-as-code and gitops to declare the setup and configuration for Ansible Automation Controller.  This approach to Ansible Automation Controller configuration provides an easy-to-read and manage deployment model and keeps your Ansible Automation Controller configuration portable between different AAP deployments. 
+This collection contains playbooks and roles that demonstrate using configuration-as-code to declare the setup and configuration for Ansible Automation Controller.  This approach to Ansible Automation Controller configuration provides an easy-to-read and manage deployment model and keeps your Ansible Automation Controller configuration portable between different AAP deployments. 
 
 ## Included Content
 
@@ -11,15 +11,15 @@ This collection contains playbooks and roles that demonstrate using configuratio
 
 Click on the role name to be directed to the README specifically for that role.
 
-| Name                                                                                                                                                  | Description                                                                          |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| Name                                                                                                                                           | Description                                                                          |
+|------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
 | [ansible_on_clouds.setup_and_config.azure](https://github.com/scottharwell/ansible_on_clouds.setup_and_config/blob/main/roles/azure/README.md) | Role that deploys a demo configuration of job templates, projects, inventories, etc. |
 
 ### Playbooks
 
-| Name                                                         | Role(s) Used  | Description                                               |
-|--------------------------------------------------------------|---------------|-----------------------------------------------------------|
-| `ansible_on_clouds.setup_and_config.configure_aap_azure.yml` | `roles.azure` | A playbook that runs the AAP on Azure configuration role. |
+| Name                                                         | Role(s) Used                               | Description                                               |
+|--------------------------------------------------------------|--------------------------------------------|-----------------------------------------------------------|
+| `ansible_on_clouds.setup_and_config.configure_aap_azure.yml` | `ansible_on_clouds.setup_and_config.azure` | A playbook that runs the AAP on Azure configuration role. |
 
 #### Running Configure AAP Azure
 

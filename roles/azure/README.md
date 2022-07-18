@@ -2,12 +2,67 @@
 
 This role configures the following components in Ansible Automation Controller that are commonly used for Ansible on Azure demos:
 
-- Execution Environments
 - Credentials
-- Projects
+- Execution Environments
 - Inventories
+- Projects
 - Templates
 - Workflows
+
+## AAP Components
+
+### Credentials
+
+| Name                            | Description                                                                                                |
+|---------------------------------|------------------------------------------------------------------------------------------------------------|
+| `Red Hat Registry`              | A credential to `console.redhat.com` that will allow retrieval of certified execution environments.        |
+| `Azure Service Principal`       | Credential used by the Azure collection for Ansible to communicate with Microsoft Azure.                   |
+| `Azure VM SSH Credential`       | An SSH credential used to connect to and configure VMs on Azure.                                           |
+| `Ansible Automation Controller` | A credential to communicate with an instance of Ansible Automation Platform that this role will configure. |
+
+### Execution Environments
+
+| Name                                   | Description                                                                                            |
+|----------------------------------------|--------------------------------------------------------------------------------------------------------|
+| `Cloud Services Execution Environment` | Latest version of the `ee-cloud-services-rhel8` execution environment published with Ansible on Azure. |
+| `Harwell - Cloud EE`                   | Custom EE with Azure and other content collections installed                                           |
+
+### Inventories
+
+| Name        | Description                                                                                                                                 |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| `localhost` | An inventory with `localhost` that can be used for collections that do not need to connect to remote hosts (i.e. cloud vendor collections). |
+| `Azure`     | A dynamic inventory sourced from the `Azure Service Principal` credential.                                                                  |
+
+### Job Templates
+
+| Name | Description |
+|------|-------------|
+| `lab.azure_roles.create_resource_group`     | Simple playbook that creates a resource group.            |
+|`lab.azure_roles.delete_resource_group`|Deletes a resource group and all resources within that group.|
+| `lab.azure_roles.create_rhel_vm`     | Creates a RHEL-based VM and all of the Azure resources required to deploy the VM.             |
+| `lab.azure_roles.delete_rhel_vm`     | Deletes the RHEL-based VM and its associated resources.            |
+| `lab.azure_roles.create_windows_vm`     | Creates a Windows Server-based VM and all of the Azure resources required to deploy the VM.            |
+| `lab.azure_roles.delete_windows_vm`     | Deletes the Windows Server-based VM and its associated resources.            |
+| `lab.azure_roles.create_transit_network`     | Creates a hun-and-spoke network model with a hub and two spoke networks.  One spoke acts as a DMZ.            |
+| `lab.azure_roles.delete_transit_network`     | Deletes the transit network and its related resources.            |
+| `lab.azure_roles.update_rhel_vms`     | A simple playbook that demonstrates running `dnf upgrade -y` on RHEL VMs.            |
+|`Azure Demos - Ephemeral Workload Test`| A playbook that will create a RHEL VM, run an operation on the VM, and then delete the VM to simulate an ephemeral VM workload.  This has been superseded by the workflow that is also deployed in this role.|
+
+### Projects
+
+| Name                                      | Description                                                                                                                                                  |
+|-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `Ansible - Azure Demo`                    | A project with playbooks used to demonstrate basic Azure operations.                                                                                         |
+| `Ansible Cloud Content Lab - Azure Roles` | A collection that takes the examples in the Azure demo project and moves them into playbooks and roles as part of the Ansible Content Lab for Cloud Content. |
+
+
+### Workflows
+
+| Name                                                       | Description                                                                                                                                                                                                                              |
+|------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `ansible_on_clouds.setup_and_config.ephemeral_vm_workload` | A workflow that uses multiple job templates that create a VM and its dependencies, then runs a command on the VM, and then deletes the VM when done.  This simulates an ephemeral VM workload that may happen nightly in spot instances. |
+
 
 ## Requirements
 
