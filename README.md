@@ -1,4 +1,4 @@
-[![validation-checks](https://github.com/scottharwell/ansible_on_clouds.setup_and_config/actions/workflows/on-push.yml/badge.svg)](https://github.com/scottharwell/ansible_on_clouds.setup_and_config/actions/workflows/on-push.yml)
+[![validation-checks](https://github.com/ansible-content-lab/lab.ansible_controller_config/actions/workflows/on-push.yml/badge.svg)](https://github.com/ansible-content-lab/lab.ansible_controller_config/actions/workflows/on-push.yml)
 
 # Ansible on Clouds Controller Setup and Configuration
 
@@ -13,17 +13,17 @@ Click on the role name to be directed to the README specifically for that role.
 
 | Name                                                                                                                                           | Description                                                                          |
 |------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| [ansible_on_clouds.setup_and_config.azure](https://github.com/scottharwell/ansible_on_clouds.setup_and_config/blob/main/roles/azure/README.md) | Role that deploys a demo configuration of job templates, projects, inventories, etc. |
+| [lab.ansible_controller_config.azure](https://github.com/ansible-content-lab/lab.ansible_controller_config/blob/main/roles/azure/README.md) | Role that deploys a demo configuration of job templates, projects, inventories, etc. |
 
 ### Playbooks
 
 | Name                                                         | Role(s) Used                               | Description                                               |
 |--------------------------------------------------------------|--------------------------------------------|-----------------------------------------------------------|
-| `ansible_on_clouds.setup_and_config.configure_aap_azure.yml` | `ansible_on_clouds.setup_and_config.azure` | A playbook that runs the AAP on Azure configuration role. |
+| `lab.ansible_controller_config.configure_aap_azure.yml` | `lab.ansible_controller_config.azure` | A playbook that runs the AAP on Azure configuration role. |
 
 #### Running Configure AAP Azure
 
-Run the `ansible_on_clouds.setup_and_config.configure_aap_azure.yml` playbook with `ansible_navigator` from the root directory of this repository.  The role expects that there is an ssh key called `id_rsa_azure_demo` that exists in your `~/.ssh` directory.  The following command maps that folder into the EE container for access to that key and its public key. 
+Run the `lab.ansible_controller_config.configure_aap_azure.yml` playbook with `ansible_navigator` from the root directory of this repository.  The role expects that there is an ssh key called `id_rsa_azure_demo` that exists in your `~/.ssh` directory.  The following command maps that folder into the EE container for access to that key and its public key. 
 
 ```bash
 ansible-navigator run playbooks/configure_aap_azure.yml \
@@ -49,14 +49,14 @@ ansible-navigator run playbooks/configure_aap_azure.yml \
 
 Before using the this collection, you need to install it with the Ansible Galaxy CLI:
 
-`ansible-galaxy collection install git+https://github.com/scottharwell/ansible_on_clouds.setup_and_config.git`
+`ansible-galaxy collection install git+https://github.com/ansible-content-lab/lab.ansible_controller_config.git`
 
 You can also include it in a `requirements.yml` file and install it via `ansible-galaxy collection install -r requirements.yml`, using the format:
 
 ```yaml
 ---
 collections:
-  - name: https://github.com/scottharwell/ansible_on_clouds.setup_and_config
+  - name: https://github.com/ansible-content-lab/lab.ansible_controller_config
     type: git
     version: main
 ```
@@ -68,7 +68,7 @@ This collection is not available on Ansible Galaxy, so you will need to have it 
 ```yaml
 - hosts: localhost
   roles:
-    - role: ansible_on_clouds.setup_and_config.aoc_demo_setup
+    - role: lab.ansible_controller_config.aoc_demo_setup
 ```
 
 ## License
