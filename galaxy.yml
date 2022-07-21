@@ -1,16 +1,16 @@
 ---
-namespace: ansible_on_clouds
-name: setup_and_config
-version: 2.0.0
+namespace: aoc
+name: controller_demo_config
+version: 2.0.1
 authors:
   - Scott Harwell (@scottharwell)
 description: A collection of content for setting up Ansible on Cloud demos rapidly.
 documentation: ''
-homepage: https://github.com/scottharwell/ansible_on_clouds.setup_and_config
-issues: https://github.com/scottharwell/ansible_on_clouds.setup_and_config/issues
+homepage: https://github.com/ansible-content-lab/aoc.controller_demo_config
+issues: https://github.com/ansible-content-lab/aoc.controller_demo_config/issues
 license_file: LICENSE
 readme: README.md
-repository: https://github.com/scottharwell/ansible_on_clouds.setup_and_config.git
+repository: https://github.com/ansible-content-lab/aoc.controller_demo_config.git
 tags:
   - cloud
   - azure
