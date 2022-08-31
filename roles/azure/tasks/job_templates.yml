@@ -3,7 +3,7 @@
   awx.awx.job_template:
     name: Demo Job Template
     state: absent
-  when: (delete_demo_project is defined) and (delete_demo_project|bool)
+  when: (delete_demo_project is defined) and (delete_demo_project | bool)
   tags:
     - templates
 
