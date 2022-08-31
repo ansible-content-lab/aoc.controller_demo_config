@@ -23,14 +23,15 @@ Click on the role name to be directed to the README specifically for that role.
 
 #### Running Configure AAP Azure
 
-Run the `lab.ansible_controller_config.configure_aap_azure.yml` playbook with `ansible_navigator` from the root directory of this repository.  The role expects that there is an ssh key called `id_rsa_azure_demo` that exists in your `~/.ssh` directory.  The following command maps that folder into the EE container for access to that key and its public key. 
+Run the `lab.ansible_controller_config.configure_aap_azure.yml` playbook with `ansible_navigator` from the root directory of this repository.  
+
+The example below sets environment variables and extra vars in different ways to demonstrate how you can pass such variables.  Take not that in the case of the file lookup examples, those files will need to reside from within the Execution Environment container.  Because of that, the `.ssh` folder is mapped from localhost into the EE. 
 
 ```bash
 ansible-navigator run playbooks/configure_aap_azure.yml \
 --pae false \
 --mode stdout \
 --ee true \
---ce docker \
 --eei quay.io/scottharwell/cloud-ee:latest \
 --senv "CONTROLLER_HOST=controller.112233445566.ansiblecloud.redhat.com" \
 --penv CONTROLLER_USERNAME \
