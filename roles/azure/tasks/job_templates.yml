@@ -4,6 +4,8 @@
     name: Demo Job Template
     state: absent
   when: (delete_demo_project is defined) and (delete_demo_project|bool)
+  tags:
+    - templates
 
 - name: Azure - Create Resource Group
   awx.awx.job_template:
@@ -16,6 +18,8 @@
       region: "{{ azure_region }}"
     credentials:
       - Azure Service Principal
+  tags:
+    - templates
 
 - name: Azure - Create RHEL VM
   awx.awx.job_template:
@@ -26,18 +30,20 @@
     extra_vars:
       resource_group_name: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
-      vm_name: "create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}"
+      vm_name: "{% raw %}create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       nic_name: create-rhel-test-nic
       network_sec_group_name: create-rhel-test-sg
       public_ip_name: create-rhel-test-public-ip
       vnet_name: spoke-1-vnet
       subnet_name: spoke-1-subnet
       create_public_ip: true
-      ssh_public_key:  "{{ ssh_public_key | default('') }}" # Copy value into this field
-      admin_password: "{{ admin_password | default('') }}" # Set a password value
+      ssh_public_key:  "{{ job_templates.ssh_public_key }}"
+      admin_password: "{{ job_templates.admin_password }}"
     ask_variables_on_launch: true
     credentials:
       - Azure Service Principal
+  tags:
+    - templates
 
 - name: Azure - Delete RHEL VM
   awx.awx.job_template:
@@ -49,6 +55,8 @@
       resource_group_name: "{{ azure_resource_group }}"
     credentials:
       - Azure Service Principal
+  tags:
+    - templates
 
 - name: Azure - Create Windows Server VM
   awx.awx.job_template:
@@ -59,17 +67,19 @@
     extra_vars:
       resource_group_name: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
-      vm_name: "create-win-test-{{ lookup('community.general.random_string', length=4, special=false) }}"
+      vm_name: "{% raw %}create-win-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       nic_name: create-win-test-nic
       network_sec_group_name: create-win-test-sg
       public_ip_name: create-win-test-public-ip
       vnet_name: spoke-1-vnet
       subnet_name: spoke-1-subnet
       create_public_ip: true
-      admin_password: "{{ admin_password | default('') }}" # Set a password value
+      admin_password: "{{ job_templates.admin_password }}"
     ask_variables_on_launch: true
     credentials:
       - Azure Service Principal
+  tags:
+    - templates
 
 - name: Azure - Delete Windows VM
   awx.awx.job_template:
@@ -81,6 +91,8 @@
       resource_group_name: "{{ azure_resource_group }}"
     credentials:
       - Azure Service Principal
+  tags:
+    - templates
 
 - name: Azure - Destroy Resource Group
   awx.awx.job_template:
@@ -93,6 +105,8 @@
       region: "{{ azure_region }}"
     credentials:
       - Azure Service Principal
+  tags:
+    - templates
 
 - name: Azure - Create Network Peering Demo
   awx.awx.job_template:
@@ -110,6 +124,8 @@
     ask_variables_on_launch: true
     credentials:
       - Azure Service Principal
+  tags:
+    - templates
 
 - name: Azure - Destroy Network Peering Demo
   awx.awx.job_template:
@@ -123,6 +139,8 @@
     ask_variables_on_launch: true
     credentials:
       - Azure Service Principal
+  tags:
+    - templates
 
 - name: Azure - Run DNF Update
   awx.awx.job_template:
@@ -137,6 +155,83 @@
     become_enabled: true
     job_slice_count: 1
     state: present
+  tags:
+    - templates
+
+- name: Azure - Install Arc Agent
+  awx.awx.job_template:
+    name: lab.azure_roles.arc_install_agent
+    inventory: Azure
+    playbook: playbooks/install_arc_agent.yml
+    project: Ansible Cloud Content Lab - Azure Roles
+    extra_vars: 
+      resource_group_name: "{{ azure_resource_group }}"
+      region: "{{ azure_region }}"
+      tenant_id: "{% raw %}{{ lookup('env', 'AZURE_TENANT') }}{% endraw %}"
+      subscription_id: "{% raw %}{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}{% endraw %}"
+      service_principal_id: "{% raw %}{{ lookup('env', 'AZURE_CLIENT_ID') }}{% endraw %}"
+      service_principal_secret: "{% raw %}{{ lookup('env', 'AZURE_SECRET') }}{% endraw %}"
+    credentials:
+      - Azure VM SSH Credential
+  tags:
+    - templates
+
+- name: Azure - Enable Arc Extensions
+  awx.awx.job_template:
+    name: lab.azure_roles.arc_enable_extensions
+    inventory: Azure
+    playbook: playbooks/enable_arc_extensions.yml
+    project: Ansible Cloud Content Lab - Azure Roles
+    extra_vars: 
+      resource_group_name: "{{ azure_resource_group }}"
+      region: "{{ azure_region }}"
+      hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'linux') | map(attribute='inventory_hostname') | list }}{% endraw %}"
+    credentials:
+      - Azure Service Principal
+  tags:
+    - templates
+
+- name: Azure - Disable Arc Extensions
+  awx.awx.job_template:
+    name: lab.azure_roles.arc_disable_extensions
+    inventory: Azure
+    playbook: playbooks/disable_arc_extensions.yml
+    project: Ansible Cloud Content Lab - Azure Roles
+    extra_vars: 
+      resource_group_name: "{{ azure_resource_group }}"
+      region: "{{ azure_region }}"
+      extensions:
+        - AzureMonitorLinuxAgent
+        - AADSSHLoginForLinux
+    credentials:
+      - Azure Service Principal
+  tags:
+    - templates
+
+- name: Azure - Replace Log Analytics with Azure Monitor
+  awx.awx.job_template:
+    name: lab.azure_roles.arc_replace_log_analytics_with_azure_monitor
+    inventory: Azure
+    playbook: playbooks/replace_log_analytics_with_arc_linux.yml
+    project: Ansible Cloud Content Lab - Azure Roles
+    extra_vars: 
+      resource_group_name: "{{ azure_resource_group }}"
+      linux_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'linux') | map(attribute='inventory_hostname') | list }}{% endraw %}"
+    credentials:
+      - Azure Service Principal
+  tags:
+    - templates
+
+- name: Azure - Uninstall Log Analytics Agent
+  awx.awx.job_template:
+    name: lab.azure_roles.log_analytics_uninstall_agent
+    inventory: Azure
+    playbook: playbooks/uninstall_log_analytics_agent.yml
+    project: Ansible Cloud Content Lab - Azure Roles
+    credentials:
+      - Azure VM SSH Credential
+  tags:
+    - templates
 
 - name: Run Ephemeral Workload Test
   awx.awx.job_template:
@@ -152,3 +247,5 @@
     become_enabled: true
     job_slice_count: 1
     state: present
+  tags:
+    - templates

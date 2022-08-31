@@ -7,12 +7,16 @@
     state: present
     variables:
       ansible_python_interpreter: /usr/bin/python3
+  tags:
+    - inventories
 
 - name: Add localhost host to inventory
   awx.awx.host:
     name: localhost
     inventory: localhost
     state: present
+  tags:
+    - inventories
 
 - name: Create Azure Inventory
   awx.awx.inventory:
@@ -20,6 +24,8 @@
     description: Azure Inventory
     organization: "{{ awx_organization }}"
     state: present
+  tags:
+    - inventories
 
 - name: Add Azure inventory source
   awx.awx.inventory_source:
@@ -35,3 +41,5 @@
     source_project: Ansible Cloud Content Lab - Azure Roles
     source_path: inventory/inventory.azure_rm.yml
     verbosity: 0
+  tags:
+    - inventories

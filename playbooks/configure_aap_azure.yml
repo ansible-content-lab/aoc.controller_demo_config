@@ -6,7 +6,20 @@
   collections:
     - awx.awx
   tasks:
-  
+    - name: Fail if variables not defined
+      ansible.builtin.assert:
+        that:
+          - "{{ lookup('env', 'CONTROLLER_HOST') | length > 0 }}"
+          - "{{ lookup('env', 'CONTROLLER_USERNAME') | length > 0 }}"
+          - "{{ lookup('env', 'CONTROLLER_PASSWORD') | length > 0 }}"
+          - "{{ lookup('env', 'AZURE_TENANT') | length > 0 }}"
+          - "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') | length > 0 }}"
+          - "{{ lookup('env', 'AZURE_CLIENT_ID') | length > 0 }}"
+          - "{{ lookup('env', 'AZURE_SECRET') | length > 0 }}"
+          - "{{ lookup('env', 'RED_HAT_ACCOUNT') | length > 0 }}"
+          - "{{ lookup('env', 'RED_HAT_PASSWORD') | length > 0 }}"
+        fail_msg: "Required variables not set"
+
     - name: Configure Demo Site
       ansible.builtin.import_role:
         name: roles/azure

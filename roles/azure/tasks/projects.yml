@@ -4,23 +4,41 @@
     name: Demo Project
     state: absent
   when: (delete_demo_project is defined) and (delete_demo_project|bool)
+  tags:
+    - projects
 
 - name: Add Azure Demo Project
   awx.awx.project:
     name: Ansible - Azure Demo
     description: Azure Demo
     default_environment: Harwell - Cloud EE
-    organization: "{{ awx_organization | default('Default') }}"  # Organization is required in projects
+    organization: "{{ awx_organization  }}"  # Organization is required in projects
     scm_type: git
-    scm_url: "{{ azure_demo_project_url | default('https://github.com/ansible-cloud/azure.git') }}"
+    scm_url: "{{ projects.azure_demo_project_url }}"
     state: present
+  tags:
+    - projects
 
 - name: Add Ansible Cloud Content Lab Azure Project
   awx.awx.project:
     name: Ansible Cloud Content Lab - Azure Roles
     description: Ansible Cloud Content Lab - Azure Roles
     default_environment: Harwell - Cloud EE
-    organization: "{{ awx_organization | default('Default') }}"  # Organization is required in projects
+    organization: "{{ awx_organization  }}"  # Organization is required in projects
     scm_type: git
-    scm_url: "{{ azure_demo_project_url | default('https://github.com/ansible-content-lab/lab.azure_roles.git') }}"
+    scm_url: "{{ projects.azure_lab_roles_url }}"
     state: present
+  tags:
+    - projects
+
+- name: Add Ansible Cloud Content Lab AWS Project
+  awx.awx.project:
+    name: Ansible Cloud Content Lab - AWS Roles
+    description: Ansible Cloud Content Lab - Azure Roles
+    default_environment: Harwell - Cloud EE
+    organization: "{{ awx_organization  }}"  # Organization is required in projects
+    scm_type: git
+    scm_url: "{{ projects.aws_lab_roles_url }}"
+    state: present
+  tags:
+    - projects

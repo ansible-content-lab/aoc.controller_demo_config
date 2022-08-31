@@ -27,4 +27,55 @@
         unified_job_template:
           name: lab.azure_roles.delete_rhel_vm
           type: job_template
-  register: result
+  tags:
+    - workflows
+
+- name: Azure Arc - Replace Log Analytics with Azure Monitor
+  awx.awx.workflow_job_template:
+    name: lab.azure_roles.arc_log_migration
+    description: Migrate hosts from Azure Log Analytics Agent to Azure Monitor Agent with Azure Arc
+    survey_enabled: true
+    survey_spec:
+      name: ""
+      description: ""
+      spec:
+        - question_name: Which Azure region will your Arc servers reside?
+          variable: region
+          required: true
+          type: text
+          default: "{{ azure_region }}"
+        - question_name: What is the name of your resource group?
+          variable: resource_group_name
+          required: true
+          type: text
+        - question_name: What is the name of your Log Analytics Workspace?
+          variable: analytics_workspace_name
+          required: true
+          type: text
+    workflow_nodes:
+      - identifier: Install Arc Agent
+        unified_job_template:
+          name: lab.azure_roles.arc_install_agent
+          type: job_template
+          inventory: Azure
+        related:
+          success_nodes:
+            - identifier: Replace Log Analytics with Azure Monitor
+
+      - identifier: Replace Log Analytics with Azure Monitor
+        unified_job_template:
+          name: lab.azure_roles.arc_replace_log_analytics_with_azure_monitor
+          type: job_template
+          inventory: localhost
+        related:
+          success_nodes:
+            - identifier: Uninstall Log Analytics Agent
+
+      - identifier: Uninstall Log Analytics Agent
+        all_parents_must_converge: false
+        unified_job_template:
+          name: lab.azure_roles.log_analytics_uninstall_agent
+          type: job_template
+          inventory: Azure
+  tags:
+    - workflows
