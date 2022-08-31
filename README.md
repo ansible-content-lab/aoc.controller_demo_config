@@ -11,14 +11,14 @@ This collection contains playbooks and roles that demonstrate using configuratio
 
 Click on the role name to be directed to the README specifically for that role.
 
-| Name                                                                                                                                           | Description                                                                          |
-|------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| Name                                                                                                                                        | Description                                                                          |
+|---------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
 | [lab.ansible_controller_config.azure](https://github.com/ansible-content-lab/lab.ansible_controller_config/blob/main/roles/azure/README.md) | Role that deploys a demo configuration of job templates, projects, inventories, etc. |
 
 ### Playbooks
 
-| Name                                                         | Role(s) Used                               | Description                                               |
-|--------------------------------------------------------------|--------------------------------------------|-----------------------------------------------------------|
+| Name                                                    | Role(s) Used                          | Description                                               |
+|---------------------------------------------------------|---------------------------------------|-----------------------------------------------------------|
 | `lab.ansible_controller_config.configure_aap_azure.yml` | `lab.ansible_controller_config.azure` | A playbook that runs the AAP on Azure configuration role. |
 
 #### Running Configure AAP Azure
@@ -29,18 +29,21 @@ Run the `lab.ansible_controller_config.configure_aap_azure.yml` playbook with `a
 ansible-navigator run playbooks/configure_aap_azure.yml \
 --pae false \
 --mode stdout \
+--ee true \
+--ce docker \
 --eei quay.io/scottharwell/cloud-ee:latest \
---eev $HOME/.ssh:/home/runner/.ssh \
---penv CONTROLLER_HOST \
+--senv "CONTROLLER_HOST=controller.112233445566.ansiblecloud.redhat.com" \
 --penv CONTROLLER_USERNAME \
 --penv CONTROLLER_PASSWORD \
---penv AZURE_TENANT_ID \
+--penv AZURE_TENANT \
 --penv AZURE_SUBSCRIPTION_ID \
 --penv AZURE_CLIENT_ID \
---penv AZURE_CLIENT_SECRET \
+--penv AZURE_SECRET \
 --penv RED_HAT_ACCOUNT \
 --penv RED_HAT_PASSWORD \
---extra-vars "ssh_public_key={{ lookup('file','~/.ssh/id_rsa_azure_demo.pub') }}"
+--eev $HOME/.ssh:/home/runner/.ssh \
+--extra-vars "{'job_templates': {'ssh_public_key': \"{{ lookup('file','~/.ssh/id_rsa_azure_demo.pub') }}\", 'admin_password': 'ansible123456' }}" \
+--extra-vars "{'credentials': { 'ssh_key_data': \"{{ lookup('file','~/.ssh/id_rsa_azure_demo') }}\" }}"
 ```
 
 ## Installation and Usage
