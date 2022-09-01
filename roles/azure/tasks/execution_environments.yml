@@ -15,5 +15,10 @@
     name: Harwell - Cloud EE
     image: quay.io/scottharwell/cloud-ee:latest
     state: present
+  register: harwell_ee
   tags:
     - ees
+
+- name: Set EE as global default
+  ansible.builtin.set_fact:
+    default_execution_environment: "{{ harwell_ee.id | int }}"
