@@ -21,3 +21,19 @@
   when: default_execution_environment is defined
   tags:
     - settings
+
+- name: Set the Azure AD Client ID for SSO
+  awx.awx.settings:
+    settings:
+      SOCIAL_AUTH_AZUREAD_OAUTH2_KEY: "{{ lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_KEY') }}"
+  when: lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_KEY') | length > 0
+  tags:
+    - settings
+
+- name: Set the Azure AD Client Secret for SSO
+  awx.awx.settings:
+    settings:
+      SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET: "{{ lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET') }}"
+  when: lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET') | length > 0
+  tags:
+    - settings
