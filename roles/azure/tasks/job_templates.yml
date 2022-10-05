@@ -153,7 +153,7 @@
     credentials:
       - Azure VM SSH Credential
     become_enabled: true
-    job_slice_count: 1
+    job_slice_count: 5
     state: present
   tags:
     - templates
