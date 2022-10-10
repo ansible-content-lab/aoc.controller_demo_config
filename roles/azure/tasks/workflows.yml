@@ -30,6 +30,28 @@
   tags:
     - workflows
 
+- name: Azure - Install log analytics
+  awx.awx.workflow_job_template:
+    name: lab.azure_roles.install_log_analytics_workflow
+    description: Create a lot analytics workspace and install the log analytics agent on attached VMs.
+    workflow_nodes:
+      - identifier: Create Log Analytics Workspace
+        unified_job_template:
+          name: lab.azure_roles.create_log_analytics_workspace
+          type: job_template
+          inventory: localhost
+        related:
+          success_nodes:
+            - identifier: Install Log Analytics Agent
+
+      - identifier: Install Log Analytics Agent
+        unified_job_template:
+          name: lab.azure_roles.log_analytics_install_agent
+          type: job_template
+          inventory: Azure
+  tags:
+    - workflows
+
 - name: Azure Arc - Replace Log Analytics with Azure Monitor
   awx.awx.workflow_job_template:
     name: lab.azure_roles.arc_log_migration

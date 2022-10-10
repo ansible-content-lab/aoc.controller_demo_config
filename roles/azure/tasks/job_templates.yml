@@ -222,6 +222,39 @@
   tags:
     - templates
 
+- name: Azure - Create Log Analytics Workspace
+  awx.awx.job_template:
+    name: lab.azure_roles.create_log_analytics_workspace
+    inventory: localhost
+    playbook: playbooks/create_log_analytics_workspace.yml
+    project: Ansible Cloud Content Lab - Azure Roles
+    credentials:
+      - Azure VM SSH Credential
+    extra_vars:
+      resource_group_name: "{{ azure_resource_group }}"
+      workspace_name: "{{ job_templates.log_ws_name }}"
+    limit: rhel
+  tags:
+    - templates
+
+- name: Azure - Install Log Analytics Agent
+  awx.awx.job_template:
+    name: lab.azure_roles.log_analytics_install_agent
+    inventory: Azure
+    playbook: playbooks/install_log_analytics_agent.yml
+    project: Ansible Cloud Content Lab - Azure Roles
+    credentials:
+      - Azure VM SSH Credential
+    extra_vars:
+      resource_group_name: "{{ azure_resource_group }}"
+      workspace_name: log-ws
+    become_enabled: true
+    limit: rhel
+    ask_inventory_on_launch: true
+    ask_limit_on_launch: true
+  tags:
+    - templates
+
 - name: Azure - Uninstall Log Analytics Agent
   awx.awx.job_template:
     name: lab.azure_roles.log_analytics_uninstall_agent
@@ -230,6 +263,8 @@
     project: Ansible Cloud Content Lab - Azure Roles
     credentials:
       - Azure VM SSH Credential
+    ask_inventory_on_launch: true
+    ask_limit_on_launch: true
   tags:
     - templates
 

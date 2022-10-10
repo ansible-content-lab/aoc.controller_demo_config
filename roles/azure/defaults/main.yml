@@ -7,6 +7,7 @@ credentials:
 job_templates:
   admin_password: ansible12345!
   ssh_public_key: "{% raw %}{{ lookup('file', '~/.ssh/id_rsa.pub') }}{% endraw %}"
+  log_ws_name: log-ws
 projects:
   azure_demo_project_url: https://github.com/ansible-cloud/azure.git
   azure_lab_roles_url: https://github.com/ansible-content-lab/azure.infrastructure_config_demos.git
