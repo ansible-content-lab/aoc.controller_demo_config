@@ -173,6 +173,11 @@
       service_principal_secret: "{% raw %}{{ lookup('env', 'AZURE_SECRET') }}{% endraw %}"
     credentials:
       - Azure VM SSH Credential
+      - Azure Service Principal
+    limit: rhel
+    become_enabled: true
+    ask_inventory_on_launch: true
+    ask_limit_on_launch: true
   tags:
     - templates
 
@@ -214,7 +219,8 @@
     inventory: Azure
     playbook: playbooks/replace_log_analytics_with_arc_linux.yml
     project: Ansible Cloud Content Lab - Azure Roles
-    extra_vars: 
+    extra_vars:
+      region: "{{ azure_region }}"
       resource_group_name: "{{ azure_resource_group }}"
       linux_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'linux') | map(attribute='inventory_hostname') | list }}{% endraw %}"
     credentials:
@@ -252,6 +258,8 @@
     limit: rhel
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
+  failed_when:
+    - rc.status != 0
   tags:
     - templates
 
@@ -263,6 +271,7 @@
     project: Ansible Cloud Content Lab - Azure Roles
     credentials:
       - Azure VM SSH Credential
+    become_enabled: true
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
   tags:
