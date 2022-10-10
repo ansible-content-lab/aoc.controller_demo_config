@@ -1,35 +1,35 @@
 ---
 - name: Configure Credentials
-  include_tasks: credentials.yml
+  ansible.builtin.include_tasks: credentials.yml
   tags:
     - credentials
 
 - name: Configure Execution Environments
-  include_tasks: execution_environments.yml
+  ansible.builtin.include_tasks: execution_environments.yml
   tags:
     - ees
 
 - name: Configure Projects
-  include_tasks: projects.yml
+  ansible.builtin.include_tasks: projects.yml
   tags:
     - projects
 
 - name: Configure Inventories
-  include_tasks: inventories.yml
+  ansible.builtin.include_tasks: inventories.yml
   tags:
     - inventories
 
 - name: Configure Templates
-  include_tasks: job_templates.yml
+  ansible.builtin.include_tasks: job_templates.yml
   tags:
     - templates
 
 - name: Configure Workflows
-  include_tasks: workflows.yml
+  ansible.builtin.include_tasks: workflows.yml
   tags:
     - workflows
 
 - name: Configure Settings
-  include_tasks: settings.yml
+  ansible.builtin.include_tasks: settings.yml
   tags:
     - settings
