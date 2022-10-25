@@ -1,7 +1,7 @@
 ---
 namespace: aoc
 name: controller_demo_config
-version: 2.0.2
+version: 2.1.0
 authors:
   - Scott Harwell (@scottharwell)
 description: A collection of content for setting up Ansible on Cloud demos rapidly.
