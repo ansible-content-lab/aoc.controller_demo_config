@@ -11,9 +11,9 @@ This collection contains playbooks and roles that demonstrate using configuratio
 
 Click on the role name to be directed to the README specifically for that role.
 
-| Name                                                                                                                                     | Description                                                                          |
-|------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| [lab.ansible_controller_config.azure](https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/roles/azure/README.md) | Role that deploys a demo configuration of job templates, projects, inventories, etc. |
+| Name                                                                                                                                            | Description                                                                          |
+|-------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| [aoc.controller_demo_config.controller](https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/roles/controller/README.md) | Role that deploys a demo configuration of job templates, projects, inventories, etc. |
 
 ### Playbooks
 
