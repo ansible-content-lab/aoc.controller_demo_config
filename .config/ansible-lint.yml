@@ -1,6 +1,7 @@
 ---
 warn_list:
   - no-handler
+  - role-name[path]
 
 skip_list:
   - ignore-errors
