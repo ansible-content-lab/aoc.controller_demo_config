@@ -1,3 +1,4 @@
 ---
 collections:
-  - awx.awx
+  - name: awx.awx
+    version: 21.8.0
