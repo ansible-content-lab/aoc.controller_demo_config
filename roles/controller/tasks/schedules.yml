@@ -1,0 +1,10 @@
+---
+- name: Schedule RHEL Demo Workflow Every Hour
+  awx.awx.schedule:
+    name: RHEL Ephemeral VM Workflow
+    state: present
+    unified_job_template: ansible_on_clouds.setup_and_config.ephemeral_vm_workload
+    rrule: "{{ query('awx.awx.schedule_rrule', 'hour', start_date='2022-01-01 23:30:00', timezone='US/Eastern' ) }}"
+  register: result
+  tags:
+    - schedules

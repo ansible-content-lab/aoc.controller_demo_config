@@ -29,6 +29,11 @@
   tags:
     - workflows
 
+- name: Configure Schedules
+  ansible.builtin.include_tasks: schedules.yml
+  tags:
+    - schedules
+
 - name: Configure Settings
   ansible.builtin.include_tasks: settings.yml
   tags:

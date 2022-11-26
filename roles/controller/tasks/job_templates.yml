@@ -258,8 +258,6 @@
     limit: rhel
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
-  failed_when:
-    - rc.status != 0
   tags:
     - templates
 
