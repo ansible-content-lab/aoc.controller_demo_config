@@ -43,7 +43,8 @@ ansible-navigator run playbooks/configure_aap.yml \
 --penv RED_HAT_ACCOUNT \
 --penv RED_HAT_PASSWORD \
 --eev $HOME/.ssh:/home/runner/.ssh \
---extra-vars "{'job_templates': {'ssh_public_key': \"{{ lookup('file','~/.ssh/id_rsa_azure_demo.pub') }}\", 'admin_password': 'ansible123456' }}" \
+--extra-vars "{'job_templates': {'ssh_public_key': \"{{ lookup('file','~/.ssh/id_rsa_azure_demo.pub') }}\", 'admin_password': 'ansible123456', 'log_ws_na
+me': 'log-ws' }}" \
 --extra-vars "{'credentials': { 'ssh_key_data': \"{{ lookup('file','~/.ssh/id_rsa_azure_demo') }}\" }}"
 ```
 
