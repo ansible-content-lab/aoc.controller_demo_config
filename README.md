@@ -78,7 +78,9 @@ This collection is not available on Ansible Galaxy, so you will need to have it 
 
 ## License
 
-GPLv3
+GNU General Public License v3.0 or later
+
+See [LICENSE](https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/LICENSE) to see the full text.
 
 ## Author
 
