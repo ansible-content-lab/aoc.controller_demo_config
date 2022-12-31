@@ -22,4 +22,4 @@
 
     - name: Configure Demo Site
       ansible.builtin.import_role:
-        name: roles/controller
+        name: controller
