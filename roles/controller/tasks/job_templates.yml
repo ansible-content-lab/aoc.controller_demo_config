@@ -11,7 +11,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.create_resource_group
     inventory: localhost
-    playbook: playbooks/create_resource_group.yml
+    playbook: create_resource_group.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       resource_group_name: "{{ azure_resource_group }}"
@@ -25,7 +25,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.create_rhel_vm
     inventory: localhost
-    playbook: playbooks/create_rhel_vm.yml
+    playbook: create_rhel_vm.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       resource_group_name: "{{ azure_resource_group }}"
@@ -49,7 +49,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.delete_rhel_vm
     inventory: localhost
-    playbook: playbooks/delete_rhel_vm.yml
+    playbook: delete_rhel_vm.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       resource_group_name: "{{ azure_resource_group }}"
@@ -62,7 +62,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.create_windows_vm
     inventory: localhost
-    playbook: playbooks/create_windows_vm.yml
+    playbook: create_windows_vm.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       resource_group_name: "{{ azure_resource_group }}"
@@ -85,7 +85,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.delete_windows_vm
     inventory: localhost
-    playbook: playbooks/delete_windows_vm.yml
+    playbook: delete_windows_vm.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       resource_group_name: "{{ azure_resource_group }}"
@@ -98,7 +98,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.delete_resource_group
     inventory: localhost
-    playbook: playbooks/delete_resource_group.yml
+    playbook: delete_resource_group.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       resource_group_name: "{{ azure_resource_group }}"
@@ -112,7 +112,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.create_transit_network
     inventory: localhost
-    playbook: playbooks/create_transit_network.yml
+    playbook: create_transit_network.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       resource_group_name: "{{ azure_resource_group }}"
@@ -131,7 +131,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.delete_transit_network
     project: Ansible Cloud Content Lab - Azure Roles
-    playbook: playbooks/delete_transit_network.yml
+    playbook: delete_transit_network.yml
     inventory: localhost
     extra_vars:
       resource_group_name: "{{ azure_resource_group }}"
@@ -147,7 +147,7 @@
     name: lab.azure_roles.update_rhel_vms
     job_type: run
     project: Ansible Cloud Content Lab - Azure Roles
-    playbook: playbooks/update_rhel_vms.yml
+    playbook: update_rhel_vms.yml
     inventory: Azure
     limit: rhel
     credentials:
@@ -162,7 +162,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.arc_install_agent
     inventory: Azure
-    playbook: playbooks/install_arc_agent.yml
+    playbook: install_arc_agent.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars: 
       resource_group_name: "{{ azure_resource_group }}"
@@ -185,7 +185,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.arc_enable_extensions
     inventory: Azure
-    playbook: playbooks/enable_arc_extensions.yml
+    playbook: enable_arc_extensions.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars: 
       resource_group_name: "{{ azure_resource_group }}"
@@ -200,7 +200,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.arc_disable_extensions
     inventory: Azure
-    playbook: playbooks/disable_arc_extensions.yml
+    playbook: disable_arc_extensions.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars: 
       resource_group_name: "{{ azure_resource_group }}"
@@ -217,7 +217,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.arc_replace_log_analytics_with_azure_monitor
     inventory: Azure
-    playbook: playbooks/replace_log_analytics_with_arc_linux.yml
+    playbook: replace_log_analytics_with_arc_linux.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       region: "{{ azure_region }}"
@@ -232,7 +232,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.create_log_analytics_workspace
     inventory: localhost
-    playbook: playbooks/create_log_analytics_workspace.yml
+    playbook: create_log_analytics_workspace.yml
     project: Ansible Cloud Content Lab - Azure Roles
     credentials:
       - Azure VM SSH Credential
@@ -247,7 +247,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.log_analytics_install_agent
     inventory: Azure
-    playbook: playbooks/install_log_analytics_agent.yml
+    playbook: install_log_analytics_agent.yml
     project: Ansible Cloud Content Lab - Azure Roles
     credentials:
       - Azure VM SSH Credential
@@ -265,7 +265,7 @@
   awx.awx.job_template:
     name: lab.azure_roles.log_analytics_uninstall_agent
     inventory: Azure
-    playbook: playbooks/uninstall_log_analytics_agent.yml
+    playbook: uninstall_log_analytics_agent.yml
     project: Ansible Cloud Content Lab - Azure Roles
     credentials:
       - Azure VM SSH Credential
