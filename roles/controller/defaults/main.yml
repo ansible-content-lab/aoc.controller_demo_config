@@ -3,10 +3,10 @@ awx_organization: Default
 azure_region: eastus
 azure_resource_group: ansible_test
 credentials:
-  ssh_key_data: "{{ lookup('file', '~/.ssh/id_rsa') }}"
+  ssh_key_data: "{{ lookup('file', '~/.ssh/id_rsa_azure_demo') }}"
 job_templates:
   admin_password: ansible12345!
-  ssh_public_key: "{% raw %}{{ lookup('file', '~/.ssh/id_rsa.pub') }}{% endraw %}"
+  ssh_public_key: "{% raw %}{{ lookup('file', '~/.ssh/id_rsa_azure_demo.pub') }}{% endraw %}"
   log_ws_name: log-ws
 projects:
   azure_demo_project_url: https://github.com/ansible-cloud/azure.git

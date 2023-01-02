@@ -14,7 +14,7 @@ This role configures the following components in Ansible Automation Controller t
 ### Credentials
 
 | Name                            | Description                                                                                                |
-|---------------------------------|------------------------------------------------------------------------------------------------------------|
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `Red Hat Registry`              | A credential to `console.redhat.com` that will allow retrieval of certified execution environments.        |
 | `Azure Service Principal`       | Credential used by the Azure collection for Ansible to communicate with Microsoft Azure.                   |
 | `Azure VM SSH Credential`       | An SSH credential used to connect to and configure VMs on Azure.                                           |
@@ -23,14 +23,14 @@ This role configures the following components in Ansible Automation Controller t
 ### Execution Environments
 
 | Name                                   | Description                                                                                            |
-|----------------------------------------|--------------------------------------------------------------------------------------------------------|
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `Cloud Services Execution Environment` | Latest version of the `ee-cloud-services-rhel8` execution environment published with Ansible on Azure. |
-| `Harwell - Cloud EE`                   | Custom EE with cloud  content collections installed                                                    |
+| `Harwell - Cloud EE`                   | Custom EE with cloud content collections installed                                                     |
 
 ### Inventories
 
 | Name        | Description                                                                                                                                 |
-|-------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `localhost` | An inventory with `localhost` that can be used for collections that do not need to connect to remote hosts (i.e. cloud vendor collections). |
 | `Azure`     | A dynamic inventory sourced from the `Azure Service Principal` credential.                                                                  |
 
@@ -39,7 +39,7 @@ This role configures the following components in Ansible Automation Controller t
 Most of the job templates are configured to pull another Cloud Content Lab project, [Azure Infrastructure Config Demos](https://github.com/ansible-content-lab/azure.infrastructure_config_demos).
 
 | Name                                     | Description                                                                                                                                                                                                   |
-|------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `lab.azure_roles.create_resource_group`  | Simple playbook that creates a resource group.                                                                                                                                                                |
 | `lab.azure_roles.delete_resource_group`  | Deletes a resource group and all resources within that group.                                                                                                                                                 |
 | `lab.azure_roles.create_rhel_vm`         | Creates a RHEL-based VM and all of the Azure resources required to deploy the VM.                                                                                                                             |
@@ -54,20 +54,18 @@ Most of the job templates are configured to pull another Cloud Content Lab proje
 ### Projects
 
 | Name                                      | Description                                                                       |
-|-------------------------------------------|-----------------------------------------------------------------------------------|
+| ----------------------------------------- | --------------------------------------------------------------------------------- |
 | `Ansible - Azure Demo`                    | A project with playbooks used to demonstrate basic Azure operations.              |
 | `Ansible Cloud Content Lab - Azure Roles` | A project that configures the examples in the Azure Cloud Content Lab collection. |
 | `Ansible Cloud Content Lab - AWS Roles`   | A project that configures the examples in the AWS Cloud Content Lab collection.   |
 
-
 ### Workflows
 
 | Name                                                       | Description                                                                                                                                                                                                                                   |
-|------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ansible_on_clouds.setup_and_config.ephemeral_vm_workload` | A workflow that uses multiple job templates that create a VM and its dependencies, then runs a command on the VM, and then deletes the VM when done.  This simulates an ephemeral VM workload that may happen nightly in spot instances.      |
 | `lab.azure_roles.install_log_analytics_workflow`           | A workflow that installs the Azure Log Analytics agent onto VMs and creates a log analytics workspace to store those logs. This workflow is used to prepare VMs for the following role in most cases since the Azure Log Agent is deprecated. |
 | `lab.azure_roles.arc_log_migration`                        | A workflow that converts VMs from using the Azure Log Agent to Azure Monitoring Agent via Azure Arc.                                                                                                                                          |
-
 
 ## Requirements
 
@@ -80,9 +78,8 @@ This role will work with any Ansible Automation Platform 2.1+ version of Ansible
 There are many variables that can be set, with the required variables defined in `defaults/main.yml`.  Below is an example of what is in the file.  Of all the variables set by default, there is one that **must** be set in your extra vars:
 
 | Key              | Description                                                                          |
-|------------------|--------------------------------------------------------------------------------------|
+| ---------------- | ------------------------------------------------------------------------------------ |
 | `ssh_public_key` | The public key used to connect to and manage Linux VMs created in certain playbooks. |
-
 
 ```yaml
 ---
@@ -101,7 +98,7 @@ windows_admin_password: ansible12345!
 Set the environment variables on your local machine that are required for credentials that will be added to Ansible Controller:
 
 | Variable Name           | Description                                                                  |
-|-------------------------|------------------------------------------------------------------------------|
+| ----------------------- | ---------------------------------------------------------------------------- |
 | `CONTROLLER_HOST`       | The hostname of AAP controller to automate against                           |
 | `CONTROLLER_USERNAME`   | Used to authenticate against the Ansible Controller API                      |
 | `CONTROLLER_PASSWORD`   | Used to authenticate against the Ansible Controller API                      |
@@ -126,7 +123,7 @@ export CONTROLLER_HOST="" CONTROLLER_USERNAME="username" CONTROLLER_PASSWORD="pa
 
 ### Testing
 
-#### Requirements 
+#### Requirements
 
 The molecule testing configuration is not well defined in this role yet.  In order to test locally, ensure that you have the following installed locally:
 

@@ -28,7 +28,7 @@ Run the `aoc.playbook_configure_aap.yml` playbook with `ansible_navigator` from 
 The example below sets environment variables and extra vars in different ways to demonstrate how you can pass such variables.  Take not that in the case of the file lookup examples, those files will need to reside from within the Execution Environment container.  Because of that, the `.ssh` folder is mapped from localhost into the EE.
 
 ```bash
-ansible-navigator run playbooks/configure_aap.yml \
+ansible-navigator run playbook_configure_aap.yml \
 --pae false \
 --mode stdout \
 --ee true \
@@ -44,7 +44,6 @@ ansible-navigator run playbooks/configure_aap.yml \
 --penv RED_HAT_PASSWORD \
 --eev $HOME/.ssh:/home/runner/.ssh \
 --extra-vars "{'job_templates': {'ssh_public_key': \"{{ lookup('file','~/.ssh/id_rsa_azure_demo.pub') }}\", 'admin_password': 'ansible123456', 'log_ws_name': 'log-ws' }}" \
---extra-vars "{'credentials': { 'ssh_key_data': \"{{ lookup('file','~/.ssh/id_rsa_azure_demo') }}\" }}"
 ```
 
 ## Installation and Usage
