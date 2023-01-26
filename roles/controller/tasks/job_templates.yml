@@ -14,7 +14,7 @@
     playbook: playbook_create_resource_group.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
     credentials:
       - Azure Service Principal
@@ -28,7 +28,7 @@
     playbook: playbook_create_rhel_vm.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
       vm_name: "{% raw %}create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       nic_name: create-rhel-test-nic
@@ -52,7 +52,7 @@
     playbook: playbook_delete_rhel_vm.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
     credentials:
       - Azure Service Principal
   tags:
@@ -65,7 +65,7 @@
     playbook: playbook_create_windows_vm.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
       vm_name: "{% raw %}create-win-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       nic_name: create-win-test-nic
@@ -88,7 +88,7 @@
     playbook: playbook_delete_windows_vm.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
     credentials:
       - Azure Service Principal
   tags:
@@ -101,7 +101,7 @@
     playbook: playbook_delete_resource_group.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
     credentials:
       - Azure Service Principal
@@ -115,7 +115,7 @@
     playbook: playbook_create_transit_network.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
       priv_network_hosts_pattern: 172.16.*
       priv_network_ssh_user: azureuser
@@ -134,7 +134,7 @@
     playbook: playbook_delete_transit_network.yml
     inventory: localhost
     extra_vars:
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
     ask_variables_on_launch: true
     credentials:
@@ -165,7 +165,7 @@
     playbook: playbook_install_arc_agent.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars: 
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
       tenant_id: "{% raw %}{{ lookup('env', 'AZURE_TENANT') }}{% endraw %}"
       subscription_id: "{% raw %}{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}{% endraw %}"
@@ -185,12 +185,12 @@
   awx.awx.job_template:
     name: lab.azure_roles.arc_enable_extensions
     inventory: Azure
-    playbook: playbook_enable_arc_extensions.yml
+    playbook: playbook_enable_arc_extension.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars: 
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
-      hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'linux') | map(attribute='inventory_hostname') | list }}{% endraw %}"
+      arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'rhel') | map(attribute='inventory_hostname') | list }}{% endraw %}"
     credentials:
       - Azure Service Principal
   tags:
@@ -200,14 +200,12 @@
   awx.awx.job_template:
     name: lab.azure_roles.arc_disable_extensions
     inventory: Azure
-    playbook: playbook_disable_arc_extensions.yml
+    playbook: playbook_disable_arc_extension.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars: 
       resource_group_name: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
-      extensions:
-        - AzureMonitorLinuxAgent
-        - AADSSHLoginForLinux
+      extension: OmsAgentForLinux
     credentials:
       - Azure Service Principal
   tags:
@@ -221,8 +219,8 @@
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       region: "{{ azure_region }}"
-      resource_group_name: "{{ azure_resource_group }}"
-      linux_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'linux') | map(attribute='inventory_hostname') | list }}{% endraw %}"
+      resource_group: "{{ azure_resource_group }}"
+      linux_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'rhel') | map(attribute='inventory_hostname') | list }}{% endraw %}"
     credentials:
       - Azure Service Principal
   tags:
@@ -237,7 +235,7 @@
     credentials:
       - Azure VM SSH Credential
     extra_vars:
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
       workspace_name: "{{ job_templates.log_ws_name }}"
     limit: rhel
   tags:
@@ -252,7 +250,7 @@
     credentials:
       - Azure VM SSH Credential
     extra_vars:
-      resource_group_name: "{{ azure_resource_group }}"
+      resource_group: "{{ azure_resource_group }}"
       workspace_name: log-ws
     become_enabled: true
     limit: rhel
