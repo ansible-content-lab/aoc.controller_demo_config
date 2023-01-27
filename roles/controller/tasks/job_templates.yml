@@ -190,7 +190,8 @@
     extra_vars: 
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
-      arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'rhel') | map(attribute='inventory_hostname') | list }}{% endraw %}"
+      arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
+      extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
       - Azure Service Principal
   tags:
@@ -205,7 +206,7 @@
     extra_vars: 
       resource_group_name: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
-      extension: OmsAgentForLinux
+      extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
       - Azure Service Principal
   tags:
@@ -220,7 +221,7 @@
     extra_vars:
       region: "{{ azure_region }}"
       resource_group: "{{ azure_resource_group }}"
-      linux_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'rhel') | map(attribute='inventory_hostname') | list }}{% endraw %}"
+      linux_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
     credentials:
       - Azure Service Principal
   tags:
