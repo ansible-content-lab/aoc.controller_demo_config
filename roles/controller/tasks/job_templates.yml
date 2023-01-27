@@ -194,6 +194,7 @@
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
       - Azure Service Principal
+    ask_variables_on_launch: true
   tags:
     - templates
 
@@ -206,9 +207,11 @@
     extra_vars: 
       resource_group_name: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
+      arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
       - Azure Service Principal
+    ask_variables_on_launch: true
   tags:
     - templates
 
