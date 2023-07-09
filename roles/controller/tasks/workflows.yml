@@ -1,6 +1,6 @@
 ---
 - name: Create a workflow to create a RHEL VM, run an automation against the VM, and then destroy the VM
-  awx.awx.workflow_job_template:
+  ansible.controller.workflow_job_template:
     name: ansible_on_clouds.setup_and_config.ephemeral_vm_workload
     inventory: localhost
     workflow_nodes:
@@ -31,7 +31,7 @@
     - workflows
 
 - name: Azure - Install log analytics
-  awx.awx.workflow_job_template:
+  ansible.controller.workflow_job_template:
     name: lab.azure_roles.install_log_analytics_workflow
     description: Create a lot analytics workspace and install the log analytics agent on attached VMs.
     workflow_nodes:
@@ -53,7 +53,7 @@
     - workflows
 
 - name: Azure Arc - Replace Log Analytics with Azure Monitor
-  awx.awx.workflow_job_template:
+  ansible.controller.workflow_job_template:
     name: lab.azure_roles.arc_log_migration
     description: Migrate hosts from Azure Log Analytics Agent to Azure Monitor Agent with Azure Arc
     survey_enabled: true

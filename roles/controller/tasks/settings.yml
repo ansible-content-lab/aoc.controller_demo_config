@@ -1,13 +1,13 @@
 ---
 - name: Ensure that TOWER_URL_BASE is correctly set
-  awx.awx.settings:
+  ansible.controller.settings:
     settings:
       TOWER_URL_BASE: "https://{{ lookup('env', 'CONTROLLER_HOST') }}"
   tags:
     - settings
 
 - name: Update the default session length
-  awx.awx.settings:
+  ansible.controller.settings:
     settings:
       SESSION_COOKIE_AGE: "{{ session_cookie_age }}"
   when: session_cookie_age is defined and ((session_cookie_age | int) > 0)
@@ -15,7 +15,7 @@
     - settings
 
 - name: Set the global default execution environment
-  awx.awx.settings:
+  ansible.controller.settings:
     settings:
       DEFAULT_EXECUTION_ENVIRONMENT: "{{ default_execution_environment }}"
   when: default_execution_environment is defined
@@ -23,7 +23,7 @@
     - settings
 
 - name: Set the Azure AD Client ID for SSO
-  awx.awx.settings:
+  ansible.controller.settings:
     settings:
       SOCIAL_AUTH_AZUREAD_OAUTH2_KEY: "{{ lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_KEY') }}"
   when: lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_KEY') | length > 0
@@ -31,7 +31,7 @@
     - settings
 
 - name: Set the Azure AD Client Secret for SSO
-  awx.awx.settings:
+  ansible.controller.settings:
     settings:
       SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET: "{{ lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET') }}"
   when: lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET') | length > 0

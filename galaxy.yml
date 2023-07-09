@@ -1,9 +1,9 @@
 ---
 namespace: aoc
 name: controller_demo_config
-version: 2.1.0
+version: 3.0.0
 authors:
-  - Scott Harwell (@scottharwell)
+  - Scott Harwell <sharwell@redhat.com>
 description: A collection of content for setting up Ansible on Cloud demos rapidly.
 documentation: ''
 homepage: https://github.com/ansible-content-lab/aoc.controller_demo_config
@@ -16,7 +16,8 @@ tags:
   - azure
   - infrastructure
 dependencies:
-  awx.awx: '>=21.2.0'
+  awx.awx: '>=22.4.0'
+  ansible.controller: '>=4.4.0'
 build_ignore:
   - '.tox'
   - '.git'

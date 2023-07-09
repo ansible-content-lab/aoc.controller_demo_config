@@ -97,17 +97,17 @@ windows_admin_password: ansible12345!
 
 Set the environment variables on your local machine that are required for credentials that will be added to Ansible Controller:
 
-| Variable Name           | Description                                                                  |
-| ----------------------- | ---------------------------------------------------------------------------- |
-| `CONTROLLER_HOST`       | The hostname of AAP controller to automate against                           |
-| `CONTROLLER_USERNAME`   | Used to authenticate against the Ansible Controller API                      |
-| `CONTROLLER_PASSWORD`   | Used to authenticate against the Ansible Controller API                      |
-| `AZURE_TENANT_ID`       | Used to configure the Azure subscription credential in Automation Controller |
-| `AZURE_SUBSCRIPTION_ID` | Used to configure the Azure subscription credential in Automation Controller |
-| `AZURE_CLIENT_ID`       | Used to configure the Azure subscription credential in Automation Controller |
-| `AZURE_CLIENT_SECRET`   | Used to configure the Azure subscription credential in Automation Controller |
-| `RED_HAT_ACCOUNT`       | Used to configure the Azure subscription credential in Automation Controller |
-| `RED_HAT_PASSWORD`      | Used to configure the Azure subscription credential in Automation Controller |
+| Variable Name           | Description                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| `CONTROLLER_HOST`       | The hostname of AAP controller to automate against                             |
+| `CONTROLLER_USERNAME`   | Used to authenticate against the Ansible Controller API                        |
+| `CONTROLLER_PASSWORD`   | Used to authenticate against the Ansible Controller API                        |
+| `AZURE_TENANT_ID`       | Used to configure the Azure subscription credential in Automation Controller   |
+| `AZURE_SUBSCRIPTION_ID` | Used to configure the Azure subscription credential in Automation Controller   |
+| `AZURE_CLIENT_ID`       | Used to configure the Azure subscription credential in Automation Controller   |
+| `AZURE_CLIENT_SECRET`   | Used to configure the Azure subscription credential in Automation Controller   |
+| `RED_HAT_ACCOUNT`       | Used to configure the Red Hat subscription credential in Automation Controller |
+| `RED_HAT_PASSWORD`      | Used to configure the Red Hat subscription credential in Automation Controller |
 
 You can set the variables in your shell with a one-liner:
 
@@ -118,6 +118,7 @@ export CONTROLLER_HOST="" CONTROLLER_USERNAME="username" CONTROLLER_PASSWORD="pa
 ## Dependencies
 
 - `awx.awx`
+- `ansible.controller`
 
 ## Examples
 

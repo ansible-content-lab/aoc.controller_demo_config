@@ -1,6 +1,6 @@
 ---
 - name: Delete Demo Template
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: Demo Job Template
     state: absent
   when: (delete_demo_project is defined) and (delete_demo_project | bool)
@@ -8,7 +8,7 @@
     - templates
 
 - name: Azure - Create Resource Group
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.create_resource_group
     inventory: localhost
     playbook: playbook_create_resource_group.yml
@@ -22,7 +22,7 @@
     - templates
 
 - name: Azure - Create RHEL VM
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.create_rhel_vm
     inventory: localhost
     playbook: playbook_create_rhel_vm.yml
@@ -46,7 +46,7 @@
     - templates
 
 - name: Azure - Delete RHEL VM
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.delete_rhel_vm
     inventory: localhost
     playbook: playbook_delete_rhel_vm.yml
@@ -59,7 +59,7 @@
     - templates
 
 - name: Azure - Create Windows Server VM
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.create_windows_vm
     inventory: localhost
     playbook: playbook_create_windows_vm.yml
@@ -82,7 +82,7 @@
     - templates
 
 - name: Azure - Delete Windows VM
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.delete_windows_vm
     inventory: localhost
     playbook: playbook_delete_windows_vm.yml
@@ -95,7 +95,7 @@
     - templates
 
 - name: Azure - Destroy Resource Group
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.delete_resource_group
     inventory: localhost
     playbook: playbook_delete_resource_group.yml
@@ -109,7 +109,7 @@
     - templates
 
 - name: Azure - Create Network Peering Demo
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.create_transit_network
     inventory: localhost
     playbook: playbook_create_transit_network.yml
@@ -119,8 +119,8 @@
       region: "{{ azure_region }}"
       priv_network_hosts_pattern: 172.16.*
       priv_network_ssh_user: azureuser
-      ansible_ssh_private_key_file_local_path: ~/.ssh/id_rsa_azure_demo # Must exist locally or be mapped in an EE
-      ansible_ssh_private_key_file_dest_path: ~/.ssh/id_rsa_azure_demo
+      ansible_ssh_private_key_file_local_path: /home/runner/.ssh/id_rsa_azure_demo # Must exist locally or be mapped in an EE
+      ansible_ssh_private_key_file_dest_path: /home/runner/.ssh/id_rsa_azure_demo
     ask_variables_on_launch: true
     credentials:
       - Azure Service Principal
@@ -128,7 +128,7 @@
     - templates
 
 - name: Azure - Destroy Network Peering Demo
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.delete_transit_network
     project: Ansible Cloud Content Lab - Azure Roles
     playbook: playbook_delete_transit_network.yml
@@ -143,7 +143,7 @@
     - templates
 
 - name: Azure - Run DNF Update
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.update_rhel_vms
     job_type: run
     project: Ansible Cloud Content Lab - Azure Roles
@@ -159,7 +159,7 @@
     - templates
 
 - name: Azure - Install Arc Agent
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.arc_install_agent
     inventory: Azure
     playbook: playbook_install_arc_agent.yml
@@ -182,7 +182,7 @@
     - templates
 
 - name: Azure - Enable Arc Extensions
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.arc_enable_extensions
     inventory: Azure
     playbook: playbook_enable_arc_extension.yml
@@ -199,7 +199,7 @@
     - templates
 
 - name: Azure - Disable Arc Extensions
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.arc_disable_extensions
     inventory: Azure
     playbook: playbook_disable_arc_extension.yml
@@ -216,7 +216,7 @@
     - templates
 
 - name: Azure - Replace Log Analytics with Azure Monitor
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.arc_replace_log_analytics_with_azure_monitor
     inventory: Azure
     playbook: playbook_replace_log_analytics_with_arc_linux.yml
@@ -231,7 +231,7 @@
     - templates
 
 - name: Azure - Create Log Analytics Workspace
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.create_log_analytics_workspace
     inventory: localhost
     playbook: playbook_create_log_analytics_workspace.yml
@@ -246,7 +246,7 @@
     - templates
 
 - name: Azure - Install Log Analytics Agent
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.log_analytics_install_agent
     inventory: Azure
     playbook: playbook_install_log_analytics_agent.yml
@@ -264,7 +264,7 @@
     - templates
 
 - name: Azure - Uninstall Log Analytics Agent
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: lab.azure_roles.log_analytics_uninstall_agent
     inventory: Azure
     playbook: playbook_uninstall_log_analytics_agent.yml
@@ -278,7 +278,7 @@
     - templates
 
 - name: Run Ephemeral Workload Test
-  awx.awx.job_template:
+  ansible.controller.job_template:
     name: Azure Demos - Ephemeral Workload Test
     job_type: run
     project: Ansible - Azure Demo

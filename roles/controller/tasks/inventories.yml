@@ -1,6 +1,6 @@
 ---
 - name: Create localhost inventory
-  awx.awx.inventory:
+  ansible.controller.inventory:
     name: localhost
     description: localhost
     organization: "{{ awx_organization }}"
@@ -11,7 +11,7 @@
     - inventories
 
 - name: Add localhost host to inventory
-  awx.awx.host:
+  ansible.controller.host:
     name: localhost
     inventory: localhost
     state: present
@@ -19,7 +19,7 @@
     - inventories
 
 - name: Create Azure Inventory
-  awx.awx.inventory:
+  ansible.controller.inventory:
     name: Azure
     description: Azure Inventory
     organization: "{{ awx_organization }}"
@@ -28,7 +28,7 @@
     - inventories
 
 - name: Add Azure inventory source
-  awx.awx.inventory_source:
+  ansible.controller.inventory_source:
     name: Azure Dynamic Inventory
     description: Creates inventory from Azure sources
     inventory: Azure
