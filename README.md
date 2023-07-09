@@ -1,5 +1,3 @@
-[![validation-checks](https://github.com/ansible-content-lab/aoc.controller_demo_config/actions/workflows/on-push.yml/badge.svg)](https://github.com/ansible-content-lab/lab.ansible_controller_config/actions/workflows/on-push.yml)
-
 # Ansible on Clouds Controller Setup and Configuration
 
 This collection contains playbooks and roles that demonstrate using configuration-as-code to declare the setup and configuration for Ansible Automation Controller.  This approach to Ansible Automation Controller configuration provides an easy-to-read and manage deployment model and keeps your Ansible Automation Controller configuration portable between different AAP deployments.
