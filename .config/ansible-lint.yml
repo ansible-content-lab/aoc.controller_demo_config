@@ -1,8 +1,5 @@
 ---
-warn_list:
-  - jinja[spacing]
-  - no-handler
-  - role-name[path]
+profile: min
 
 skip_list:
   - ignore-errors
