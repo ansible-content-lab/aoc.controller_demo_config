@@ -8,6 +8,7 @@ job_templates:
   admin_password: ansible12345!
   ssh_public_key: "{% raw %}{{ lookup('file', '/home/runner/.ssh/id_rsa_azure_demo.pub') }}{% endraw %}"
   log_ws_name: log-ws
+  vnet_route_table_name: vnet-rt
   vnet_name: vnet-test
   vnet_cidr: 10.0.200.0/23
   subnet_name: subnet-test
