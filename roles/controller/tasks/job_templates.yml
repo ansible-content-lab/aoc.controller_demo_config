@@ -21,16 +21,37 @@
   tags:
     - templates
 
-- name: Azure - Create RHEL VM
+- name: Azure - Create VNET
   ansible.controller.job_template:
-    name: lab.azure_roles.create_rhel_vm
+    name: lab.azure_roles.create_vnet
     inventory: localhost
-    playbook: playbook_create_rhel_vm.yml
+    playbook: playbook_create_vnet.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
+      route_table_name: "{{ job_templates.vnet_route_table_name }}"
+      vnet_name: "{{ job_templates.vnet_name }}"
+      vnet_cidr: "{{ job_templates.vnet_cidr }}"
+      subnet_name: "{{ job_templates.subnet_name }}"
+      subnet_cidr: "{{ job_templates.subnet_cidr }}"
+    credentials:
+      - Azure Service Principal
+  tags:
+    - templates
+
+- name: Azure - Create RHEL VM
+  ansible.controller.job_template:
+    name: lab.azure_roles.create_rhel_vm
+    inventory: localhost
+    playbook: playbook_create_vm.yml
+    project: Ansible Cloud Content Lab - Azure Roles
+    extra_vars:
+      resource_group: "{{ azure_resource_group }}"
+      region: "{{ azure_region }}"
+      os_type: Linux
       vm_name: "{% raw %}create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
+      vm_blueprint: rhel9
       nic_name: create-rhel-test-nic
       network_sec_group_name: create-rhel-test-sg
       public_ip_name: create-rhel-test-public-ip
@@ -38,7 +59,11 @@
       subnet_name: spoke-1-subnet
       create_public_ip: true
       ssh_public_key:  "{{ job_templates.ssh_public_key }}"
+      admin_user: azureuser
       admin_password: "{{ job_templates.admin_password }}"
+      ssh_public_keys:
+        - path: "{% raw %}/home/{{ admin_user }}/.ssh/authorized_keys{% endraw %}"
+          key_data: "{% raw %}{{ lookup('file', '/home/runner/.ssh/id_rsa_azure_demo.pub') }}{% endraw %}" # Can be populated through a custom credential or variable
     ask_variables_on_launch: true
     credentials:
       - Azure Service Principal
@@ -49,10 +74,14 @@
   ansible.controller.job_template:
     name: lab.azure_roles.delete_rhel_vm
     inventory: localhost
-    playbook: playbook_delete_rhel_vm.yml
+    playbook: playbook_delete_vm.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
+      vm_name: rhel9-test
+      nic_name: "{% raw %}{{ vm_name }}-nic{% endraw %}"
+      network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
+      public_ip_name: "{% raw %}{{ vm_name }}-public-ip{% endraw %}"
     credentials:
       - Azure Service Principal
   tags:
@@ -62,11 +91,12 @@
   ansible.controller.job_template:
     name: lab.azure_roles.create_windows_vm
     inventory: localhost
-    playbook: playbook_create_windows_vm.yml
+    playbook: playbook_create_vm.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
+      os_type: Windows
       vm_name: "{% raw %}create-win-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       nic_name: create-win-test-nic
       network_sec_group_name: create-win-test-sg
@@ -74,6 +104,7 @@
       vnet_name: spoke-1-vnet
       subnet_name: spoke-1-subnet
       create_public_ip: true
+      admin_user: azureuser
       admin_password: "{{ job_templates.admin_password }}"
     ask_variables_on_launch: true
     credentials:
@@ -85,10 +116,14 @@
   ansible.controller.job_template:
     name: lab.azure_roles.delete_windows_vm
     inventory: localhost
-    playbook: playbook_delete_windows_vm.yml
+    playbook: playbook_delete_vm.yml
     project: Ansible Cloud Content Lab - Azure Roles
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
+      vm_name:  win2022-test
+      nic_name: "{% raw %}{{ vm_name }}-nic{% endraw %}"
+      network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
+      public_ip_name: "{% raw %}{{ vm_name }}-public-ip{% endraw %}"
     credentials:
       - Azure Service Principal
   tags:

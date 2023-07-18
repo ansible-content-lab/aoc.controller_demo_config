@@ -8,6 +8,10 @@ job_templates:
   admin_password: ansible12345!
   ssh_public_key: "{% raw %}{{ lookup('file', '/home/runner/.ssh/id_rsa_azure_demo.pub') }}{% endraw %}"
   log_ws_name: log-ws
+  vnet_name: vnet-test
+  vnet_cidr: 10.0.200.0/23
+  subnet_name: subnet-test
+  subnet_cidr: 10.0.200.0/24
 projects:
   azure_demo_project_url: https://github.com/ansible-cloud/azure.git
   azure_lab_roles_url: https://github.com/ansible-content-lab/azure.infrastructure_config_demos.git
