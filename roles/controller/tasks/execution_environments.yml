@@ -10,18 +10,19 @@
     state: present
   register: cloud_services_ee
   when:
-    - seed_validated_content
+    - (seed_validated_content | bool)
   tags:
     - ees
 
 - name: Set Cloud Services EE as global default
   ansible.builtin.set_fact:
     default_execution_environment: "{{ cloud_services_ee.id | int }}"
-  when: 
-    - seed_validated_content
+  when:
+    - (seed_validated_content | bool)
     - cloud_services_ee.id is defined
     - execution_environments.cloud_services.set_default is defined
     - execution_environments.cloud_services.set_default
+    - (execution_environments.cloud_services.set_default | bool)
   tags:
     - ees
 
@@ -34,7 +35,7 @@
     pull: always
   register: cloud_ee
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
   tags:
     - ees
 
@@ -42,9 +43,9 @@
   ansible.builtin.set_fact:
     default_execution_environment: "{{ cloud_ee.id | int }}"
   when: 
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - cloud_ee.id is defined
-    - execution_environments.cloud_ee.default is defined
-    - execution_environments.cloud_ee.default
+    - execution_environments.cloud_ee.set_default is defined
+    - (execution_environments.cloud_ee.set_default | bool)
   tags:
     - ees

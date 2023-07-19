@@ -29,7 +29,7 @@
     state: present
   register: azure_inventory
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - inventories.azure.name is defined
   tags:
     - inventories
@@ -49,7 +49,7 @@
     source_path: inventory/inventory.azure_rm.yml
     verbosity: 0
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_inventory is defined
     - inventories.azure.name is defined
     - azure_credential is defined

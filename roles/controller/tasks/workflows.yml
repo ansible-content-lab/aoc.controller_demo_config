@@ -28,7 +28,7 @@
           name: "{{ job_templates.delete_rhel_vm.name }}"
           type: job_template
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - workflows.ephemeral_workload.name is defined
     - job_templates.create_rhel_vm.name is defined
     - job_templates.dnf_update.name is defined
@@ -58,7 +58,7 @@
           type: job_template
           inventory: Azure
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - workflows.install_log_analytics.name is defined
     - job_templates.create_log_analytics_ws.name is defined
     - job_templates.install_log_analytics.name is defined
@@ -115,7 +115,7 @@
           type: job_template
           inventory: Azure
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - workflows.arc_log_migration.name is defined
     - job_templates.install_arc_agent.name is defined
     - job_templates.replace_log_analytics_with_azure_monitor.name is defined

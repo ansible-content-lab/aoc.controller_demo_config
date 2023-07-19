@@ -4,6 +4,7 @@
     name: Demo Project
     state: absent
   when:
+    - (seed_lab_content | bool)
     - delete_demo_project is defined
     - (delete_demo_project | bool)
   tags:
@@ -22,7 +23,7 @@
     update_project: true
     wait: true
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
   register: content_lab_project_demo
   tags:
     - projects
@@ -40,7 +41,7 @@
     update_project: true
     wait: true
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
   register: content_lab_project_azure
   tags:
     - projects
@@ -58,7 +59,7 @@
     update_project: true
     wait: true
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
   register: content_lab_project_aws
   tags:
     - projects
@@ -76,7 +77,7 @@
     update_project: true
     wait: true
   when:
-    - seed_validated_content
+    - (seed_validated_content | bool)
   register: seeded_content_project_azure
   tags:
     - projects

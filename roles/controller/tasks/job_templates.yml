@@ -6,7 +6,7 @@
   when:
     - job_templates.demo.delete_demo_template is defined
     - job_templates.demo.delete_demo_template
-    - seed_lab_content
+    - (seed_lab_content | bool)
   tags:
     - templates
 
@@ -22,7 +22,7 @@
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -49,7 +49,7 @@
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -86,7 +86,7 @@
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -112,7 +112,7 @@
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -146,7 +146,7 @@
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -172,7 +172,7 @@
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -195,7 +195,7 @@
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -223,7 +223,7 @@
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -247,7 +247,7 @@
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -272,7 +272,7 @@
     job_slice_count: 5
     state: present
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - vm_credential is defined
     - credentials.ssh.name is defined
     - content_lab_project_azure is defined
@@ -304,7 +304,7 @@
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - job_templates.install_arc_agent.name is defined
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
@@ -333,7 +333,7 @@
       - "{{ credentials.azure_service_principal.name }}"
     ask_variables_on_launch: true
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -359,7 +359,7 @@
       - "{{ credentials.azure_service_principal.name }}"
     ask_variables_on_launch: true
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -383,7 +383,7 @@
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - job_templates.replace_log_analytics_with_azure_monitor.name is defined
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
@@ -408,7 +408,7 @@
       workspace_name: "{{ job_templates.create_log_analytics_ws.ws_name }}"
     limit: rhel
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - job_templates.create_log_analytics_ws.name is defined
     - job_templates.create_log_analytics_ws.ws_name is defined
     - vm_credential is defined
@@ -437,7 +437,7 @@
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - job_templates.install_log_analytics.name is defined
     - job_templates.create_log_analytics_ws.ws_name is defined
     - vm_credential is defined
@@ -462,7 +462,7 @@
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - job_templates.uninstall_log_analytics.name is defined
     - vm_credential is defined
     - credentials.ssh.name is defined
@@ -489,7 +489,7 @@
     job_slice_count: 1
     state: present
   when:
-    - seed_lab_content
+    - (seed_lab_content | bool)
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - vm_credential is defined
@@ -520,7 +520,7 @@
     job_slice_count: 1
     state: present
   when:
-    - seed_validated_content
+    - (seed_validated_content | bool)
     - cloud_services_ee is defined
     - execution_environments.cloud_services.name is defined
     - seeded_content_project_azure is defined
@@ -546,7 +546,7 @@
     job_slice_count: 1
     state: present
   when:
-    - seed_validated_content
+    - (seed_validated_content | bool)
     - cloud_services_ee is defined
     - execution_environments.cloud_services.name is defined
     - seeded_content_project_azure is defined
