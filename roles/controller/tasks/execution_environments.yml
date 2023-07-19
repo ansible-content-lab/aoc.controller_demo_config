@@ -14,6 +14,14 @@
   tags:
     - ees
 
+- name: Set Cloud Services EE as global default
+  ansible.builtin.set_fact:
+    default_execution_environment: "{{ cloud_services_ee.id | int }}"
+  when: 
+    - cloud_services_ee is defined
+    - execution_environments.set_cloud_services_ee_default is defined
+    - execution_environments.set_cloud_services_ee_default
+
 - name: Add Test Cloud Execution Environment
   ansible.controller.execution_environment:
     name: Cloud EE
@@ -26,7 +34,10 @@
   tags:
     - ees
 
-- name: Set EE as global default
+- name: Set Cloud EE as global default
   ansible.builtin.set_fact:
     default_execution_environment: "{{ cloud_ee.id | int }}"
-  when: cloud_ee is defined
+  when: 
+    - cloud_ee is defined
+    - execution_environments.set_cloud_ee_default is defined
+    - execution_environments.set_cloud_ee_default
