@@ -22,6 +22,8 @@
     - cloud_services_ee.id is defined
     - execution_environments.set_cloud_services_ee_default is defined
     - execution_environments.set_cloud_services_ee_default
+  tags:
+    - ees
 
 - name: Add Test Cloud Execution Environment
   ansible.controller.execution_environment:
@@ -44,3 +46,5 @@
     - cloud_ee.id is defined
     - execution_environments.set_cloud_ee_default is defined
     - execution_environments.set_cloud_ee_default
+  tags:
+    - ees
