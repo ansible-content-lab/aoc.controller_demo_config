@@ -25,7 +25,7 @@ This role configures the following components in Ansible Automation Controller t
 | Name                                   | Description                                                                                            |
 | -------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `Cloud Services Execution Environment` | Latest version of the `ee-cloud-services-rhel8` execution environment published with Ansible on Azure. |
-| `Harwell - Cloud EE`                   | Custom EE with cloud content collections installed                                                     |
+| `Cloud EE`                   | Custom EE with cloud content collections installed                                                     |
 
 ### Inventories
 

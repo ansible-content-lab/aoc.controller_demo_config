@@ -3,49 +3,60 @@
   ansible.controller.job_template:
     name: Demo Job Template
     state: absent
-  when: (delete_demo_project is defined) and (delete_demo_project | bool)
+  when:
+    - job_templates.demo.delete_demo_template is defined
+    - job_templates.demo.delete_demo_template
+    - seed_content_lab
   tags:
     - templates
 
 - name: Azure - Create Resource Group
   ansible.controller.job_template:
-    name: lab.azure_roles.create_resource_group
+    name: Azure - Create Resource Group
     inventory: localhost
     playbook: playbook_create_resource_group.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Create VNET
   ansible.controller.job_template:
-    name: lab.azure_roles.create_vnet
+    name: Azure - Create VNET
     inventory: localhost
     playbook: playbook_create_vnet.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
-      route_table_name: "{{ job_templates.vnet_route_table_name }}"
-      vnet_name: "{{ job_templates.vnet_name }}"
-      vnet_cidr: "{{ job_templates.vnet_cidr }}"
-      subnet_name: "{{ job_templates.subnet_name }}"
-      subnet_cidr: "{{ job_templates.subnet_cidr }}"
+      route_table_name: "{{ job_templates.vnet.vnet_route_table_name }}"
+      vnet_name: "{{ job_templates.vnet.vnet_name }}"
+      vnet_cidr: "{{ job_templates.vnet.vnet_cidr }}"
+      subnet_name: "{{ job_templates.vnet.subnet_name }}"
+      subnet_cidr: "{{ job_templates.vnet.subnet_cidr }}"
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Create RHEL VM
   ansible.controller.job_template:
-    name: lab.azure_roles.create_rhel_vm
+    name: Azure - Create RHEL VM
     inventory: localhost
     playbook: playbook_create_vm.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
@@ -55,27 +66,30 @@
       nic_name: create-rhel-test-nic
       network_sec_group_name: create-rhel-test-sg
       public_ip_name: create-rhel-test-public-ip
-      vnet_name: spoke-1-vnet
-      subnet_name: spoke-1-subnet
+      vnet_name: "{{ job_templates.vnet.vnet_name }}"
+      subnet_name: "{{ job_templates.vnet.subnet_name }}"
       create_public_ip: true
-      ssh_public_key:  "{{ job_templates.ssh_public_key }}"
       admin_user: azureuser
-      admin_password: "{{ job_templates.admin_password }}"
+      admin_password: ansible12345!
       ssh_public_keys:
         - path: "{% raw %}/home/{{ admin_user }}/.ssh/authorized_keys{% endraw %}"
           key_data: "{% raw %}{{ lookup('file', '/home/runner/.ssh/id_rsa_azure_demo.pub') }}{% endraw %}" # Can be populated through a custom credential or variable
     ask_variables_on_launch: true
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Delete RHEL VM
   ansible.controller.job_template:
-    name: lab.azure_roles.delete_rhel_vm
+    name: Azure - Delete RHEL VM
     inventory: localhost
     playbook: playbook_delete_vm.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       vm_name: rhel9-test
@@ -83,16 +97,20 @@
       network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
       public_ip_name: "{% raw %}{{ vm_name }}-public-ip{% endraw %}"
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Create Windows Server VM
   ansible.controller.job_template:
-    name: lab.azure_roles.create_windows_vm
+    name: Azure - Create Windows Server VM
     inventory: localhost
     playbook: playbook_create_vm.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
@@ -101,23 +119,27 @@
       nic_name: create-win-test-nic
       network_sec_group_name: create-win-test-sg
       public_ip_name: create-win-test-public-ip
-      vnet_name: spoke-1-vnet
-      subnet_name: spoke-1-subnet
+      vnet_name: "{{ job_templates.vnet.vnet_name }}"
+      subnet_name: "{{ job_templates.vnet.subnet_name }}"
       create_public_ip: true
       admin_user: azureuser
-      admin_password: "{{ job_templates.admin_password }}"
+      admin_password: ansible12345!
     ask_variables_on_launch: true
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Delete Windows VM
   ansible.controller.job_template:
-    name: lab.azure_roles.delete_windows_vm
+    name: Azure - Delete Windows VM
     inventory: localhost
     playbook: playbook_delete_vm.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       vm_name:  win2022-test
@@ -125,30 +147,38 @@
       network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
       public_ip_name: "{% raw %}{{ vm_name }}-public-ip{% endraw %}"
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Destroy Resource Group
   ansible.controller.job_template:
-    name: lab.azure_roles.delete_resource_group
+    name: Azure - Destroy Resource Group
     inventory: localhost
     playbook: playbook_delete_resource_group.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Create Network Peering Demo
   ansible.controller.job_template:
-    name: lab.azure_roles.create_transit_network
+    name: Azure - Create Network Peering Demo
     inventory: localhost
     playbook: playbook_create_transit_network.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
@@ -158,14 +188,18 @@
       ansible_ssh_private_key_file_dest_path: /home/runner/.ssh/id_rsa_azure_demo
     ask_variables_on_launch: true
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Destroy Network Peering Demo
   ansible.controller.job_template:
-    name: lab.azure_roles.delete_transit_network
-    project: Ansible Cloud Content Lab - Azure Roles
+    name: Azure - Destroy Network Peering Demo
+    project: "{{ content_lab_project_azure.name }}"
     playbook: playbook_delete_transit_network.yml
     inventory: localhost
     extra_vars:
@@ -173,32 +207,40 @@
       region: "{{ azure_region }}"
     ask_variables_on_launch: true
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Run DNF Update
   ansible.controller.job_template:
-    name: lab.azure_roles.update_rhel_vms
+    name: Azure - Run DNF Update
     job_type: run
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     playbook: playbook_update_rhel_vms.yml
-    inventory: Azure
+    inventory: "{{ azure_inventory.name }}"
     limit: rhel
     credentials:
-      - Azure VM SSH Credential
+      - "{{ azure_vm_credential.name }}"
     become_enabled: true
     job_slice_count: 5
     state: present
+  when:
+    - seed_content_lab
+    - azure_vm_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Install Arc Agent
   ansible.controller.job_template:
-    name: lab.azure_roles.arc_install_agent
-    inventory: Azure
+    name: Azure - Install Arc Agent
+    inventory: "{{ azure_inventory.name }}"
     playbook: playbook_install_arc_agent.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     extra_vars: 
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
@@ -207,108 +249,137 @@
       service_principal_id: "{% raw %}{{ lookup('env', 'AZURE_CLIENT_ID') }}{% endraw %}"
       service_principal_secret: "{% raw %}{{ lookup('env', 'AZURE_SECRET') }}{% endraw %}"
     credentials:
-      - Azure VM SSH Credential
-      - Azure Service Principal
+      - "{{ azure_vm_credential.name }}"
+      - "{{ azure_credential.name }}"
     limit: rhel
     become_enabled: true
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - azure_vm_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Enable Arc Extensions
   ansible.controller.job_template:
-    name: lab.azure_roles.arc_enable_extensions
-    inventory: Azure
+    name: Azure - Enable Arc Extensions
+    inventory: "{{ azure_inventory.name }}"
     playbook: playbook_enable_arc_extension.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     extra_vars: 
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
       arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
     ask_variables_on_launch: true
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Disable Arc Extensions
   ansible.controller.job_template:
-    name: lab.azure_roles.arc_disable_extensions
-    inventory: Azure
+    name: Azure - Disable Arc Extensions
+    inventory: "{{ azure_inventory.name }}"
     playbook: playbook_disable_arc_extension.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     extra_vars: 
       resource_group_name: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
       arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
     ask_variables_on_launch: true
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Replace Log Analytics with Azure Monitor
   ansible.controller.job_template:
-    name: lab.azure_roles.arc_replace_log_analytics_with_azure_monitor
-    inventory: Azure
+    name: Azure - Replace Log Analytics with Azure Monitor
+    inventory: "{{ azure_inventory.name }}"
     playbook: playbook_replace_log_analytics_with_arc_linux.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     extra_vars:
       region: "{{ azure_region }}"
       resource_group: "{{ azure_resource_group }}"
       linux_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
     credentials:
-      - Azure Service Principal
+      - "{{ azure_credential.name }}"
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Create Log Analytics Workspace
   ansible.controller.job_template:
-    name: lab.azure_roles.create_log_analytics_workspace
+    name: Azure - Create Log Analytics Workspace
     inventory: localhost
     playbook: playbook_create_log_analytics_workspace.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     credentials:
-      - Azure VM SSH Credential
+      - "{{ azure_vm_credential.name }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
-      workspace_name: "{{ job_templates.log_ws_name }}"
+      workspace_name: "{{ job_templates.log_analytics.ws_name }}"
     limit: rhel
+  when:
+    - seed_content_lab
+    - azure_vm_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Install Log Analytics Agent
   ansible.controller.job_template:
-    name: lab.azure_roles.log_analytics_install_agent
-    inventory: Azure
+    name: Azure - Install Log Analytics Agent
+    inventory: "{{ azure_inventory.name }}"
     playbook: playbook_install_log_analytics_agent.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     credentials:
-      - Azure VM SSH Credential
+      - "{{ azure_vm_credential.name }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
-      workspace_name: log-ws
+      workspace_name: "{{ job_templates.log_analytics.ws_name }}"
     become_enabled: true
     limit: rhel
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
+  when:
+    - seed_content_lab
+    - azure_vm_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
 - name: Azure - Uninstall Log Analytics Agent
   ansible.controller.job_template:
-    name: lab.azure_roles.log_analytics_uninstall_agent
-    inventory: Azure
+    name: Azure - Uninstall Log Analytics Agent
+    inventory: "{{ azure_inventory.name }}"
     playbook: playbook_uninstall_log_analytics_agent.yml
-    project: Ansible Cloud Content Lab - Azure Roles
+    project: "{{ content_lab_project_azure.name }}"
     credentials:
-      - Azure VM SSH Credential
+      - "{{ azure_vm_credential.name }}"
     become_enabled: true
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
+  when:
+    - seed_content_lab
+    - azure_vm_credential is defined
+    - content_lab_project_azure is defined
   tags:
     - templates
 
@@ -316,15 +387,21 @@
   ansible.controller.job_template:
     name: Azure Demos - Ephemeral Workload Test
     job_type: run
-    project: Ansible - Azure Demo
+    project: "{{ content_lab_project_demo.name }}"
     playbook: project/emphemeral_workload_test.yml
     inventory: localhost
     credentials:
-      - Ansible Automation Controller
-      - Azure Service Principal
-      - Azure VM SSH Credential
+      - "{{ controller_credential.name }}"
+      - "{{ azure_credential.name }}"
+      - "{{ azure_vm_credential.name }}"
     become_enabled: true
     job_slice_count: 1
     state: present
+  when:
+    - seed_content_lab
+    - azure_credential is defined
+    - azure_vm_credential is defined
+    - controller_credential is defined
+    - content_lab_project_demo is defined
   tags:
     - templates

@@ -8,19 +8,25 @@
     credential: Red Hat Registry
     pull: always
     state: present
+  register: cloud_services_ee
+  when:
+    - seed_validated_content
   tags:
     - ees
 
 - name: Add Test Cloud Execution Environment
   ansible.controller.execution_environment:
-    name: Harwell - Cloud EE
+    name: Cloud EE
     image: quay.io/scottharwell/cloud-ee:latest
     state: present
     pull: always
-  register: harwell_ee
+  register: cloud_ee
+  when:
+    - seed_content_lab
   tags:
     - ees
 
 - name: Set EE as global default
   ansible.builtin.set_fact:
-    default_execution_environment: "{{ harwell_ee.id | int }}"
+    default_execution_environment: "{{ cloud_ee.id | int }}"
+  when: cloud_ee is defined

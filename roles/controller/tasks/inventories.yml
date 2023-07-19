@@ -5,8 +5,6 @@
     description: localhost
     organization: "{{ awx_organization }}"
     state: present
-    variables:
-      ansible_python_interpreter: /usr/bin/python3
   tags:
     - inventories
 
@@ -24,6 +22,9 @@
     description: Azure Inventory
     organization: "{{ awx_organization }}"
     state: present
+  register: azure_inventory
+  when:
+    - seed_content_lab
   tags:
     - inventories
 
@@ -33,7 +34,7 @@
     description: Creates inventory from Azure sources
     inventory: Azure
     credential: Azure Service Principal
-    execution_environment: Harwell - Cloud EE
+    execution_environment: Cloud EE
     overwrite: true
     update_on_launch: true
     organization: "{{ awx_organization }}"
@@ -41,5 +42,8 @@
     source_project: Ansible Cloud Content Lab - Azure Roles
     source_path: inventory/inventory.azure_rm.yml
     verbosity: 0
+  when:
+    - seed_content_lab
+    - azure_inventory is defined
   tags:
     - inventories
