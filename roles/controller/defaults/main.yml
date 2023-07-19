@@ -26,11 +26,27 @@ inventories:
   localhost:
     name: localhost
 job_templates:
+  create_rhel_vm:
+    name: Content Lab - Azure - Create RHEL VM
+  delete_rhel_vm:
+    name: Content Lab - Azure - Create RHEL VM
   demo:
     delete_demo_template: true
-  log_analytics:
+  dnf_update:
+    name: Content Lab - Azure - Run DNF Update
+  create_log_analytics_ws:
+    name: Content Lab - Azure - Create Log Analytics Workspace
     ws_name: log-ws
+  install_arc_agent:
+    name: Content Lab - Azure - Install Arc Agent
+  install_log_analytics:
+    name: Content Lab - Azure - Install Log Analytics Agent
+  replace_log_analytics_with_azure_monitor:
+    name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
+  uninstall_log_analytics:
+    name: Content Lab - Azure - Uninstall Log Analytics Agent
   vnet:
+    name: Content Lab - Azure - Create VNET
     route_table_name: vnet-rt
     vnet_name: vnet-test
     vnet_cidr: 10.0.200.0/23

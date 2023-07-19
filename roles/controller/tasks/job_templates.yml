@@ -34,7 +34,7 @@
 
 - name: Content Lab - Azure - Create VNET
   ansible.controller.job_template:
-    name: Content Lab - Azure - Create VNET
+    name: "{{ job_templates.vnet.name }}"
     inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_vnet.yml
     project: "{{ projects.azure_lab_roles.name }}"
@@ -61,7 +61,7 @@
 
 - name: Content Lab - Azure - Create RHEL VM
   ansible.controller.job_template:
-    name: Content Lab - Azure - Create RHEL VM
+    name: "{{ job_templates.create_rhel_vm.name }}"
     inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
@@ -99,7 +99,7 @@
 
 - name: Content Lab - Azure - Delete RHEL VM
   ansible.controller.job_template:
-    name: Content Lab - Azure - Delete RHEL VM
+    name: "{{ job_templates.delete_rhel_vm.name }}"
     inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_delete_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
@@ -260,7 +260,7 @@
 
 - name: Content Lab - Azure - Run DNF Update
   ansible.controller.job_template:
-    name: Content Lab - Azure - Run DNF Update
+    name: "{{ job_templates.dnf_update.name }}"
     job_type: run
     project: "{{ projects.azure_lab_roles.name }}"
     playbook: playbook_update_rhel_vms.yml
@@ -285,7 +285,7 @@
 
 - name: Content Lab - Azure - Install Arc Agent
   ansible.controller.job_template:
-    name: Content Lab - Azure - Install Arc Agent
+    name: "{{ job_templates.install_arc_agent.name }}"
     inventory: "{{ inventories.azure.name }}"
     playbook: playbook_install_arc_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
@@ -305,6 +305,7 @@
     ask_limit_on_launch: true
   when:
     - seed_lab_content
+    - job_templates.install_arc_agent.name is defined
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - vm_credential is defined
@@ -371,7 +372,7 @@
 
 - name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
   ansible.controller.job_template:
-    name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
+    name: "{{ job_templates.replace_log_analytics_with_azure_monitor.name }}"
     inventory: "{{ inventories.azure.name }}"
     playbook: playbook_replace_log_analytics_with_arc_linux.yml
     project: "{{ projects.azure_lab_roles.name }}"
@@ -383,6 +384,7 @@
       - "{{ credentials.azure_service_principal.name }}"
   when:
     - seed_lab_content
+    - job_templates.replace_log_analytics_with_azure_monitor.name is defined
     - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
@@ -395,7 +397,7 @@
 
 - name: Content Lab - Azure - Create Log Analytics Workspace
   ansible.controller.job_template:
-    name: Azure - Create Log Analytics Workspace
+    name: "{{ job_templates.create_log_analytics_ws.name }}"
     inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_log_analytics_workspace.yml
     project: "{{ projects.azure_lab_roles.name }}"
@@ -403,10 +405,12 @@
       - "{{ credentials.ssh.name }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
-      workspace_name: "{{ job_templates.log_analytics.ws_name }}"
+      workspace_name: "{{ job_templates.create_log_analytics_ws.ws_name }}"
     limit: rhel
   when:
     - seed_lab_content
+    - job_templates.create_log_analytics_ws.name is defined
+    - job_templates.create_log_analytics_ws.ws_name is defined
     - vm_credential is defined
     - credentials.ssh.name is defined
     - content_lab_project_azure is defined
@@ -419,7 +423,7 @@
 
 - name: Content Lab - Azure - Install Log Analytics Agent
   ansible.controller.job_template:
-    name: Azure - Install Log Analytics Agent
+    name: "{{ job_templates.install_log_analytics.name }}"
     inventory: "{{ inventories.azure.name }}"
     playbook: playbook_install_log_analytics_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
@@ -427,13 +431,15 @@
       - "{{ credentials.ssh.name }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
-      workspace_name: "{{ job_templates.log_analytics.ws_name }}"
+      workspace_name: "{{ job_templates.create_log_analytics_ws.ws_name }}"
     become_enabled: true
     limit: rhel
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
   when:
     - seed_lab_content
+    - job_templates.install_log_analytics.name is defined
+    - job_templates.create_log_analytics_ws.ws_name is defined
     - vm_credential is defined
     - credentials.ssh.name is defined
     - content_lab_project_azure is defined
@@ -446,7 +452,7 @@
 
 - name: Content Lab - Azure - Uninstall Log Analytics Agent
   ansible.controller.job_template:
-    name: Content Lab - Azure - Uninstall Log Analytics Agent
+    name: "{{ job_templates.uninstall_log_analytics.name }}"
     inventory: "{{ inventories.azure.name }}"
     playbook: playbook_uninstall_log_analytics_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
@@ -457,6 +463,7 @@
     ask_limit_on_launch: true
   when:
     - seed_lab_content
+    - job_templates.uninstall_log_analytics.name is defined
     - vm_credential is defined
     - credentials.ssh.name is defined
     - content_lab_project_azure is defined
