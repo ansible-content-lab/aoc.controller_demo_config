@@ -3,10 +3,19 @@ awx_organization: Default
 azure_region: eastus
 azure_resource_group: ansible_test
 credentials:
+  azure_service_principal:
+    name: Azure Service Principal
+  controller:
+    name: Ansible Automation Controller
+  red_hat_registry:
+    name: Red Hat Registry
   ssh:
+    name: VM SSH Credential
     user: vmuser
     key_data: "{{ lookup('file', '/home/runner/.ssh/id_ed25519') }}"
 execution_environments:
+  cloud_services_ee_name: Cloud Services Execution Environment
+  cloud_ee_name: Cloud EE
   set_cloud_services_ee_default: false
   set_cloud_ee_default: false
 job_templates:

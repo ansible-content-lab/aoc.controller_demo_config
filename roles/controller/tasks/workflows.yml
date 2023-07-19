@@ -28,7 +28,7 @@
           name: "{{ delete_rhel_vm_template }}"
           type: job_template
   when:
-    - seed_content_lab
+    - seed_lab_content
     - create_rhel_vm_template is defined
     - rhel_vm_update_template is defined
     - delete_rhel_vm_template is defined
@@ -55,7 +55,7 @@
           type: job_template
           inventory: Azure
   when:
-    - seed_content_lab
+    - seed_lab_content
     - create_log_analytics_workspace_template is defined
     - install_log_analytics_agent_template is defined
   tags:
@@ -109,7 +109,7 @@
           type: job_template
           inventory: Azure
   when:
-    - seed_content_lab
+    - seed_lab_content
     - install_arc_agent_template is defined
     - replace_log_analytics_with_azure_monitor_template is defined
     - uninstall_log_analytics_agent_template is defined

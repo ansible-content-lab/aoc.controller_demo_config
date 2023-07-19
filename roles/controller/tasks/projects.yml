@@ -14,13 +14,13 @@
   ansible.controller.project:
     name: Ansible Cloud Content Lab - Azure Demo
     description: Azure Demo
-    default_environment: Cloud EE
+    default_environment: "{{ execution_environments.cloud_ee_name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
-    scm.url: "{{ projects.azure_demo_project.url }}"
+    scm_url: "{{ projects.azure_demo_project.url }}"
     state: present
   when:
-    - seed_content_lab
+    - seed_lab_content
   register: content_lab_project_demo
   tags:
     - projects
@@ -30,13 +30,13 @@
   ansible.controller.project:
     name: Ansible Cloud Content Lab - Azure Roles
     description: Ansible Cloud Content Lab - Azure Roles
-    default_environment: Cloud EE
+    default_environment: "{{ execution_environments.cloud_ee_name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
-    scm.url: "{{ projects.azure_lab_roles.url }}"
+    scm_url: "{{ projects.azure_lab_roles.url }}"
     state: present
   when:
-    - seed_content_lab
+    - seed_lab_content
   register: content_lab_project_azure
   tags:
     - projects
@@ -46,13 +46,13 @@
   ansible.controller.project:
     name: Ansible Cloud Content Lab - AWS Roles
     description: Ansible Cloud Content Lab - AWS Roles
-    default_environment: Cloud EE
+    default_environment: "{{ execution_environments.cloud_ee_name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
-    scm.url: "{{ projects.aws_lab_roles.url }}"
+    scm_url: "{{ projects.aws_lab_roles.url }}"
     state: present
   when:
-    - seed_content_lab
+    - seed_lab_content
   register: content_lab_project_aws
   tags:
     - projects
@@ -62,14 +62,13 @@
   ansible.controller.project:
     name: Ansible Validated Content - Azure Demos
     description: Ansible Automation Platform Cloud Seeded Content - Azure
-    default_environment: "{{ cloud_services_ee.name }}"
+    default_environment: "{{ execution_environments.cloud_services_ee_name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
     scm_url: "{{ projects.azure_seeded_content.url }}"
     state: present
   when:
     - seed_validated_content
-    - cloud_services_ee is present
   register: seeded_content_project_azure
   tags:
     - projects

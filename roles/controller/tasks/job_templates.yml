@@ -6,13 +6,13 @@
   when:
     - job_templates.demo.delete_demo_template is defined
     - job_templates.demo.delete_demo_template
-    - seed_content_lab
+    - seed_lab_content
   tags:
     - templates
 
-- name: Azure - Create Resource Group
+- name: Content Lab - Azure - Create Resource Group
   ansible.controller.job_template:
-    name: Azure - Create Resource Group
+    name: Content Lab - Azure - Create Resource Group
     inventory: localhost
     playbook: playbook_create_resource_group.yml
     project: "{{ content_lab_project_azure }}"
@@ -20,17 +20,18 @@
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   tags:
     - templates
 
-- name: Azure - Create VNET
+- name: Content Lab - Azure - Create VNET
   ansible.controller.job_template:
-    name: Azure - Create VNET
+    name: Content Lab - Azure - Create VNET
     inventory: localhost
     playbook: playbook_create_vnet.yml
     project: "{{ content_lab_project_azure }}"
@@ -43,17 +44,18 @@
       subnet_name: "{{ job_templates.vnet.subnet_name }}"
       subnet_cidr: "{{ job_templates.vnet.subnet_cidr }}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   tags:
     - templates
 
-- name: Azure - Create RHEL VM
+- name: Content Lab - Azure - Create RHEL VM
   ansible.controller.job_template:
-    name: Azure - Create RHEL VM
+    name: Content Lab - Azure - Create RHEL VM
     inventory: localhost
     playbook: playbook_create_vm.yml
     project: "{{ content_lab_project_azure.name }}"
@@ -76,18 +78,19 @@
           key_data: "{% raw %}{{ lookup('file', '/home/runner/.ssh/id_rsa_azure_demo.pub') }}{% endraw %}" # Can be populated through a custom credential or variable
     ask_variables_on_launch: true
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   register: create_rhel_vm_template
   tags:
     - templates
 
-- name: Azure - Delete RHEL VM
+- name: Content Lab - Azure - Delete RHEL VM
   ansible.controller.job_template:
-    name: Azure - Delete RHEL VM
+    name: Content Lab - Azure - Delete RHEL VM
     inventory: localhost
     playbook: playbook_delete_vm.yml
     project: "{{ content_lab_project_azure.name }}"
@@ -98,18 +101,19 @@
       network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
       public_ip_name: "{% raw %}{{ vm_name }}-public-ip{% endraw %}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   register: delete_rhel_vm_template
   tags:
     - templates
 
-- name: Azure - Create Windows Server VM
+- name: Content Lab - Azure - Create Windows Server VM
   ansible.controller.job_template:
-    name: Azure - Create Windows Server VM
+    name: Content Lab - Azure - Create Windows Server VM
     inventory: localhost
     playbook: playbook_create_vm.yml
     project: "{{ content_lab_project_azure }}"
@@ -128,18 +132,19 @@
       admin_password: ansible12345!
     ask_variables_on_launch: true
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   register: create_windows_vm_template
   tags:
     - templates
 
-- name: Azure - Delete Windows VM
+- name: Content Lab - Azure - Delete Windows VM
   ansible.controller.job_template:
-    name: Azure - Delete Windows VM
+    name: Content Lab - Azure - Delete Windows VM
     inventory: localhost
     playbook: playbook_delete_vm.yml
     project: "{{ content_lab_project_azure }}"
@@ -150,18 +155,19 @@
       network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
       public_ip_name: "{% raw %}{{ vm_name }}-public-ip{% endraw %}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   register: delete_windows_vm_template
   tags:
     - templates
 
-- name: Azure - Delete Resource Group
+- name: Content Lab - Azure - Delete Resource Group
   ansible.controller.job_template:
-    name: Azure - Delete Resource Group
+    name: Content Lab - Azure - Delete Resource Group
     inventory: localhost
     playbook: playbook_delete_resource_group.yml
     project: "{{ content_lab_project_azure.name }}"
@@ -169,18 +175,19 @@
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   register: delete_resource_group_template
   tags:
     - templates
 
-- name: Azure - Create Network Peering Demo
+- name: Content Lab - Azure - Create Network Peering Demo
   ansible.controller.job_template:
-    name: Azure - Create Network Peering Demo
+    name: Content Lab - Azure - Create Network Peering Demo
     inventory: localhost
     playbook: playbook_create_transit_network.yml
     project: "{{ content_lab_project_azure.name }}"
@@ -193,18 +200,19 @@
       ansible_ssh_private_key_file_dest_path: /home/runner/.ssh/id_rsa_azure_demo
     ask_variables_on_launch: true
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   register: create_network_peering_demo_template
   tags:
     - templates
 
-- name: Azure - Delete Network Peering Demo
+- name: Content Lab - Azure - Delete Network Peering Demo
   ansible.controller.job_template:
-    name: Azure - Delete Network Peering Demo
+    name: Content Lab - Azure - Delete Network Peering Demo
     project: "{{ content_lab_project_azure.name }}"
     playbook: playbook_delete_transit_network.yml
     inventory: localhost
@@ -213,39 +221,41 @@
       region: "{{ azure_region }}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   register: delete_network_peering_demo_template
   tags:
     - templates
 
-- name: Azure - Run DNF Update
+- name: Content Lab - Azure - Run DNF Update
   ansible.controller.job_template:
-    name: Azure - Run DNF Update
+    name: Content Lab - Azure - Run DNF Update
     job_type: run
     project: "{{ content_lab_project_azure.name }}"
     playbook: playbook_update_rhel_vms.yml
     inventory: "{{ azure_inventory.name }}"
     limit: rhel
     credentials:
-      - "{{ azure_vm_credential.name }}"
+      - "{{ credentials.ssh.name }}"
     become_enabled: true
     job_slice_count: 5
     state: present
   when:
-    - seed_content_lab
-    - azure_vm_credential is defined
+    - seed_lab_content
+    - vm_credential is defined
+    - credentials.ssh.name is defined
     - content_lab_project_azure is defined
   register: rhel_vm_update_template
   tags:
     - templates
 
-- name: Azure - Install Arc Agent
+- name: Content Lab - Azure - Install Arc Agent
   ansible.controller.job_template:
-    name: Azure - Install Arc Agent
+    name: Content Lab - Azure - Install Arc Agent
     inventory: "{{ azure_inventory.name }}"
     playbook: playbook_install_arc_agent.yml
     project: "{{ content_lab_project_azure.name }}"
@@ -257,24 +267,26 @@
       service_principal_id: "{% raw %}{{ lookup('env', 'AZURE_CLIENT_ID') }}{% endraw %}"
       service_principal_secret: "{% raw %}{{ lookup('env', 'AZURE_SECRET') }}{% endraw %}"
     credentials:
-      - "{{ azure_vm_credential.name }}"
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.ssh.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
     limit: rhel
     become_enabled: true
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
-    - azure_vm_credential is defined
+    - credentials.azure_service_principal.name is defined
+    - vm_credential is defined
+    - credentials.ssh.name is defined
     - content_lab_project_azure is defined
   register: install_arc_agent_template
   tags:
     - templates
 
-- name: Azure - Enable Arc Extensions
+- name: Content Lab - Azure - Enable Arc Extensions
   ansible.controller.job_template:
-    name: Azure - Enable Arc Extensions
+    name: Content Lab - Azure - Enable Arc Extensions
     inventory: "{{ azure_inventory.name }}"
     playbook: playbook_enable_arc_extension.yml
     project: "{{ content_lab_project_azure.name }}"
@@ -284,19 +296,20 @@
       arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
     ask_variables_on_launch: true
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   register: enable_arc_extensions_template
   tags:
     - templates
 
-- name: Azure - Disable Arc Extensions
+- name: Content Lab - Azure - Disable Arc Extensions
   ansible.controller.job_template:
-    name: Azure - Disable Arc Extensions
+    name: Content Lab - Azure - Disable Arc Extensions
     inventory: "{{ azure_inventory.name }}"
     playbook: playbook_disable_arc_extension.yml
     project: "{{ content_lab_project_azure.name }}"
@@ -306,19 +319,20 @@
       arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
     ask_variables_on_launch: true
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   register: disable_arc_extensions_template
   tags:
     - templates
 
-- name: Azure - Replace Log Analytics with Azure Monitor
+- name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
   ansible.controller.job_template:
-    name: Azure - Replace Log Analytics with Azure Monitor
+    name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
     inventory: "{{ azure_inventory.name }}"
     playbook: playbook_replace_log_analytics_with_arc_linux.yml
     project: "{{ content_lab_project_azure.name }}"
@@ -327,43 +341,45 @@
       resource_group: "{{ azure_resource_group }}"
       linux_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
   register: replace_log_analytics_with_azure_monitor_template
   tags:
     - templates
 
-- name: Azure - Create Log Analytics Workspace
+- name: Content Lab - Azure - Create Log Analytics Workspace
   ansible.controller.job_template:
     name: Azure - Create Log Analytics Workspace
     inventory: localhost
     playbook: playbook_create_log_analytics_workspace.yml
     project: "{{ content_lab_project_azure.name }}"
     credentials:
-      - "{{ azure_vm_credential.name }}"
+      - "{{ credentials.ssh.name }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       workspace_name: "{{ job_templates.log_analytics.ws_name }}"
     limit: rhel
   when:
-    - seed_content_lab
-    - azure_vm_credential is defined
+    - seed_lab_content
+    - vm_credential is defined
+    - credentials.ssh.name is defined
     - content_lab_project_azure is defined
   register: create_log_analytics_workspace_template
   tags:
     - templates
 
-- name: Azure - Install Log Analytics Agent
+- name: Content Lab - Azure - Install Log Analytics Agent
   ansible.controller.job_template:
     name: Azure - Install Log Analytics Agent
     inventory: "{{ azure_inventory.name }}"
     playbook: playbook_install_log_analytics_agent.yml
     project: "{{ content_lab_project_azure.name }}"
     credentials:
-      - "{{ azure_vm_credential.name }}"
+      - "{{ credentials.ssh.name }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       workspace_name: "{{ job_templates.log_analytics.ws_name }}"
@@ -372,61 +388,66 @@
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
   when:
-    - seed_content_lab
-    - azure_vm_credential is defined
+    - seed_lab_content
+    - vm_credential is defined
+    - credentials.ssh.name is defined
     - content_lab_project_azure is defined
   register: install_log_analytics_agent_template
   tags:
     - templates
 
-- name: Azure - Uninstall Log Analytics Agent
+- name: Content Lab - Azure - Uninstall Log Analytics Agent
   ansible.controller.job_template:
-    name: Azure - Uninstall Log Analytics Agent
+    name: Content Lab - Azure - Uninstall Log Analytics Agent
     inventory: "{{ azure_inventory.name }}"
     playbook: playbook_uninstall_log_analytics_agent.yml
     project: "{{ content_lab_project_azure.name }}"
     credentials:
-      - "{{ azure_vm_credential.name }}"
+      - "{{ credentials.ssh.name }}"
     become_enabled: true
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
   when:
-    - seed_content_lab
-    - azure_vm_credential is defined
+    - seed_lab_content
+    - vm_credential is defined
+    - credentials.ssh.name is defined
     - content_lab_project_azure is defined
   register: uninstall_log_analytics_agent_template
   tags:
     - templates
 
-- name: Run Ephemeral Workload Test
+- name: Content Lab - Run Ephemeral Workload Test
   ansible.controller.job_template:
-    name: Azure Demos - Ephemeral Workload Test
+    name: Content Lab - Azure Demos - Ephemeral Workload Test
     job_type: run
     project: "{{ content_lab_project_demo.name }}"
     playbook: project/emphemeral_workload_test.yml
     inventory: localhost
     credentials:
-      - "{{ controller_credential.name }}"
-      - "{{ azure_credential.name }}"
-      - "{{ azure_vm_credential.name }}"
+      - "{{ credentials.azure_service_principal.name }}"
+      - "{{ credentials.controller.name }}"
+      - "{{ credentials.ssh.name }}"
     become_enabled: true
     job_slice_count: 1
     state: present
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_credential is defined
-    - azure_vm_credential is defined
+    - credentials.azure_service_principal.name is defined
+    - vm_credential is defined
+    - credentials.ssh.name is defined
     - controller_credential is defined
+    - credentials.controller.name is defined
     - content_lab_project_demo is defined
   register: ephemeral_workload_template
   tags:
     - templates
 
-- name: Azure web application deployment demo
+- name: Validated Content - Azure web application deployment demo
   ansible.controller.job_template:
-    name: Azure web application deployment demo
+    name: Validated Content - Azure web application deployment demo
     job_type: run
-    execution_environment: "{{ cloud_services_ee.name }}"
+    execution_environment: "{{ execution_environments.cloud_services_ee_name }}"
     project: "{{ seeded_content_project_azure.name }}"
     playbook: playbooks/webapp.yml
     ask_credential_on_launch: true
@@ -440,16 +461,17 @@
   when:
     - seed_validated_content
     - cloud_services_ee is defined
+    - execution_environments.cloud_services_ee_name is defined
     - seeded_content_project_azure is defined
   register: ephemeral_workload_template
   tags:
     - templates
 
-- name: Azure web application migration demo
+- name: Validated Content - Azure web application migration demo
   ansible.controller.job_template:
-    name: Azure web application migration demo
+    name: Validated Content - Azure web application migration demo
     job_type: run
-    execution_environment: "{{ cloud_services_ee.name }}"
+    execution_environment: "{{ execution_environments.cloud_services_ee_name }}"
     project: "{{ seeded_content_project_azure.name }}"
     playbook: playbooks/vmss_migrate.yml
     ask_credential_on_launch: true
@@ -464,6 +486,7 @@
   when:
     - seed_validated_content
     - cloud_services_ee is defined
+    - execution_environments.cloud_services_ee_name is defined
     - seeded_content_project_azure is defined
   register: ephemeral_workload_template
   tags:

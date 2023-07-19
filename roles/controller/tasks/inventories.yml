@@ -5,6 +5,7 @@
     description: localhost
     organization: "{{ awx_organization }}"
     state: present
+  register: localhost_inventory
   tags:
     - inventories
 
@@ -13,6 +14,8 @@
     name: localhost
     inventory: localhost
     state: present
+  when:
+    - localhost_inventory is defined
   tags:
     - inventories
 
@@ -24,7 +27,7 @@
     state: present
   register: azure_inventory
   when:
-    - seed_content_lab
+    - seed_lab_content
   tags:
     - inventories
 
@@ -43,7 +46,7 @@
     source_path: inventory/inventory.azure_rm.yml
     verbosity: 0
   when:
-    - seed_content_lab
+    - seed_lab_content
     - azure_inventory is defined
   tags:
     - inventories
