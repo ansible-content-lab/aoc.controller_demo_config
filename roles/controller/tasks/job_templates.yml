@@ -81,6 +81,7 @@
     - seed_content_lab
     - azure_credential is defined
     - content_lab_project_azure is defined
+  register: create_rhel_vm_template
   tags:
     - templates
 
@@ -102,6 +103,7 @@
     - seed_content_lab
     - azure_credential is defined
     - content_lab_project_azure is defined
+  register: delete_rhel_vm_template
   tags:
     - templates
 
@@ -131,6 +133,7 @@
     - seed_content_lab
     - azure_credential is defined
     - content_lab_project_azure is defined
+  register: create_windows_vm_template
   tags:
     - templates
 
@@ -152,12 +155,13 @@
     - seed_content_lab
     - azure_credential is defined
     - content_lab_project_azure is defined
+  register: delete_windows_vm_template
   tags:
     - templates
 
-- name: Azure - Destroy Resource Group
+- name: Azure - Delete Resource Group
   ansible.controller.job_template:
-    name: Azure - Destroy Resource Group
+    name: Azure - Delete Resource Group
     inventory: localhost
     playbook: playbook_delete_resource_group.yml
     project: "{{ content_lab_project_azure.name }}"
@@ -170,6 +174,7 @@
     - seed_content_lab
     - azure_credential is defined
     - content_lab_project_azure is defined
+  register: delete_resource_group_template
   tags:
     - templates
 
@@ -193,12 +198,13 @@
     - seed_content_lab
     - azure_credential is defined
     - content_lab_project_azure is defined
+  register: create_network_peering_demo_template
   tags:
     - templates
 
-- name: Azure - Destroy Network Peering Demo
+- name: Azure - Delete Network Peering Demo
   ansible.controller.job_template:
-    name: Azure - Destroy Network Peering Demo
+    name: Azure - Delete Network Peering Demo
     project: "{{ content_lab_project_azure.name }}"
     playbook: playbook_delete_transit_network.yml
     inventory: localhost
@@ -212,6 +218,7 @@
     - seed_content_lab
     - azure_credential is defined
     - content_lab_project_azure is defined
+  register: delete_network_peering_demo_template
   tags:
     - templates
 
@@ -232,6 +239,7 @@
     - seed_content_lab
     - azure_vm_credential is defined
     - content_lab_project_azure is defined
+  register: rhel_vm_update_template
   tags:
     - templates
 
@@ -260,6 +268,7 @@
     - azure_credential is defined
     - azure_vm_credential is defined
     - content_lab_project_azure is defined
+  register: install_arc_agent_template
   tags:
     - templates
 
@@ -281,6 +290,7 @@
     - seed_content_lab
     - azure_credential is defined
     - content_lab_project_azure is defined
+  register: enable_arc_extensions_template
   tags:
     - templates
 
@@ -302,6 +312,7 @@
     - seed_content_lab
     - azure_credential is defined
     - content_lab_project_azure is defined
+  register: disable_arc_extensions_template
   tags:
     - templates
 
@@ -321,6 +332,7 @@
     - seed_content_lab
     - azure_credential is defined
     - content_lab_project_azure is defined
+  register: replace_log_analytics_with_azure_monitor_template
   tags:
     - templates
 
@@ -340,6 +352,7 @@
     - seed_content_lab
     - azure_vm_credential is defined
     - content_lab_project_azure is defined
+  register: create_log_analytics_workspace_template
   tags:
     - templates
 
@@ -362,6 +375,7 @@
     - seed_content_lab
     - azure_vm_credential is defined
     - content_lab_project_azure is defined
+  register: install_log_analytics_agent_template
   tags:
     - templates
 
@@ -380,6 +394,7 @@
     - seed_content_lab
     - azure_vm_credential is defined
     - content_lab_project_azure is defined
+  register: uninstall_log_analytics_agent_template
   tags:
     - templates
 
@@ -403,5 +418,6 @@
     - azure_vm_credential is defined
     - controller_credential is defined
     - content_lab_project_demo is defined
+  register: ephemeral_workload_template
   tags:
     - templates

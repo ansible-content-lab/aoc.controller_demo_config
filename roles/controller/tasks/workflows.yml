@@ -1,12 +1,12 @@
 ---
 - name: Create a workflow to create a RHEL VM, run an automation against the VM, and then destroy the VM
   ansible.controller.workflow_job_template:
-    name: ansible_on_clouds.setup_and_config.ephemeral_vm_workload
+    name: Linux - Ephemeral VM Workflow
     inventory: localhost
     workflow_nodes:
       - identifier: Create VM
         unified_job_template:
-          name: lab.azure_roles.create_rhel_vm
+          name: "{{ create_rhel_vm_template.name }}"
           type: job_template
         related:
           success_nodes:
@@ -16,7 +16,7 @@
 
       - identifier: Run DNF Update
         unified_job_template:
-          name: lab.azure_roles.update_rhel_vms
+          name: "{{ rhel_vm_update_template.name }}"
           type: job_template
         related:
           always_nodes:
@@ -25,19 +25,24 @@
       - identifier: Delete VM
         all_parents_must_converge: false
         unified_job_template:
-          name: lab.azure_roles.delete_rhel_vm
+          name: "{{ delete_rhel_vm_template }}"
           type: job_template
+  when:
+    - seed_content_lab
+    - create_rhel_vm_template is defined
+    - rhel_vm_update_template is defined
+    - delete_rhel_vm_template is defined
   tags:
     - workflows
 
 - name: Azure - Install log analytics
   ansible.controller.workflow_job_template:
-    name: lab.azure_roles.install_log_analytics_workflow
+    name: Azure - Install Log Analytics Workflow
     description: Create a lot analytics workspace and install the log analytics agent on attached VMs.
     workflow_nodes:
       - identifier: Create Log Analytics Workspace
         unified_job_template:
-          name: lab.azure_roles.create_log_analytics_workspace
+          name: "{{ create_log_analytics_workspace_template.name }}"
           type: job_template
           inventory: localhost
         related:
@@ -46,9 +51,13 @@
 
       - identifier: Install Log Analytics Agent
         unified_job_template:
-          name: lab.azure_roles.log_analytics_install_agent
+          name: "{{ install_log_analytics_agent_template.name }}"
           type: job_template
           inventory: Azure
+  when:
+    - seed_content_lab
+    - create_log_analytics_workspace_template is defined
+    - install_log_analytics_agent_template is defined
   tags:
     - workflows
 
@@ -77,7 +86,7 @@
     workflow_nodes:
       - identifier: Install Arc Agent
         unified_job_template:
-          name: lab.azure_roles.arc_install_agent
+          name: "{{ install_arc_agent_template.name }}"
           type: job_template
           inventory: Azure
         related:
@@ -86,7 +95,7 @@
 
       - identifier: Replace Log Analytics with Azure Monitor
         unified_job_template:
-          name: lab.azure_roles.arc_replace_log_analytics_with_azure_monitor
+          name: "{{ replace_log_analytics_with_azure_monitor_template.name }}"
           type: job_template
           inventory: localhost
         related:
@@ -96,8 +105,13 @@
       - identifier: Uninstall Log Analytics Agent
         all_parents_must_converge: false
         unified_job_template:
-          name: lab.azure_roles.log_analytics_uninstall_agent
+          name: "{{ uninstall_log_analytics_agent_template.name }}"
           type: job_template
           inventory: Azure
+  when:
+    - seed_content_lab
+    - install_arc_agent_template is defined
+    - replace_log_analytics_with_azure_monitor_template is defined
+    - uninstall_log_analytics_agent_template is defined
   tags:
     - workflows

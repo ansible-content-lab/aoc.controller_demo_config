@@ -3,7 +3,7 @@
   ansible.controller.schedule:
     name: RHEL Ephemeral VM Workflow
     state: present
-    unified_job_template: ansible_on_clouds.setup_and_config.ephemeral_vm_workload
+    unified_job_template: Ephemeral VM Workflow
     rrule: "{{ query('ansible.controller.schedule_rrule', 'hour', start_date='2022-01-01 23:30:00', timezone='US/Eastern') }}"
   register: result
   tags:
