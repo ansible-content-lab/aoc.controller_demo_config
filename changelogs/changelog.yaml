@@ -1,0 +1,23 @@
+---
+ancestor: 3.0.0
+releases:
+  4.0.0:
+    release_date: "2023-07-19"
+    changes:
+      release_summary: Refactored the collection with the intent of having a general use as a PoC for seeding content into automation controller.
+      breaking_changes:
+        - All variable names have been edited and refactored. See `roles/controller/defaults/main.yml` for new variables and structure.
+      major_changes:
+        - Separated the ability to deploy validated content and content lab content.
+        - Flags to deploy validated content, content lab content, or both.
+      minor_changes:
+        - Introduced change log.
+    objects:
+      role:
+        - name: controller
+          description: Performs all of the operations to seed content in Ansible Automation Controller
+          namespace: null
+      playbook:
+        - name: playbook_configure_app
+          description: A playbook that can be used to initiate the operations.
+          namespace: null
