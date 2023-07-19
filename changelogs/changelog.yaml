@@ -15,3 +15,11 @@ releases:
     fragments:
     - 1-seeded-content-refactor.yml
     release_date: '2023-07-19'
+  4.0.1:
+    changes:
+      minor_changes:
+      - Removed requirements.yml
+      release_summary: Removed requirements.yml to push dependency to EE.
+    fragments:
+    - remove-requirements.yml
+    release_date: '2023-07-19'

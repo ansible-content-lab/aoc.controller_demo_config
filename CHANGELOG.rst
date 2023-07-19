@@ -6,6 +6,19 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v4.0.1
+======
+
+Release Summary
+---------------
+
+Removed requirements.yml to push dependency to EE.
+
+Minor Changes
+-------------
+
+- Removed requirements.yml
+
 v4.0.0
 ======
 

@@ -1,6 +1,0 @@
----
-collections:
-  - name: ansible.controller
-    version: 4.4.0
-  - name: awx.awx
-    version: 22.5.0
