@@ -1,7 +1,8 @@
 ---
-- name: Deploy Demo AoC Site
+- name: Deploy Ansible Automation Controller Seeded Content
   hosts: localhost
   connection: local
+  become: false
   gather_facts: false
   tasks:
     - name: Fail if variables not defined
@@ -18,6 +19,10 @@
           - "{{ lookup('env', 'RED_HAT_PASSWORD') | length > 0 }}"
         fail_msg: "Required variables not set"
 
-    - name: Configure Demo Site
+    - name: Start Notice
+      ansible.builtin.debug:
+        msg: This process will configure Ansible Automation Controller with seeded content.
+
+    - name: Run Controller Configuration Role
       ansible.builtin.import_role:
         name: controller

@@ -3,17 +3,77 @@ awx_organization: Default
 azure_region: eastus
 azure_resource_group: ansible_test
 credentials:
-  ssh_key_data: "{{ lookup('file', '/home/runner/.ssh/id_rsa_azure_demo') }}"
+  azure_service_principal:
+    name: Azure Service Principal
+  controller:
+    name: Ansible Automation Controller
+  red_hat_registry:
+    name: Red Hat Registry
+  ssh:
+    name: VM SSH Credential
+    user: vmuser
+    key_data: "{{ lookup('file', '/home/runner/.ssh/id_ed25519') }}"
+execution_environments:
+  cloud_services:
+    name: Cloud Services Execution Environment
+    set_default: false
+  cloud_ee:
+    name: Cloud EE
+    set_default: false
+inventories:
+  azure:
+    name: Azure
+  localhost:
+    name: localhost
 job_templates:
-  admin_password: ansible12345!
-  ssh_public_key: "{% raw %}{{ lookup('file', '/home/runner/.ssh/id_rsa_azure_demo.pub') }}{% endraw %}"
-  log_ws_name: log-ws
-  vnet_route_table_name: vnet-rt
-  vnet_name: vnet-test
-  vnet_cidr: 10.0.200.0/23
-  subnet_name: subnet-test
-  subnet_cidr: 10.0.200.0/24
+  create_rhel_vm:
+    name: Content Lab - Azure - Create RHEL VM
+  delete_rhel_vm:
+    name: Content Lab - Azure - Create RHEL VM
+  demo:
+    delete_demo_template: true
+  dnf_update:
+    name: Content Lab - Azure - Run DNF Update
+  create_log_analytics_ws:
+    name: Content Lab - Azure - Create Log Analytics Workspace
+    ws_name: log-ws
+  install_arc_agent:
+    name: Content Lab - Azure - Install Arc Agent
+  install_log_analytics:
+    name: Content Lab - Azure - Install Log Analytics Agent
+  replace_log_analytics_with_azure_monitor:
+    name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
+  uninstall_log_analytics:
+    name: Content Lab - Azure - Uninstall Log Analytics Agent
+  vnet:
+    name: Content Lab - Azure - Create VNET
+    route_table_name: vnet-rt
+    vnet_name: vnet-test
+    vnet_cidr: 10.0.200.0/23
+    subnet_name: subnet-test
+    subnet_cidr: 10.0.200.0/24
 projects:
-  azure_demo_project_url: https://github.com/ansible-cloud/azure.git
-  azure_lab_roles_url: https://github.com/ansible-content-lab/azure.infrastructure_config_demos.git
-  aws_lab_roles_url: https://github.com/ansible-content-lab/aws.infrastructure_config_demos.git
+  azure_demo_project:
+    name: Ansible Cloud Content Lab - Azure Demo
+    url: https://github.com/ansible-cloud/azure.git
+  azure_lab_roles:
+    name: Ansible Cloud Content Lab - Azure Roles
+    url: https://github.com/ansible-content-lab/azure.infrastructure_config_demos.git
+  aws_lab_roles:
+    name: Ansible Cloud Content Lab - AWS Roles
+    url: https://github.com/ansible-content-lab/aws.infrastructure_config_demos.git
+  azure_seeded_content:
+    name: Ansible Validated Content - Azure Demos
+    url: https://github.com/redhat-cop/cloud.azure_ops.git
+schedules:
+  ephemeral_workload:
+    name: Content Lab - RHEL Ephemeral VM Workflow
+workflows:
+  arc_log_migration:
+    name: Content Lab - Azure - Arc Log Migration
+  ephemeral_workload:
+    name: Content Lab - Linux - Ephemeral VM Workflow
+  install_log_analytics:
+    name: Content Lab - Azure - Install Log Analytics Workflow
+seed_lab_content: false
+seed_validated_content: true

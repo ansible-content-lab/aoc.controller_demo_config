@@ -1,10 +1,14 @@
 ---
 - name: Schedule RHEL Demo Workflow Every Hour
   ansible.controller.schedule:
-    name: RHEL Ephemeral VM Workflow
+    name: "{{ schedules.ephemeral_workload.name }}"
     state: present
-    unified_job_template: ansible_on_clouds.setup_and_config.ephemeral_vm_workload
+    unified_job_template: "{{ workflows.ephemeral_workload.name }}"
     rrule: "{{ query('ansible.controller.schedule_rrule', 'hour', start_date='2022-01-01 23:30:00', timezone='US/Eastern') }}"
   register: result
+  when:
+    - (seed_lab_content | bool)
+    - schedules.ephemeral_workload.name is defined
+    - workflows.ephemeral_workload.name is defined
   tags:
     - schedules

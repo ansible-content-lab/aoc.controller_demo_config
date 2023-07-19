@@ -3,42 +3,82 @@
   ansible.controller.project:
     name: Demo Project
     state: absent
-  when: (delete_demo_project is defined) and (delete_demo_project | bool)
+  when:
+    - (seed_lab_content | bool)
+    - delete_demo_project is defined
+    - (delete_demo_project | bool)
   tags:
     - projects
+    - azure
 
-- name: Add Azure Demo Project
+- name: Add Ansible Cloud Content Lab Azure Demo Project
   ansible.controller.project:
-    name: Ansible - Azure Demo
+    name: "{{ projects.azure_demo_project.name }}"
     description: Azure Demo
-    default_environment: Harwell - Cloud EE
+    default_environment: "{{ execution_environments.cloud_ee.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
-    scm_url: "{{ projects.azure_demo_project_url }}"
+    scm_url: "{{ projects.azure_demo_project.url }}"
     state: present
+    update_project: true
+    wait: true
+  when:
+    - (seed_lab_content | bool)
+  register: content_lab_project_demo
   tags:
     - projects
+    - azure
 
 - name: Add Ansible Cloud Content Lab Azure Project
   ansible.controller.project:
-    name: Ansible Cloud Content Lab - Azure Roles
+    name: "{{ projects.azure_lab_roles.name }}"
     description: Ansible Cloud Content Lab - Azure Roles
-    default_environment: Harwell - Cloud EE
+    default_environment: "{{ execution_environments.cloud_ee.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
-    scm_url: "{{ projects.azure_lab_roles_url }}"
+    scm_url: "{{ projects.azure_lab_roles.url }}"
     state: present
+    update_project: true
+    wait: true
+  when:
+    - (seed_lab_content | bool)
+  register: content_lab_project_azure
   tags:
     - projects
+    - azure
 
 - name: Add Ansible Cloud Content Lab AWS Project
   ansible.controller.project:
-    name: Ansible Cloud Content Lab - AWS Roles
-    description: Ansible Cloud Content Lab - Azure Roles
-    default_environment: Harwell - Cloud EE
+    name: "{{ projects.aws_lab_roles.name }}"
+    description: Ansible Cloud Content Lab - AWS Roles
+    default_environment: "{{ execution_environments.cloud_ee.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
-    scm_url: "{{ projects.aws_lab_roles_url }}"
+    scm_url: "{{ projects.aws_lab_roles.url }}"
     state: present
+    update_project: true
+    wait: true
+  when:
+    - (seed_lab_content | bool)
+  register: content_lab_project_aws
   tags:
     - projects
+    - aws
+
+- name: Add Ansible Cloud Seeded Content Project
+  ansible.controller.project:
+    name: "{{ projects.azure_seeded_content.name }}"
+    description: Ansible Automation Platform Cloud Seeded Content - Azure
+    default_environment: "{{ execution_environments.cloud_services.name }}"
+    organization: "{{ awx_organization }}"  # Organization is required in projects
+    scm_type: git
+    scm_url: "{{ projects.azure_seeded_content.url }}"
+    state: present
+    update_project: true
+    wait: true
+  when:
+    - (seed_validated_content | bool)
+  register: seeded_content_project_azure
+  tags:
+    - projects
+    - azure

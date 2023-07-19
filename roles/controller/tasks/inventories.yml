@@ -1,29 +1,36 @@
 ---
 - name: Create localhost inventory
   ansible.controller.inventory:
-    name: localhost
+    name: "{{ inventories.localhost.name }}"
     description: localhost
     organization: "{{ awx_organization }}"
     state: present
-    variables:
-      ansible_python_interpreter: /usr/bin/python3
+  register: localhost_inventory
+  when:
+    - inventories.localhost.name is defined
   tags:
     - inventories
 
 - name: Add localhost host to inventory
   ansible.controller.host:
     name: localhost
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     state: present
+  when:
+    - localhost_inventory is defined
   tags:
     - inventories
 
 - name: Create Azure Inventory
   ansible.controller.inventory:
-    name: Azure
+    name: "{{ inventories.azure.name }}"
     description: Azure Inventory
     organization: "{{ awx_organization }}"
     state: present
+  register: azure_inventory
+  when:
+    - (seed_lab_content | bool)
+    - inventories.azure.name is defined
   tags:
     - inventories
 
@@ -31,9 +38,9 @@
   ansible.controller.inventory_source:
     name: Azure Dynamic Inventory
     description: Creates inventory from Azure sources
-    inventory: Azure
-    credential: Azure Service Principal
-    execution_environment: Harwell - Cloud EE
+    inventory: "{{ inventories.azure.name }}"
+    credential: "{{ credentials.azure_service_principal.name }}"
+    execution_environment: Cloud EE
     overwrite: true
     update_on_launch: true
     organization: "{{ awx_organization }}"
@@ -41,5 +48,13 @@
     source_project: Ansible Cloud Content Lab - Azure Roles
     source_path: inventory/inventory.azure_rm.yml
     verbosity: 0
+  when:
+    - (seed_lab_content | bool)
+    - azure_inventory is defined
+    - inventories.azure.name is defined
+    - azure_credential is defined
+    - credentials.azure_service_principal.name is defined
+    - cloud_ee is defined
+    - execution_environments.cloud_services.name is defined
   tags:
     - inventories

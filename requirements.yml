@@ -1,14 +1,6 @@
 ---
 collections:
-  - name: awx.awx
-    version: 22.4.0
   - name: ansible.controller
     version: 4.4.0
-  - name: azure.infrastructure_config_demos
-    version: v1.6.0
-    source: https://github.com/ansible-content-lab/azure.infrastructure_config_demos.git
-    type: git
-  - name: aws.infrastructure_config_demos
-    version: v2.0.0
-    source: https://github.com/ansible-content-lab/aws.infrastructure_config_demos.git
-    type: git
+  - name: awx.awx
+    version: 22.5.0
