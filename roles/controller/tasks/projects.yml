@@ -10,9 +10,9 @@
     - projects
     - azure
 
-- name: Add Azure Demo Project
+- name: Add Ansible Cloud Content Lab Azure Demo Project
   ansible.controller.project:
-    name: Ansible - Azure Demo
+    name: Ansible Cloud Content Lab - Azure Demo
     description: Azure Demo
     default_environment: Cloud EE
     organization: "{{ awx_organization }}"  # Organization is required in projects
@@ -60,15 +60,16 @@
 
 - name: Add Ansible Cloud Seeded Content Project
   ansible.controller.project:
-    name: cloud.azure_ops
+    name: Ansible Validated Content - Azure Demos
     description: Ansible Automation Platform Cloud Seeded Content - Azure
-    default_environment: Cloud EE
+    default_environment: "{{ cloud_services_ee.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
-    scm_url: "{{ projects.azure_seeded_content_url }}"
+    scm_url: "{{ projects.azure_seeded_content.url }}"
     state: present
   when:
     - seed_validated_content
+    - cloud_services_ee is present
   register: seeded_content_project_azure
   tags:
     - projects

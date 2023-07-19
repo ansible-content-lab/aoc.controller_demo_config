@@ -12,3 +12,7 @@ collections:
     version: v2.0.0
     source: https://github.com/ansible-content-lab/aws.infrastructure_config_demos.git
     type: git
+  - name: cloud.azure_ops
+    source: https://github.com/redhat-cop/cloud.azure_ops.git
+    version: 2.0.0
+    type: git
