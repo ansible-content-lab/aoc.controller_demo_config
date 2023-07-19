@@ -10,7 +10,9 @@
   ansible.controller.settings:
     settings:
       SESSION_COOKIE_AGE: "{{ session_cookie_age }}"
-  when: session_cookie_age is defined and ((session_cookie_age | int) > 0)
+  when: 
+    - session_cookie_age is defined
+    - (session_cookie_age | int) > 0
   tags:
     - settings
 
@@ -18,7 +20,8 @@
   ansible.controller.settings:
     settings:
       DEFAULT_EXECUTION_ENVIRONMENT: "{{ default_execution_environment }}"
-  when: default_execution_environment is defined
+  when:
+    - default_execution_environment is defined
   tags:
     - settings
 
@@ -26,7 +29,8 @@
   ansible.controller.settings:
     settings:
       SOCIAL_AUTH_AZUREAD_OAUTH2_KEY: "{{ lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_KEY') }}"
-  when: lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_KEY') | length > 0
+  when:
+    - lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_KEY') | length > 0
   tags:
     - settings
 
@@ -34,6 +38,7 @@
   ansible.controller.settings:
     settings:
       SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET: "{{ lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET') }}"
-  when: lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET') | length > 0
+  when:
+    - lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET') | length > 0
   tags:
     - settings

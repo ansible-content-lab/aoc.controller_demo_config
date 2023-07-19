@@ -65,5 +65,15 @@ projects:
   azure_seeded_content:
     name: Ansible Validated Content - Azure Demos
     url: https://github.com/redhat-cop/cloud.azure_ops.git
+schedules:
+  ephemeral_workload:
+    name: Content Lab - RHEL Ephemeral VM Workflow
+workflows:
+  arc_log_migration:
+    name: Content Lab - Azure - Arc Log Migration
+  ephemeral_workload:
+    name: Content Lab - Linux - Ephemeral VM Workflow
+  install_log_analytics:
+    name: Content Lab - Azure - Install Log Analytics Workflow
 seed_lab_content: false
 seed_validated_content: true

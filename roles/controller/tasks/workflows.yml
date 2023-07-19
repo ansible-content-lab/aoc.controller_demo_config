@@ -1,7 +1,7 @@
 ---
 - name: Create a workflow to create a RHEL VM, run an automation against the VM, and then destroy the VM
   ansible.controller.workflow_job_template:
-    name: Content Lab - Linux - Ephemeral VM Workflow
+    name: "{{ workflows.ephemeral_workload.name }}"
     inventory: "{{ inventories.localhost.name }}"
     workflow_nodes:
       - identifier: Create VM
@@ -29,6 +29,7 @@
           type: job_template
   when:
     - seed_lab_content
+    - workflows.ephemeral_workload.name is defined
     - job_templates.create_rhel_vm.name is defined
     - job_templates.dnf_update.name is defined
     - job_templates.delete_rhel_vm.name is defined
@@ -39,7 +40,7 @@
 
 - name: Azure - Install log analytics
   ansible.controller.workflow_job_template:
-    name: Content Lab - Azure - Install Log Analytics Workflow
+    name: "{{ workflows.install_log_analytics.name }}"
     description: Create a lot analytics workspace and install the log analytics agent on attached VMs.
     workflow_nodes:
       - identifier: Create Log Analytics Workspace
@@ -58,6 +59,7 @@
           inventory: Azure
   when:
     - seed_lab_content
+    - workflows.install_log_analytics.name is defined
     - job_templates.create_log_analytics_ws.name is defined
     - job_templates.install_log_analytics.name is defined
     - localhost_inventory is defined
@@ -67,7 +69,7 @@
 
 - name: Azure Arc - Replace Log Analytics with Azure Monitor
   ansible.controller.workflow_job_template:
-    name: Content Lab - Azure - Arc Log Migration
+    name: "{{ workflows.arc_log_migration.name }}"
     description: Migrate hosts from Azure Log Analytics Agent to Azure Monitor Agent with Azure Arc
     survey_enabled: true
     survey_spec:
@@ -114,6 +116,7 @@
           inventory: Azure
   when:
     - seed_lab_content
+    - workflows.arc_log_migration.name is defined
     - job_templates.install_arc_agent.name is defined
     - job_templates.replace_log_analytics_with_azure_monitor.name is defined
     - job_templates.uninstall_log_analytics.name is defined
