@@ -1,7 +1,7 @@
 ---
 - name: Add EE Cloud Services Execution Environment
   ansible.controller.execution_environment:
-    name: "{{ execution_environments.cloud_services_ee_name }}"
+    name: "{{ execution_environments.cloud_services.name }}"
     description: Red Hat Cloud Services EE
     organization: "{{ awx_organization | default('') }}"
     image: registry.redhat.io/ansible-automation-platform-24/ee-cloud-services-rhel8:latest
@@ -20,14 +20,14 @@
   when: 
     - seed_validated_content
     - cloud_services_ee.id is defined
-    - execution_environments.set_cloud_services_ee_default is defined
-    - execution_environments.set_cloud_services_ee_default
+    - execution_environments.cloud_services.set_default is defined
+    - execution_environments.cloud_services.set_default
   tags:
     - ees
 
 - name: Add Test Cloud Execution Environment
   ansible.controller.execution_environment:
-    name: "{{ execution_environments.cloud_ee_name }}"
+    name: "{{ execution_environments.cloud_ee.name }}"
     description: Cloud Content Lab EE that contains dependencies for major hyperscaler collections.
     image: quay.io/scottharwell/cloud-ee:latest
     state: present
@@ -44,7 +44,7 @@
   when: 
     - seed_lab_content
     - cloud_ee.id is defined
-    - execution_environments.set_cloud_ee_default is defined
-    - execution_environments.set_cloud_ee_default
+    - execution_environments.cloud_ee.default is defined
+    - execution_environments.cloud_ee.default
   tags:
     - ees

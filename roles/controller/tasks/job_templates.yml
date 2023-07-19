@@ -13,7 +13,7 @@
 - name: Content Lab - Azure - Create Resource Group
   ansible.controller.job_template:
     name: Content Lab - Azure - Create Resource Group
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_resource_group.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
@@ -27,13 +27,15 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - localhost_inventory is defined
+    - inventories.localhost.name is defined
   tags:
     - templates
 
 - name: Content Lab - Azure - Create VNET
   ansible.controller.job_template:
     name: Content Lab - Azure - Create VNET
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_vnet.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
@@ -52,13 +54,15 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - localhost_inventory is defined
+    - inventories.localhost.name is defined
   tags:
     - templates
 
 - name: Content Lab - Azure - Create RHEL VM
   ansible.controller.job_template:
     name: Content Lab - Azure - Create RHEL VM
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
@@ -87,6 +91,8 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - localhost_inventory is defined
+    - inventories.localhost.name is defined
   register: create_rhel_vm_template
   tags:
     - templates
@@ -94,7 +100,7 @@
 - name: Content Lab - Azure - Delete RHEL VM
   ansible.controller.job_template:
     name: Content Lab - Azure - Delete RHEL VM
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_delete_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
@@ -111,6 +117,8 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - localhost_inventory is defined
+    - inventories.localhost.name is defined
   register: delete_rhel_vm_template
   tags:
     - templates
@@ -118,7 +126,7 @@
 - name: Content Lab - Azure - Create Windows Server VM
   ansible.controller.job_template:
     name: Content Lab - Azure - Create Windows Server VM
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
@@ -143,6 +151,8 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - localhost_inventory is defined
+    - inventories.localhost.name is defined
   register: create_windows_vm_template
   tags:
     - templates
@@ -150,7 +160,7 @@
 - name: Content Lab - Azure - Delete Windows VM
   ansible.controller.job_template:
     name: Content Lab - Azure - Delete Windows VM
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_delete_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
@@ -167,6 +177,8 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - localhost_inventory is defined
+    - inventories.localhost.name is defined
   register: delete_windows_vm_template
   tags:
     - templates
@@ -174,7 +186,7 @@
 - name: Content Lab - Azure - Delete Resource Group
   ansible.controller.job_template:
     name: Content Lab - Azure - Delete Resource Group
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_delete_resource_group.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
@@ -188,6 +200,8 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - localhost_inventory is defined
+    - inventories.localhost.name is defined
   register: delete_resource_group_template
   tags:
     - templates
@@ -195,7 +209,7 @@
 - name: Content Lab - Azure - Create Network Peering Demo
   ansible.controller.job_template:
     name: Content Lab - Azure - Create Network Peering Demo
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_transit_network.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
@@ -214,6 +228,8 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - localhost_inventory is defined
+    - inventories.localhost.name is defined
   register: create_network_peering_demo_template
   tags:
     - templates
@@ -223,7 +239,7 @@
     name: Content Lab - Azure - Delete Network Peering Demo
     project: "{{ projects.azure_lab_roles.name }}"
     playbook: playbook_delete_transit_network.yml
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     extra_vars:
       resource_group: "{{ azure_resource_group }}"
       region: "{{ azure_region }}"
@@ -236,6 +252,8 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - localhost_inventory is defined
+    - inventories.localhost.name is defined
   register: delete_network_peering_demo_template
   tags:
     - templates
@@ -246,7 +264,7 @@
     job_type: run
     project: "{{ projects.azure_lab_roles.name }}"
     playbook: playbook_update_rhel_vms.yml
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ inventories.azure.name }}"
     limit: rhel
     credentials:
       - "{{ credentials.ssh.name }}"
@@ -259,6 +277,8 @@
     - credentials.ssh.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - azure_inventory is defined
+    - inventories.azure.name is defined
   register: rhel_vm_update_template
   tags:
     - templates
@@ -266,7 +286,7 @@
 - name: Content Lab - Azure - Install Arc Agent
   ansible.controller.job_template:
     name: Content Lab - Azure - Install Arc Agent
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ inventories.azure.name }}"
     playbook: playbook_install_arc_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars: 
@@ -291,6 +311,8 @@
     - credentials.ssh.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - azure_inventory is defined
+    - inventories.azure.name is defined
   register: install_arc_agent_template
   tags:
     - templates
@@ -298,7 +320,7 @@
 - name: Content Lab - Azure - Enable Arc Extensions
   ansible.controller.job_template:
     name: Content Lab - Azure - Enable Arc Extensions
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ inventories.azure.name }}"
     playbook: playbook_enable_arc_extension.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars: 
@@ -315,6 +337,8 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - azure_inventory is defined
+    - inventories.azure.name is defined
   register: enable_arc_extensions_template
   tags:
     - templates
@@ -322,7 +346,7 @@
 - name: Content Lab - Azure - Disable Arc Extensions
   ansible.controller.job_template:
     name: Content Lab - Azure - Disable Arc Extensions
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ inventories.azure.name }}"
     playbook: playbook_disable_arc_extension.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars: 
@@ -339,6 +363,8 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - azure_inventory is defined
+    - inventories.azure.name is defined
   register: disable_arc_extensions_template
   tags:
     - templates
@@ -346,7 +372,7 @@
 - name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
   ansible.controller.job_template:
     name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ inventories.azure.name }}"
     playbook: playbook_replace_log_analytics_with_arc_linux.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
@@ -361,6 +387,8 @@
     - credentials.azure_service_principal.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - azure_inventory is defined
+    - inventories.azure.name is defined
   register: replace_log_analytics_with_azure_monitor_template
   tags:
     - templates
@@ -368,7 +396,7 @@
 - name: Content Lab - Azure - Create Log Analytics Workspace
   ansible.controller.job_template:
     name: Azure - Create Log Analytics Workspace
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_log_analytics_workspace.yml
     project: "{{ projects.azure_lab_roles.name }}"
     credentials:
@@ -383,6 +411,8 @@
     - credentials.ssh.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - localhost_inventory is defined
+    - inventories.localhost.name is defined
   register: create_log_analytics_workspace_template
   tags:
     - templates
@@ -390,7 +420,7 @@
 - name: Content Lab - Azure - Install Log Analytics Agent
   ansible.controller.job_template:
     name: Azure - Install Log Analytics Agent
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ inventories.azure.name }}"
     playbook: playbook_install_log_analytics_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
     credentials:
@@ -408,6 +438,8 @@
     - credentials.ssh.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - azure_inventory is defined
+    - inventories.azure.name is defined
   register: install_log_analytics_agent_template
   tags:
     - templates
@@ -415,7 +447,7 @@
 - name: Content Lab - Azure - Uninstall Log Analytics Agent
   ansible.controller.job_template:
     name: Content Lab - Azure - Uninstall Log Analytics Agent
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ inventories.azure.name }}"
     playbook: playbook_uninstall_log_analytics_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
     credentials:
@@ -429,6 +461,8 @@
     - credentials.ssh.name is defined
     - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
+    - azure_inventory is defined
+    - inventories.azure.name is defined
   register: uninstall_log_analytics_agent_template
   tags:
     - templates
@@ -439,7 +473,7 @@
     job_type: run
     project: "{{ projects.azure_demo_project.name }}"
     playbook: project/emphemeral_workload_test.yml
-    inventory: localhost
+    inventory: "{{ inventories.localhost.name }}"
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
       - "{{ credentials.controller.name }}"
@@ -457,6 +491,8 @@
     - credentials.controller.name is defined
     - content_lab_project_demo is defined
     - projects.azure_demo_project.name is defined
+    - localhost_inventory is defined
+    - inventories.localhost.name is defined
   register: ephemeral_workload_template
   tags:
     - templates
@@ -465,7 +501,7 @@
   ansible.controller.job_template:
     name: Validated Content - Azure web application deployment demo
     job_type: run
-    execution_environment: "{{ execution_environments.cloud_services_ee_name }}"
+    execution_environment: "{{ execution_environments.cloud_services.name }}"
     project: "{{ projects.azure_seeded_content.name }}"
     playbook: playbooks/webapp.yml
     ask_credential_on_launch: true
@@ -479,7 +515,7 @@
   when:
     - seed_validated_content
     - cloud_services_ee is defined
-    - execution_environments.cloud_services_ee_name is defined
+    - execution_environments.cloud_services.name is defined
     - seeded_content_project_azure is defined
     - projects.azure_seeded_content.name is defined
   register: ephemeral_workload_template
@@ -490,7 +526,7 @@
   ansible.controller.job_template:
     name: Validated Content - Azure web application migration demo
     job_type: run
-    execution_environment: "{{ execution_environments.cloud_services_ee_name }}"
+    execution_environment: "{{ execution_environments.cloud_services.name }}"
     project: "{{ projects.azure_seeded_content.name }}"
     playbook: playbooks/vmss_migrate.yml
     ask_credential_on_launch: true
@@ -505,7 +541,7 @@
   when:
     - seed_validated_content
     - cloud_services_ee is defined
-    - execution_environments.cloud_services_ee_name is defined
+    - execution_environments.cloud_services.name is defined
     - seeded_content_project_azure is defined
     - projects.azure_seeded_content.name is defined
   register: ephemeral_workload_template

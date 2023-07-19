@@ -14,7 +14,7 @@
   ansible.controller.project:
     name: "{{ projects.azure_demo_project.name }}"
     description: Azure Demo
-    default_environment: "{{ execution_environments.cloud_ee_name }}"
+    default_environment: "{{ execution_environments.cloud_ee.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
     scm_url: "{{ projects.azure_demo_project.url }}"
@@ -32,7 +32,7 @@
   ansible.controller.project:
     name: "{{ projects.azure_lab_roles.name }}"
     description: Ansible Cloud Content Lab - Azure Roles
-    default_environment: "{{ execution_environments.cloud_ee_name }}"
+    default_environment: "{{ execution_environments.cloud_ee.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
     scm_url: "{{ projects.azure_lab_roles.url }}"
@@ -50,7 +50,7 @@
   ansible.controller.project:
     name: "{{ projects.aws_lab_roles.name }}"
     description: Ansible Cloud Content Lab - AWS Roles
-    default_environment: "{{ execution_environments.cloud_ee_name }}"
+    default_environment: "{{ execution_environments.cloud_ee.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
     scm_url: "{{ projects.aws_lab_roles.url }}"
@@ -68,7 +68,7 @@
   ansible.controller.project:
     name: "{{ projects.azure_seeded_content.name }}"
     description: Ansible Automation Platform Cloud Seeded Content - Azure
-    default_environment: "{{ execution_environments.cloud_services_ee_name }}"
+    default_environment: "{{ execution_environments.cloud_services.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
     scm_url: "{{ projects.azure_seeded_content.url }}"
