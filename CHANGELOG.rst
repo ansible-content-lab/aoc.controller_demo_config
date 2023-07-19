@@ -6,6 +6,19 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v4.0.2
+======
+
+Release Summary
+---------------
+
+Removed assertions prior to playbook run that were no longer needed.
+
+Minor Changes
+-------------
+
+- Removed assertions prior to playbook run.
+
 v4.0.1
 ======
 

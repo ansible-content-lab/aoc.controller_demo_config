@@ -23,3 +23,10 @@ releases:
     fragments:
     - remove-requirements.yml
     release_date: '2023-07-19'
+  4.0.2:
+    changes:
+      minor_changes:
+      - Removed assertions prior to playbook run.
+      release_summary: Removed assertions prior to playbook run that were no longer
+        needed.
+    release_date: '2023-07-19'
