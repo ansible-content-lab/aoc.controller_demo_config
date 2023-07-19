@@ -28,4 +28,4 @@ Minor Changes
 Breaking Changes / Porting Guide
 --------------------------------
 
-- All variable names have been edited and refactored. See `roles/controller/defaults/main.yml` for new variables and structure.
+- All variable names have been edited and refactored. See ``roles/controller/defaults/main.yml`` for new variables and structure.
