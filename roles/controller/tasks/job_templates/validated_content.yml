@@ -10,7 +10,7 @@
     ask_inventory_on_launch: true
     ask_variables_on_launch: true
     extra_vars:
-      azure_resource_group: "<deployment resource group>"
+      azure.resource_group: "<deployment resource group>"
     become_enabled: false
     job_slice_count: 1
     state: present

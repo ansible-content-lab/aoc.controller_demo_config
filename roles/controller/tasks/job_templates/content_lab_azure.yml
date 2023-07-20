@@ -6,8 +6,8 @@
     playbook: playbook_create_resource_group.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
-      region: "{{ azure_region }}"
+      resource_group: "{{ azure.resource_group }}"
+      region: "{{ azure.region }}"
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
@@ -20,18 +20,18 @@
 
 - name: Content Lab - Azure - Create VNET
   ansible.controller.job_template:
-    name: "{{ job_templates.vnet.name }}"
+    name: "{{ job_templates.azure.vnet.name }}"
     inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_vnet.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
-      region: "{{ azure_region }}"
-      route_table_name: "{{ job_templates.vnet.route_table_name }}"
-      vnet_name: "{{ job_templates.vnet.vnet_name }}"
-      vnet_cidr: "{{ job_templates.vnet.vnet_cidr }}"
-      subnet_name: "{{ job_templates.vnet.subnet_name }}"
-      subnet_cidr: "{{ job_templates.vnet.subnet_cidr }}"
+      resource_group: "{{ azure.resource_group }}"
+      region: "{{ azure.region }}"
+      route_table_name: "{{ job_templates.azure.vnet.route_table_name }}"
+      vnet_name: "{{ job_templates.azure.vnet.vnet_name }}"
+      vnet_cidr: "{{ job_templates.azure.vnet.vnet_cidr }}"
+      subnet_name: "{{ job_templates.azure.vnet.subnet_name }}"
+      subnet_cidr: "{{ job_templates.azure.vnet.subnet_cidr }}"
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
@@ -44,21 +44,21 @@
 
 - name: Content Lab - Azure - Create RHEL VM
   ansible.controller.job_template:
-    name: "{{ job_templates.create_rhel_vm.name }}"
+    name: "{{ job_templates.azure.create_rhel_vm.name }}"
     inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
-      region: "{{ azure_region }}"
+      resource_group: "{{ azure.resource_group }}"
+      region: "{{ azure.region }}"
       os_type: Linux
       vm_name: "{% raw %}create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       vm_blueprint: rhel9
       nic_name: create-rhel-test-nic
       network_sec_group_name: create-rhel-test-sg
       public_ip_name: create-rhel-test-public-ip
-      vnet_name: "{{ job_templates.vnet.vnet_name }}"
-      subnet_name: "{{ job_templates.vnet.subnet_name }}"
+      vnet_name: "{{ job_templates.azure.vnet.vnet_name }}"
+      subnet_name: "{{ job_templates.azure.vnet.subnet_name }}"
       create_public_ip: true
       admin_user: azureuser
       admin_password: ansible12345!
@@ -79,12 +79,12 @@
 
 - name: Content Lab - Azure - Delete RHEL VM
   ansible.controller.job_template:
-    name: "{{ job_templates.delete_rhel_vm.name }}"
+    name: "{{ job_templates.azure.delete_rhel_vm.name }}"
     inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_delete_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
+      resource_group: "{{ azure.resource_group }}"
       vm_name: rhel9-test
       nic_name: "{% raw %}{{ vm_name }}-nic{% endraw %}"
       network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
@@ -107,15 +107,15 @@
     playbook: playbook_create_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
-      region: "{{ azure_region }}"
+      resource_group: "{{ azure.resource_group }}"
+      region: "{{ azure.region }}"
       os_type: Windows
       vm_name: "{% raw %}create-win-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       nic_name: create-win-test-nic
       network_sec_group_name: create-win-test-sg
       public_ip_name: create-win-test-public-ip
-      vnet_name: "{{ job_templates.vnet.vnet_name }}"
-      subnet_name: "{{ job_templates.vnet.subnet_name }}"
+      vnet_name: "{{ job_templates.azure.vnet.vnet_name }}"
+      subnet_name: "{{ job_templates.azure.vnet.subnet_name }}"
       create_public_ip: true
       admin_user: azureuser
       admin_password: ansible12345!
@@ -138,7 +138,7 @@
     playbook: playbook_delete_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
+      resource_group: "{{ azure.resource_group }}"
       vm_name: win2022-test
       nic_name: "{% raw %}{{ vm_name }}-nic{% endraw %}"
       network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
@@ -161,8 +161,8 @@
     playbook: playbook_delete_resource_group.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
-      region: "{{ azure_region }}"
+      resource_group: "{{ azure.resource_group }}"
+      region: "{{ azure.region }}"
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
@@ -181,8 +181,8 @@
     playbook: playbook_create_transit_network.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
-      region: "{{ azure_region }}"
+      resource_group: "{{ azure.resource_group }}"
+      region: "{{ azure.region }}"
       priv_network_hosts_pattern: 172.16.*
       priv_network_ssh_user: azureuser
       ansible_ssh_private_key_file_local_path: /home/runner/.ssh/id_rsa_azure_demo # Must exist locally or be mapped in an EE
@@ -206,8 +206,8 @@
     playbook: playbook_delete_transit_network.yml
     inventory: "{{ inventories.localhost.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
-      region: "{{ azure_region }}"
+      resource_group: "{{ azure.resource_group }}"
+      region: "{{ azure.region }}"
     ask_variables_on_launch: true
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
@@ -222,7 +222,7 @@
 
 - name: Content Lab - Azure - Run DNF Update
   ansible.controller.job_template:
-    name: "{{ job_templates.dnf_update.name }}"
+    name: "{{ job_templates.azure.dnf_update.name }}"
     job_type: run
     project: "{{ projects.azure_lab_roles.name }}"
     playbook: playbook_update_rhel_vms.yml
@@ -244,13 +244,13 @@
 
 - name: Content Lab - Azure - Install Arc Agent
   ansible.controller.job_template:
-    name: "{{ job_templates.install_arc_agent.name }}"
+    name: "{{ job_templates.azure.install_arc_agent.name }}"
     inventory: "{{ inventories.azure.name }}"
     playbook: playbook_install_arc_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
-      region: "{{ azure_region }}"
+      resource_group: "{{ azure.resource_group }}"
+      region: "{{ azure.region }}"
       tenant_id: "{% raw %}{{ lookup('env', 'AZURE_TENANT') }}{% endraw %}"
       subscription_id: "{% raw %}{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}{% endraw %}"
       service_principal_id: "{% raw %}{{ lookup('env', 'AZURE_CLIENT_ID') }}{% endraw %}"
@@ -264,7 +264,7 @@
     ask_limit_on_launch: true
   when:
     - (seed_lab_content | bool)
-    - job_templates.install_arc_agent.name is defined
+    - job_templates.azure.install_arc_agent.name is defined
     - credentials.azure_service_principal.name is defined
     - credentials.ssh.name is defined
     - projects.azure_lab_roles.name is defined
@@ -280,8 +280,8 @@
     playbook: playbook_enable_arc_extension.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
-      region: "{{ azure_region }}"
+      resource_group: "{{ azure.resource_group }}"
+      region: "{{ azure.region }}"
       arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
@@ -303,8 +303,8 @@
     playbook: playbook_disable_arc_extension.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      resource_group_name: "{{ azure_resource_group }}"
-      region: "{{ azure_region }}"
+      resource_group_name: "{{ azure.resource_group }}"
+      region: "{{ azure.region }}"
       arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
@@ -321,19 +321,19 @@
 
 - name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
   ansible.controller.job_template:
-    name: "{{ job_templates.replace_log_analytics_with_azure_monitor.name }}"
+    name: "{{ job_templates.azure.replace_log_analytics_with_azure_monitor.name }}"
     inventory: "{{ inventories.azure.name }}"
     playbook: playbook_replace_log_analytics_with_arc_linux.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
-      region: "{{ azure_region }}"
-      resource_group: "{{ azure_resource_group }}"
+      region: "{{ azure.region }}"
+      resource_group: "{{ azure.resource_group }}"
       linux_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
     credentials:
       - "{{ credentials.azure_service_principal.name }}"
   when:
     - (seed_lab_content | bool)
-    - job_templates.replace_log_analytics_with_azure_monitor.name is defined
+    - job_templates.azure.replace_log_analytics_with_azure_monitor.name is defined
     - credentials.azure_service_principal.name is defined
     - projects.azure_lab_roles.name is defined
     - inventories.azure.name is defined
@@ -343,20 +343,20 @@
 
 - name: Content Lab - Azure - Create Log Analytics Workspace
   ansible.controller.job_template:
-    name: "{{ job_templates.create_log_analytics_ws.name }}"
+    name: "{{ job_templates.azure.create_log_analytics_ws.name }}"
     inventory: "{{ inventories.localhost.name }}"
     playbook: playbook_create_log_analytics_workspace.yml
     project: "{{ projects.azure_lab_roles.name }}"
     credentials:
       - "{{ credentials.ssh.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
-      workspace_name: "{{ job_templates.create_log_analytics_ws.ws_name }}"
+      resource_group: "{{ azure.resource_group }}"
+      workspace_name: "{{ job_templates.azure.create_log_analytics_ws.ws_name }}"
     limit: rhel
   when:
     - (seed_lab_content | bool)
-    - job_templates.create_log_analytics_ws.name is defined
-    - job_templates.create_log_analytics_ws.ws_name is defined
+    - job_templates.azure.create_log_analytics_ws.name is defined
+    - job_templates.azure.create_log_analytics_ws.ws_name is defined
     - credentials.ssh.name is defined
     - projects.azure_lab_roles.name is defined
     - inventories.localhost.name is defined
@@ -366,23 +366,23 @@
 
 - name: Content Lab - Azure - Install Log Analytics Agent
   ansible.controller.job_template:
-    name: "{{ job_templates.install_log_analytics.name }}"
+    name: "{{ job_templates.azure.install_log_analytics.name }}"
     inventory: "{{ inventories.azure.name }}"
     playbook: playbook_install_log_analytics_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
     credentials:
       - "{{ credentials.ssh.name }}"
     extra_vars:
-      resource_group: "{{ azure_resource_group }}"
-      workspace_name: "{{ job_templates.create_log_analytics_ws.ws_name }}"
+      resource_group: "{{ azure.resource_group }}"
+      workspace_name: "{{ job_templates.azure.create_log_analytics_ws.ws_name }}"
     become_enabled: true
     limit: rhel
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
   when:
     - (seed_lab_content | bool)
-    - job_templates.install_log_analytics.name is defined
-    - job_templates.create_log_analytics_ws.ws_name is defined
+    - job_templates.azure.install_log_analytics.name is defined
+    - job_templates.azure.create_log_analytics_ws.ws_name is defined
     - credentials.ssh.name is defined
     - projects.azure_lab_roles.name is defined
     - inventories.azure.name is defined
@@ -392,7 +392,7 @@
 
 - name: Content Lab - Azure - Uninstall Log Analytics Agent
   ansible.controller.job_template:
-    name: "{{ job_templates.uninstall_log_analytics.name }}"
+    name: "{{ job_templates.azure.uninstall_log_analytics.name }}"
     inventory: "{{ inventories.azure.name }}"
     playbook: playbook_uninstall_log_analytics_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
@@ -403,7 +403,7 @@
     ask_limit_on_launch: true
   when:
     - (seed_lab_content | bool)
-    - job_templates.uninstall_log_analytics.name is defined
+    - job_templates.azure.uninstall_log_analytics.name is defined
     - credentials.ssh.name is defined
     - projects.azure_lab_roles.name is defined
     - inventories.azure.name is defined

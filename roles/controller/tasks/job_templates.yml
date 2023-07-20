@@ -7,14 +7,14 @@
     - templates
 
 - name: Include Validated Content Job Templates
-  ansible.builtin.include_tasks: job_templates/demo.yml
+  ansible.builtin.include_tasks: job_templates/validated_content.yml
   when:
     - (seed_validated_content | bool)
   tags:
     - templates
 
 - name: Include Content Lab Azure Job Templates
-  ansible.builtin.include_tasks: job_templates/demo.yml
+  ansible.builtin.include_tasks: job_templates/content_lab_azure.yml
   when:
     - (seed_lab_content | bool)
   tags:
@@ -22,7 +22,7 @@
     - azure
 
 - name: Include Content Lab AWS Job Templates
-  ansible.builtin.include_tasks: job_templates/demo.yml
+  ansible.builtin.include_tasks: job_templates/content_lab_aws.yml
   when:
     - (seed_lab_content | bool)
   tags:

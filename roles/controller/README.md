@@ -88,8 +88,8 @@ ssh_public_key: "{{ lookup('file', '~/.ssh/id_rsa_azure_demo.pub') }}"
 
 # Optional
 awx_organization: Default
-azure_region: eastus
-azure_resource_group: ansible_test
+azure.region: eastus
+azure.resource_group: ansible_test
 windows_admin_password: ansible12345!
 ```
 
