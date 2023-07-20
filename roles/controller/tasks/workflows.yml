@@ -36,6 +36,7 @@
     - inventories.localhost.name is defined
   tags:
     - workflows
+    - azure
 
 - name: Azure - Install log analytics
   ansible.controller.workflow_job_template:
@@ -64,6 +65,7 @@
     - inventories.localhost.name is defined
   tags:
     - workflows
+    - azure
 
 - name: Azure Arc - Replace Log Analytics with Azure Monitor
   ansible.controller.workflow_job_template:
@@ -120,3 +122,4 @@
     - job_templates.uninstall_log_analytics.name is defined
   tags:
     - workflows
+    - azure

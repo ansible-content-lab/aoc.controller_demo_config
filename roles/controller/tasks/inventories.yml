@@ -17,6 +17,7 @@
     inventory: "{{ inventories.localhost.name }}"
     state: present
   when:
+    - inventories.localhost.name is defined
   tags:
     - inventories
 
@@ -32,6 +33,7 @@
     - inventories.azure.name is defined
   tags:
     - inventories
+    - azure
 
 - name: Add Azure inventory source
   ansible.controller.inventory_source:
@@ -55,3 +57,4 @@
     - execution_environments.cloud_services.name is defined
   tags:
     - inventories
+    - azure

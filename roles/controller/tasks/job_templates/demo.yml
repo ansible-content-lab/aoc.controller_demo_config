@@ -1,0 +1,11 @@
+---
+- name: Delete Demo Template
+  ansible.controller.job_template:
+    name: Demo Job Template
+    state: absent
+  when:
+    - job_templates.demo.delete_demo_template is defined
+    - job_templates.demo.delete_demo_template
+    - (seed_lab_content | bool)
+  tags:
+    - templates
