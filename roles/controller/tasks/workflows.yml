@@ -33,7 +33,6 @@
     - job_templates.create_rhel_vm.name is defined
     - job_templates.dnf_update.name is defined
     - job_templates.delete_rhel_vm.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   tags:
     - workflows
@@ -62,7 +61,6 @@
     - workflows.install_log_analytics.name is defined
     - job_templates.create_log_analytics_ws.name is defined
     - job_templates.install_log_analytics.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   tags:
     - workflows

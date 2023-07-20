@@ -30,3 +30,12 @@ releases:
       release_summary: Removed assertions prior to playbook run that were no longer
         needed.
     release_date: '2023-07-19'
+  4.0.3:
+    changes:
+      minor_changes:
+      - Fixes to ensure that seeded content would deploy properly on AAP.
+      release_summary: Fixes to ensure that seeded content would deploy properly on
+        AAP.
+    fragments:
+    - controller-fixes.yml
+    release_date: '2023-07-19'

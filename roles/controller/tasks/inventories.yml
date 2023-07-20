@@ -17,7 +17,6 @@
     inventory: "{{ inventories.localhost.name }}"
     state: present
   when:
-    - localhost_inventory is defined
   tags:
     - inventories
 
@@ -50,9 +49,7 @@
     verbosity: 0
   when:
     - (seed_lab_content | bool)
-    - azure_inventory is defined
     - inventories.azure.name is defined
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
     - cloud_ee is defined
     - execution_environments.cloud_services.name is defined

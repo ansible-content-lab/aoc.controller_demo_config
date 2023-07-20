@@ -23,11 +23,8 @@
       - "{{ credentials.azure_service_principal.name }}"
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   tags:
     - templates
@@ -50,11 +47,8 @@
       - "{{ credentials.azure_service_principal.name }}"
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   tags:
     - templates
@@ -87,11 +81,8 @@
       - "{{ credentials.azure_service_principal.name }}"
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   register: create_rhel_vm_template
   tags:
@@ -113,11 +104,8 @@
       - "{{ credentials.azure_service_principal.name }}"
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   register: delete_rhel_vm_template
   tags:
@@ -147,11 +135,8 @@
       - "{{ credentials.azure_service_principal.name }}"
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   register: create_windows_vm_template
   tags:
@@ -173,11 +158,8 @@
       - "{{ credentials.azure_service_principal.name }}"
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   register: delete_windows_vm_template
   tags:
@@ -196,11 +178,8 @@
       - "{{ credentials.azure_service_principal.name }}"
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   register: delete_resource_group_template
   tags:
@@ -224,11 +203,8 @@
       - "{{ credentials.azure_service_principal.name }}"
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   register: create_network_peering_demo_template
   tags:
@@ -248,11 +224,8 @@
       - "{{ credentials.azure_service_principal.name }}"
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   register: delete_network_peering_demo_template
   tags:
@@ -273,11 +246,8 @@
     state: present
   when:
     - (seed_lab_content | bool)
-    - vm_credential is defined
     - credentials.ssh.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - azure_inventory is defined
     - inventories.azure.name is defined
   register: rhel_vm_update_template
   tags:
@@ -306,13 +276,9 @@
   when:
     - (seed_lab_content | bool)
     - job_templates.install_arc_agent.name is defined
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - vm_credential is defined
     - credentials.ssh.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - azure_inventory is defined
     - inventories.azure.name is defined
   register: install_arc_agent_template
   tags:
@@ -334,11 +300,8 @@
     ask_variables_on_launch: true
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - azure_inventory is defined
     - inventories.azure.name is defined
   register: enable_arc_extensions_template
   tags:
@@ -360,11 +323,8 @@
     ask_variables_on_launch: true
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - azure_inventory is defined
     - inventories.azure.name is defined
   register: disable_arc_extensions_template
   tags:
@@ -385,11 +345,8 @@
   when:
     - (seed_lab_content | bool)
     - job_templates.replace_log_analytics_with_azure_monitor.name is defined
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - azure_inventory is defined
     - inventories.azure.name is defined
   register: replace_log_analytics_with_azure_monitor_template
   tags:
@@ -411,11 +368,8 @@
     - (seed_lab_content | bool)
     - job_templates.create_log_analytics_ws.name is defined
     - job_templates.create_log_analytics_ws.ws_name is defined
-    - vm_credential is defined
     - credentials.ssh.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   register: create_log_analytics_workspace_template
   tags:
@@ -440,11 +394,8 @@
     - (seed_lab_content | bool)
     - job_templates.install_log_analytics.name is defined
     - job_templates.create_log_analytics_ws.ws_name is defined
-    - vm_credential is defined
     - credentials.ssh.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - azure_inventory is defined
     - inventories.azure.name is defined
   register: install_log_analytics_agent_template
   tags:
@@ -464,11 +415,8 @@
   when:
     - (seed_lab_content | bool)
     - job_templates.uninstall_log_analytics.name is defined
-    - vm_credential is defined
     - credentials.ssh.name is defined
-    - content_lab_project_azure is defined
     - projects.azure_lab_roles.name is defined
-    - azure_inventory is defined
     - inventories.azure.name is defined
   register: uninstall_log_analytics_agent_template
   tags:
@@ -490,15 +438,10 @@
     state: present
   when:
     - (seed_lab_content | bool)
-    - azure_credential is defined
     - credentials.azure_service_principal.name is defined
-    - vm_credential is defined
     - credentials.ssh.name is defined
-    - controller_credential is defined
     - credentials.controller.name is defined
-    - content_lab_project_demo is defined
     - projects.azure_demo_project.name is defined
-    - localhost_inventory is defined
     - inventories.localhost.name is defined
   register: ephemeral_workload_template
   tags:
@@ -523,7 +466,6 @@
     - (seed_validated_content | bool)
     - cloud_services_ee is defined
     - execution_environments.cloud_services.name is defined
-    - seeded_content_project_azure is defined
     - projects.azure_seeded_content.name is defined
   register: ephemeral_workload_template
   tags:
@@ -549,7 +491,6 @@
     - (seed_validated_content | bool)
     - cloud_services_ee is defined
     - execution_environments.cloud_services.name is defined
-    - seeded_content_project_azure is defined
     - projects.azure_seeded_content.name is defined
   register: ephemeral_workload_template
   tags:

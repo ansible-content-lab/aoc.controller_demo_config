@@ -6,6 +6,19 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v4.0.3
+======
+
+Release Summary
+---------------
+
+Fixes to ensure that seeded content would deploy properly on AAP.
+
+Minor Changes
+-------------
+
+- Fixes to ensure that seeded content would deploy properly on AAP.
+
 v4.0.2
 ======
 

@@ -17,9 +17,11 @@ execution_environments:
   cloud_services:
     name: Cloud Services Execution Environment
     set_default: false
+    image: registry.redhat.io/ansible-automation-platform-24/ee-cloud-services-rhel8:latest
   cloud_ee:
     name: Cloud EE
     set_default: false
+    image: quay.io/scottharwell/cloud-ee:latest
 inventories:
   azure:
     name: Azure
@@ -68,6 +70,7 @@ projects:
 schedules:
   ephemeral_workload:
     name: Content Lab - RHEL Ephemeral VM Workflow
+    enabled: false
 workflows:
   arc_log_migration:
     name: Content Lab - Azure - Arc Log Migration

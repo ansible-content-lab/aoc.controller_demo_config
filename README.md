@@ -1,6 +1,6 @@
 # Ansible on Clouds Controller Setup and Configuration
 
-This collection contains playbooks and roles that demonstrate using configuration-as-code to declare the setup and configuration for Ansible Automation Controller.  This approach to Ansible Automation Controller configuration provides an easy-to-read and manage deployment model and keeps your Ansible Automation Controller configuration portable between different AAP deployments.
+This collection contains playbooks and roles that demonstrate using configuration-as-code to declare the setup and configuration for Ansible Automation Controller -- seeding opinionated automation content into the platform.  This approach to Ansible Automation Controller configuration provides an easy-to-read and manage deployment model and keeps your Ansible Automation Controller configuration portable between different AAP deployments.
 
 ## Included Content
 
@@ -40,8 +40,7 @@ ansible-navigator run playbook_configure_aap.yml \
 --penv AZURE_SECRET \
 --penv RED_HAT_ACCOUNT \
 --penv RED_HAT_PASSWORD \
---eev $HOME/.ssh:/home/runner/.ssh \
---extra-vars "{'job_templates': {'ssh_public_key': \"{{ lookup('file','~/.ssh/id_rsa_azure_demo.pub') }}\", 'admin_password': 'ansible123456', 'log_ws_name': 'log-ws' }}"
+--eev $HOME/.ssh:/home/runner/.ssh
 ```
 
 ## Installation and Usage
@@ -80,4 +79,4 @@ See [LICENSE](https://github.com/ansible-content-lab/aoc.controller_demo_config/
 
 ## Author
 
-This role was originally written by Scott Harwell and Hicham Mourad from the Ansible team at Red Hat.
+This collection was originally written by Scott Harwell and Hicham Mourad from the Ansible team at Red Hat.

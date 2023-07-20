@@ -4,13 +4,15 @@
     name: "{{ execution_environments.cloud_services.name }}"
     description: Red Hat Cloud Services EE
     organization: "{{ awx_organization | default('') }}"
-    image: registry.redhat.io/ansible-automation-platform-24/ee-cloud-services-rhel8:latest
-    credential: Red Hat Registry
+    image: "{{ credentials.red_hat_registry.image }}"
+    credential: "{{ credentials.red_hat_registry.name }}"
     pull: always
     state: present
   register: cloud_services_ee
   when:
     - (seed_validated_content | bool)
+    - credentials.red_hat_registry.name is defined
+    - credentials.red_hat_registry.image is defined
   tags:
     - ees
 
@@ -30,12 +32,13 @@
   ansible.controller.execution_environment:
     name: "{{ execution_environments.cloud_ee.name }}"
     description: Cloud Content Lab EE that contains dependencies for major hyperscaler collections.
-    image: quay.io/scottharwell/cloud-ee:latest
+    image: "{{ execution_environments.cloud_ee.image }}"
     state: present
     pull: always
   register: cloud_ee
   when:
     - (seed_lab_content | bool)
+    - execution_environments.cloud_ee.image is defined
   tags:
     - ees
 

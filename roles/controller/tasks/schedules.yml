@@ -5,10 +5,12 @@
     state: present
     unified_job_template: "{{ workflows.ephemeral_workload.name }}"
     rrule: "{{ query('ansible.controller.schedule_rrule', 'hour', start_date='2022-01-01 23:30:00', timezone='US/Eastern') }}"
+    enabled: "{{ schedules.ephemeral_workload.enabled }}"
   register: result
   when:
     - (seed_lab_content | bool)
     - schedules.ephemeral_workload.name is defined
+    - schedules.ephemeral_workload.enabled is defined
     - workflows.ephemeral_workload.name is defined
   tags:
     - schedules
