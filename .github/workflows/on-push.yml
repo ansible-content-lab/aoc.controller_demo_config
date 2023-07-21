@@ -27,7 +27,7 @@ jobs:
 
       - name: Copy ansible-lint config into dir
         shell: bash
-        run: copy ./.ansible-lint /home/runner/.ansible
+        run: cp ./.ansible-lint /home/runner/.ansible
 
       - name: Run pre-commit tests
         run: pre-commit run -v
