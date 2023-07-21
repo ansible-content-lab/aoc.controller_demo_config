@@ -1,0 +1,8 @@
+---
+breaking_changes:
+  - Changed variables that start with ``azure_`` to ``azure.``.
+major_changes:
+  - Added AWS job templates.
+minor_changes:
+  - Readme updates to account for the new content added.
+release_summary: Adding AWS content to the cloud content lab seeded content.
