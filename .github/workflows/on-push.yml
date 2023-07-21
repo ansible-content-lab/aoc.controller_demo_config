@@ -27,7 +27,7 @@ jobs:
 
       - name: Copy ansible-lint config into dir
         shell: bash
-        run: cp ./.ansible-lint /home/runner/.ansible
+        run: cp ./.ansible-lint /home/runner/.ansible/.ansible-lint
 
       - name: Ensure tmp dir exists
         shell: bash

@@ -1,5 +1,5 @@
 ---
-profile: min
+profile: basic
 
 skip_list:
   - ignore-errors
