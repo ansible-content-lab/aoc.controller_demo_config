@@ -1,7 +1,7 @@
 ---
 awx_organization: Default
 aws:
-  region: us-east
+  region: us-east-1
 azure:
   region: eastus
   resource_group: ansible_test
@@ -39,6 +39,16 @@ job_templates:
     create_rhel_vm:
       name: Content Lab - AWS - Create RHEL VM
       keypair_name: vm_keypair
+    create_peer_network:
+      name: Content Lab - AWS - Create Peer Network
+    create_reports:
+      name: Content Lab - AWS - Create Reports
+    create_transit_network:
+      name: Content Lab - AWS - Create Transit Network
+    delete_peer_network:
+      name: Content Lab - AWS - Delete Peer Network
+    delete_transit_network:
+      name: Content Lab - AWS - Delete Transit Network
     delete_rhel_vm:
       name: Content Lab - AWS - Delete RHEL VM
     vnet:
