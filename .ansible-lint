@@ -1,5 +1,7 @@
 ---
 profile: basic
+quiet: false
+verbosity: 2
 
 skip_list:
   - ignore-errors
