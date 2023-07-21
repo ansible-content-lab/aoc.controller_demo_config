@@ -25,5 +25,8 @@ jobs:
       - name: Install requirements
         run: sudo pip3 install ansible-core>=2.15.1 ansible-lint pre-commit
 
+      - name: Copy ansible-lint config into dir
+        run: copy ./.ansible-lint /home/runner/.ansible
+
       - name: Run pre-commit tests
         run: pre-commit run -v
