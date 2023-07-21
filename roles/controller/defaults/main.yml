@@ -1,11 +1,15 @@
 ---
 awx_organization: Default
+aws:
+  region: us-east
 azure:
   region: eastus
   resource_group: ansible_test
 credentials:
   azure_service_principal:
     name: Azure Service Principal
+  aws_account:
+    name: AWS Account
   controller:
     name: Ansible Automation Controller
   red_hat_registry:
@@ -31,6 +35,15 @@ inventories:
 job_templates:
   demo:
     delete_demo_template: true
+  aws:
+    create_rhel_vm:
+      name: Content Lab - AWS - Create RHEL VM
+      keypair_name: vm_keypair
+    delete_rhel_vm:
+      name: Content Lab - AWS - Delete RHEL VM
+    vnet:
+      subnet_name: subnet-test
+      subnet_cidr: 10.0.200.0/24
   azure:
     create_rhel_vm:
       name: Content Lab - Azure - Create RHEL VM

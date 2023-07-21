@@ -1,0 +1,54 @@
+---
+- name: Content Lab - AWS - Create RHEL VM
+  ansible.controller.job_template:
+    name: "{{ job_templates.aws.create_rhel_vm.name }}"
+    inventory: "{{ inventories.localhost.name }}"
+    playbook: playbook_create_vm.yml
+    project: "{{ projects.aws_lab_roles.name }}"
+    extra_vars:
+      create_vm_aws_region: "{{ aws.region }}"
+      create_vm_vm_name: "{% raw %}create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
+      create_vm_aws_image_filter: "{% raw %}{{ default(omit) }}{% endraw %}"
+      create_vm_aws_vpc_subnet_name: "{{ job_templates.aws.vnet.subnet_name }}"
+      create_vm_aws_securitygroup_name: default
+      create_vm_aws_keypair_name: "{{ job_templates.aws.create_rhel_vm.keypair_name }}"
+      create_vm_aws_instance_size: t2.micro
+      create_vm_vm_blueprint: rhel9
+    ask_variables_on_launch: true
+    credentials:
+      - "{{ credentials.aws_account.name }}"
+  when:
+    - (seed_lab_content | bool)
+    - credentials.aws_account.name is defined
+    - projects.aws_lab_roles.name is defined
+    - inventories.localhost.name is defined
+    - job_templates.aws.create_rhel_vm.name is defined
+    - job_templates.aws.create_rhel_vm.keypair_name is defined
+    - job_templates.aws.vnet.subnet_name is defined
+  register: create_rhel_vm_template
+  tags:
+    - templates
+    - aws
+
+- name: Content Lab - AWS - Delete RHEL VM
+  ansible.controller.job_template:
+    name: "{{ job_templates.aws.delete_rhel_vm.name }}"
+    inventory: "{{ inventories.localhost.name }}"
+    playbook: playbook_create_vm.yml
+    project: "{{ projects.aws_lab_roles.name }}"
+    extra_vars:
+      aws_region: "{{ aws.region }}"
+      vm_name: vm-name
+    ask_variables_on_launch: true
+    credentials:
+      - "{{ credentials.aws_account.name }}"
+  when:
+    - (seed_lab_content | bool)
+    - credentials.aws_account.name is defined
+    - projects.aws_lab_roles.name is defined
+    - inventories.localhost.name is defined
+    - job_templates.aws.delete_rhel_vm.name is defined
+  register: create_rhel_vm_template
+  tags:
+    - templates
+    - aws
