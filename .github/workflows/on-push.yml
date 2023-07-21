@@ -22,8 +22,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install pre-commit
-        run: sudo pip3 install pre-commit
+      - name: Install requirements
+        run: sudo pip3 install ansible>=2.15.1 ansible-lint pre-commit
 
       - name: Run pre-commit tests
         run: pre-commit run -v
