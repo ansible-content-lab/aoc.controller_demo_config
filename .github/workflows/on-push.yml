@@ -23,11 +23,15 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install requirements
-        run: sudo pip3 install ansible-core>=2.15.1 ansible-lint pre-commit
+        run: sudo pip3 install pre-commit
 
       - name: Copy ansible-lint config into dir
         shell: bash
         run: cp ./.ansible-lint /home/runner/.ansible
+
+      - name: Ensure tmp dir exists
+        shell: bash
+        run: mkdir -p /home/runner/.ansible/tmp
 
       - name: Run pre-commit tests
         run: pre-commit run -v
