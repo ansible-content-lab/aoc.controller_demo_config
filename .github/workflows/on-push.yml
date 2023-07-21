@@ -25,13 +25,5 @@ jobs:
       - name: Install requirements
         run: sudo pip3 install pre-commit
 
-      - name: Copy ansible-lint config into dir
-        shell: bash
-        run: cp ./.ansible-lint /home/runner/.ansible/.ansible-lint
-
-      - name: Ensure tmp dir exists
-        shell: bash
-        run: mkdir -p /home/runner/.ansible/tmp
-
       - name: Run pre-commit tests
         run: pre-commit run -v
