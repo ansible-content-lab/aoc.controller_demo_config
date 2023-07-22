@@ -26,4 +26,4 @@ jobs:
         run: sudo pip3 install pre-commit
 
       - name: Run pre-commit tests
-        run: pre-commit run -v
+        run: pre-commit run -v --all-files
