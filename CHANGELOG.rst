@@ -6,6 +6,30 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v4.1.0
+======
+
+Release Summary
+---------------
+
+Adding AWS content to the cloud content lab seeded content.
+
+Major Changes
+-------------
+
+- Added AWS job templates.
+- Added GitHub Workflows tests.
+
+Minor Changes
+-------------
+
+- Readme updates to account for the new content added.
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Changed variables that start with ``azure_`` to ``azure.``.
+
 v4.0.3
 ======
 

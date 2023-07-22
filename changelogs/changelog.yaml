@@ -39,3 +39,16 @@ releases:
     fragments:
     - controller-fixes.yml
     release_date: '2023-07-19'
+  4.1.0:
+    changes:
+      breaking_changes:
+      - Changed variables that start with ``azure_`` to ``azure.``.
+      major_changes:
+      - Added AWS job templates.
+      - Added GitHub Workflows tests.
+      minor_changes:
+      - Readme updates to account for the new content added.
+      release_summary: Adding AWS content to the cloud content lab seeded content.
+    fragments:
+    - 2-added-aws-content.yml
+    release_date: '2023-07-22'
