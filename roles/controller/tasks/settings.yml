@@ -33,6 +33,7 @@
     - lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_KEY') | length > 0
   tags:
     - settings
+    - azure
 
 - name: Set the Azure AD Client Secret for SSO
   ansible.controller.settings:
@@ -42,3 +43,4 @@
     - lookup('env', 'SOCIAL_AUTH_AZUREAD_OAUTH2_SECRET') | length > 0
   tags:
     - settings
+    - azure

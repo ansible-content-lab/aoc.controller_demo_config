@@ -1,0 +1,49 @@
+---
+- name: Validated Content - Azure web application deployment demo
+  ansible.controller.job_template:
+    name: Validated Content - Azure web application deployment demo
+    job_type: run
+    execution_environment: "{{ execution_environments.cloud_services.name }}"
+    project: "{{ projects.azure_seeded_content.name }}"
+    playbook: playbooks/webapp.yml
+    ask_credential_on_launch: true
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    extra_vars:
+      azure.resource_group: "<deployment resource group>"
+    become_enabled: false
+    job_slice_count: 1
+    state: present
+  when:
+    - (seed_validated_content | bool)
+    - cloud_services_ee is defined
+    - execution_environments.cloud_services.name is defined
+    - projects.azure_seeded_content.name is defined
+  register: ephemeral_workload_template
+  tags:
+    - templates
+
+- name: Validated Content - Azure web application migration demo
+  ansible.controller.job_template:
+    name: Validated Content - Azure web application migration demo
+    job_type: run
+    execution_environment: "{{ execution_environments.cloud_services.name }}"
+    project: "{{ projects.azure_seeded_content.name }}"
+    playbook: playbooks/vmss_migrate.yml
+    ask_credential_on_launch: true
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    extra_vars:
+      source_resource_group: "<source resource group>"
+      destination_resource_group: "<destination resource group>"
+    become_enabled: false
+    job_slice_count: 1
+    state: present
+  when:
+    - (seed_validated_content | bool)
+    - cloud_services_ee is defined
+    - execution_environments.cloud_services.name is defined
+    - projects.azure_seeded_content.name is defined
+  register: ephemeral_workload_template
+  tags:
+    - templates

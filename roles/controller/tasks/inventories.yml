@@ -17,6 +17,7 @@
     inventory: "{{ inventories.localhost.name }}"
     state: present
   when:
+    - inventories.localhost.name is defined
   tags:
     - inventories
 
@@ -32,6 +33,7 @@
     - inventories.azure.name is defined
   tags:
     - inventories
+    - azure
 
 - name: Add Azure inventory source
   ansible.controller.inventory_source:
@@ -39,19 +41,20 @@
     description: Creates inventory from Azure sources
     inventory: "{{ inventories.azure.name }}"
     credential: "{{ credentials.azure_service_principal.name }}"
-    execution_environment: Cloud EE
+    execution_environment: "{{ execution_environments.cloud_services.name }}"
     overwrite: true
     update_on_launch: true
     organization: "{{ awx_organization }}"
     source: scm
-    source_project: Ansible Cloud Content Lab - Azure Roles
+    source_project: "{{ projects.azure_lab_roles.name }}"
     source_path: inventory/inventory.azure_rm.yml
     verbosity: 0
   when:
     - (seed_lab_content | bool)
     - inventories.azure.name is defined
     - credentials.azure_service_principal.name is defined
-    - cloud_ee is defined
     - execution_environments.cloud_services.name is defined
+    - projects.azure_lab_roles.name is defined
   tags:
     - inventories
+    - azure
