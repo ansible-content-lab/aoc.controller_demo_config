@@ -12,7 +12,6 @@
   when:
     - (seed_validated_content | bool)
     - credentials.red_hat_registry.name is defined
-    - credentials.red_hat_registry.image is defined
   tags:
     - ees
 
