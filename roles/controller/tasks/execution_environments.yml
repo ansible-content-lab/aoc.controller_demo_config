@@ -4,7 +4,7 @@
     name: "{{ execution_environments.cloud_services.name }}"
     description: Red Hat Cloud Services EE
     organization: "{{ awx_organization | default('') }}"
-    image: "{{ credentials.red_hat_registry.image }}"
+    image: "{{ execution_environments.cloud_services.image }}"
     credential: "{{ credentials.red_hat_registry.name }}"
     pull: always
     state: present
