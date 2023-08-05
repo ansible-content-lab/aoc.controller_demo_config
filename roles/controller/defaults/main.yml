@@ -80,18 +80,21 @@ job_templates:
       subnet_name: subnet-test
       subnet_cidr: 10.0.200.0/24
 projects:
+  aws_lab_roles:
+    name: Ansible Cloud Content Lab - AWS Roles
+    url: https://github.com/ansible-content-lab/aws.infrastructure_config_demos.git
   azure_demo_project:
     name: Ansible Cloud Content Lab - Azure Demo
     url: https://github.com/ansible-cloud/azure.git
   azure_lab_roles:
     name: Ansible Cloud Content Lab - Azure Roles
     url: https://github.com/ansible-content-lab/azure.infrastructure_config_demos.git
-  aws_lab_roles:
-    name: Ansible Cloud Content Lab - AWS Roles
-    url: https://github.com/ansible-content-lab/aws.infrastructure_config_demos.git
   azure_seeded_content:
     name: Ansible Validated Content - Azure Demos
     url: https://github.com/redhat-cop/cloud.azure_ops.git
+  azure_tf:
+    name: Ansible Cloud Content Lab - Azure Terraform Demos
+    url: https://github.com/ansible-content-lab/azure.terraform_reference.git
 schedules:
   ephemeral_workload:
     name: Content Lab - RHEL Ephemeral VM Workflow
