@@ -52,3 +52,12 @@ releases:
     fragments:
     - 2-added-aws-content.yml
     release_date: '2023-07-22'
+  4.1.1:
+    changes:
+      minor_changes:
+      - Added azure tag to job templates.
+      - Bumped pre-commit tool versions.
+      release_summary: Added azure tags to job templates.
+    fragments:
+    - 4-azure-tags.yml
+    release_date: '2023-08-08'
