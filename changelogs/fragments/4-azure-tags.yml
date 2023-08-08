@@ -1,4 +1,0 @@
----
-minor_changes:
-  - Added azure tag to job templates.
-  - Bumped pre-commit tool versions.

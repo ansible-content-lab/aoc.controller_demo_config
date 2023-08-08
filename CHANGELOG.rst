@@ -6,6 +6,15 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v4.1.1
+======
+
+Minor Changes
+-------------
+
+- Added azure tag to job templates.
+- Bumped pre-commit tool versions.
+
 v4.1.0
 ======
 
