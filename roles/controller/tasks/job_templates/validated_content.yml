@@ -22,6 +22,7 @@
   register: ephemeral_workload_template
   tags:
     - templates
+    - validated_content
 
 - name: Validated Content - Azure web application migration demo
   ansible.controller.job_template:
@@ -47,3 +48,4 @@
   register: ephemeral_workload_template
   tags:
     - templates
+    - validated_content

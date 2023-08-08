@@ -1,3 +1,4 @@
 ---
 major_changes:
   - Added new Ansible Cloud Content lab project, `azure.terraform_reference` to the projects deployed.
+  - Added tags to content lab azure and validated content job templates.

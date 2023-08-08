@@ -1,0 +1,25 @@
+---
+- name: Content Lab - TerraForm create TF state storage
+  ansible.controller.job_template:
+    name: Content Lab - TerraForm n-tier architecture deployment demo
+    job_type: run
+    project: "{{ projects.azure_tf.name }}"
+    playbook: playbook_create_tfstate_storage.yml
+    inventory: "{{ inventories.localhost.name }}"
+    credentials:
+      - "{{ credentials.azure_service_principal.name }}"
+      - "{{ credentials.controller.name }}"
+    become_enabled: true
+    job_slice_count: 1
+    state: present
+  when:
+    - (seed_lab_content | bool)
+    - credentials.azure_service_principal.name is defined
+    - credentials.controller.name is defined
+    - projects.azure_demo_project.name is defined
+    - inventories.localhost.name is defined
+  register: ephemeral_workload_template
+  tags:
+    - templates
+    - azure
+    - terraform
