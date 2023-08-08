@@ -17,6 +17,7 @@
     - inventories.localhost.name is defined
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Create VNET
   ansible.controller.job_template:
@@ -41,6 +42,7 @@
     - inventories.localhost.name is defined
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Create RHEL VM
   ansible.controller.job_template:
@@ -76,6 +78,7 @@
   register: create_rhel_vm_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Delete RHEL VM
   ansible.controller.job_template:
@@ -99,6 +102,7 @@
   register: delete_rhel_vm_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Create Windows Server VM
   ansible.controller.job_template:
@@ -130,6 +134,7 @@
   register: create_windows_vm_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Delete Windows VM
   ansible.controller.job_template:
@@ -153,6 +158,7 @@
   register: delete_windows_vm_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Delete Resource Group
   ansible.controller.job_template:
@@ -173,6 +179,7 @@
   register: delete_resource_group_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Create Network Peering Demo
   ansible.controller.job_template:
@@ -198,6 +205,7 @@
   register: create_network_peering_demo_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Delete Network Peering Demo
   ansible.controller.job_template:
@@ -219,6 +227,7 @@
   register: delete_network_peering_demo_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Run DNF Update
   ansible.controller.job_template:
@@ -241,6 +250,7 @@
   register: rhel_vm_update_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Install Arc Agent
   ansible.controller.job_template:
@@ -272,6 +282,7 @@
   register: install_arc_agent_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Enable Arc Extensions
   ansible.controller.job_template:
@@ -295,6 +306,7 @@
   register: enable_arc_extensions_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Disable Arc Extensions
   ansible.controller.job_template:
@@ -318,6 +330,7 @@
   register: disable_arc_extensions_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
   ansible.controller.job_template:
@@ -340,6 +353,7 @@
   register: replace_log_analytics_with_azure_monitor_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Create Log Analytics Workspace
   ansible.controller.job_template:
@@ -363,6 +377,7 @@
   register: create_log_analytics_workspace_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Install Log Analytics Agent
   ansible.controller.job_template:
@@ -389,6 +404,7 @@
   register: install_log_analytics_agent_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Azure - Uninstall Log Analytics Agent
   ansible.controller.job_template:
@@ -410,6 +426,7 @@
   register: uninstall_log_analytics_agent_template
   tags:
     - templates
+    - azure
 
 - name: Content Lab - Run Ephemeral Workload Test
   ansible.controller.job_template:
@@ -435,3 +452,4 @@
   register: ephemeral_workload_template
   tags:
     - templates
+    - azure
