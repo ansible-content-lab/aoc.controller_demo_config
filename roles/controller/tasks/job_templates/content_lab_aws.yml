@@ -3,7 +3,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.aws.create_rhel_vm.name }}"
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_create_vm.yml
+    playbook: playbooks/create_vm.yml
     project: "{{ projects.aws_lab_roles.name }}"
     extra_vars:
       create_vm_aws_region: "{{ aws.region }}"
@@ -34,7 +34,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.aws.delete_rhel_vm.name }}"
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_create_vm.yml
+    playbook: playbooks/create_vm.yml
     project: "{{ projects.aws_lab_roles.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
@@ -57,7 +57,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.aws.create_peer_network.name }}"
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_create_peer_network.yml
+    playbook: playbooks/create_peer_network.yml
     project: "{{ projects.aws_lab_roles.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
@@ -83,7 +83,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.aws.delete_peer_network.name }}"
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_delete_peer_network.yml
+    playbook: playbooks/delete_peer_network.yml
     project: "{{ projects.aws_lab_roles.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
@@ -105,7 +105,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.aws.create_reports.name }}"
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_create_reports.yml
+    playbook: playbooks/create_reports.yml
     project: "{{ projects.aws_lab_roles.name }}"
     extra_vars:
       reports_aws_region: "{{ aws.region }}"
@@ -127,7 +127,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.aws.create_transit_network.name }}"
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_create_transit_network.yml
+    playbook: playbooks/create_transit_network.yml
     project: "{{ projects.aws_lab_roles.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
@@ -159,7 +159,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.aws.delete_transit_network.name }}"
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_delete_transit_network.yml
+    playbook: playbooks/delete_transit_network.yml
     project: "{{ projects.aws_lab_roles.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"

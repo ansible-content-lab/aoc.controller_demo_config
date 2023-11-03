@@ -6,8 +6,31 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v4.2.0
+======
+
+Release Summary
+---------------
+
+Updates to dependent collections.
+
+Major Changes
+-------------
+
+- Moved playbook to playbooks folder.
+
+Minor Changes
+-------------
+
+- Updated for changes to dependent collections.
+
 v4.1.1
 ======
+
+Release Summary
+---------------
+
+Added azure tags to job templates.
 
 Minor Changes
 -------------
