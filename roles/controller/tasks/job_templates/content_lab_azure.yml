@@ -3,7 +3,7 @@
   ansible.controller.job_template:
     name: Content Lab - Azure - Create Resource Group
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_create_resource_group.yml
+    playbook: playbooks/create_resource_group.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
@@ -23,7 +23,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.azure.vnet.name }}"
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_create_vnet.yml
+    playbook: playbooks/create_vnet.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
@@ -48,7 +48,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.azure.create_rhel_vm.name }}"
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_create_vm.yml
+    playbook: playbooks/create_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
@@ -84,7 +84,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.azure.delete_rhel_vm.name }}"
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_delete_vm.yml
+    playbook: playbooks/delete_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
@@ -108,7 +108,7 @@
   ansible.controller.job_template:
     name: Content Lab - Azure - Create Windows Server VM
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_create_vm.yml
+    playbook: playbooks/create_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
@@ -140,7 +140,7 @@
   ansible.controller.job_template:
     name: Content Lab - Azure - Delete Windows VM
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_delete_vm.yml
+    playbook: playbooks/delete_vm.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
@@ -164,7 +164,7 @@
   ansible.controller.job_template:
     name: Content Lab - Azure - Delete Resource Group
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_delete_resource_group.yml
+    playbook: playbooks/delete_resource_group.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
@@ -185,7 +185,7 @@
   ansible.controller.job_template:
     name: Content Lab - Azure - Create Network Peering Demo
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_create_transit_network.yml
+    playbook: playbooks/create_transit_network.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
@@ -211,7 +211,7 @@
   ansible.controller.job_template:
     name: Content Lab - Azure - Delete Network Peering Demo
     project: "{{ projects.azure_lab_roles.name }}"
-    playbook: playbook_delete_transit_network.yml
+    playbook: playbooks/delete_transit_network.yml
     inventory: "{{ inventories.localhost.name }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
@@ -234,7 +234,7 @@
     name: "{{ job_templates.azure.dnf_update.name }}"
     job_type: run
     project: "{{ projects.azure_lab_roles.name }}"
-    playbook: playbook_update_rhel_vms.yml
+    playbook: playbooks/update_rhel_vms.yml
     inventory: "{{ inventories.azure.name }}"
     limit: rhel
     credentials:
@@ -256,7 +256,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.azure.install_arc_agent.name }}"
     inventory: "{{ inventories.azure.name }}"
-    playbook: playbook_install_arc_agent.yml
+    playbook: playbooks/install_arc_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
@@ -288,7 +288,7 @@
   ansible.controller.job_template:
     name: Content Lab - Azure - Enable Arc Extensions
     inventory: "{{ inventories.azure.name }}"
-    playbook: playbook_enable_arc_extension.yml
+    playbook: playbooks/enable_arc_extension.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
@@ -312,7 +312,7 @@
   ansible.controller.job_template:
     name: Content Lab - Azure - Disable Arc Extensions
     inventory: "{{ inventories.azure.name }}"
-    playbook: playbook_disable_arc_extension.yml
+    playbook: playbooks/disable_arc_extension.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       resource_group_name: "{{ azure.resource_group }}"
@@ -336,7 +336,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.azure.replace_log_analytics_with_azure_monitor.name }}"
     inventory: "{{ inventories.azure.name }}"
-    playbook: playbook_replace_log_analytics_with_arc_linux.yml
+    playbook: playbooks/replace_log_analytics_with_arc_linux.yml
     project: "{{ projects.azure_lab_roles.name }}"
     extra_vars:
       region: "{{ azure.region }}"
@@ -359,7 +359,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.azure.create_log_analytics_ws.name }}"
     inventory: "{{ inventories.localhost.name }}"
-    playbook: playbook_create_log_analytics_workspace.yml
+    playbook: playbooks/create_log_analytics_workspace.yml
     project: "{{ projects.azure_lab_roles.name }}"
     credentials:
       - "{{ credentials.ssh.name }}"
@@ -383,7 +383,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.azure.install_log_analytics.name }}"
     inventory: "{{ inventories.azure.name }}"
-    playbook: playbook_install_log_analytics_agent.yml
+    playbook: playbooks/install_log_analytics_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
     credentials:
       - "{{ credentials.ssh.name }}"
@@ -410,7 +410,7 @@
   ansible.controller.job_template:
     name: "{{ job_templates.azure.uninstall_log_analytics.name }}"
     inventory: "{{ inventories.azure.name }}"
-    playbook: playbook_uninstall_log_analytics_agent.yml
+    playbook: playbooks/uninstall_log_analytics_agent.yml
     project: "{{ projects.azure_lab_roles.name }}"
     credentials:
       - "{{ credentials.ssh.name }}"
@@ -424,32 +424,6 @@
     - projects.azure_lab_roles.name is defined
     - inventories.azure.name is defined
   register: uninstall_log_analytics_agent_template
-  tags:
-    - templates
-    - azure
-
-- name: Content Lab - Run Ephemeral Workload Test
-  ansible.controller.job_template:
-    name: Content Lab - Azure Demos - Ephemeral Workload Test
-    job_type: run
-    project: "{{ projects.azure_demo_project.name }}"
-    playbook: project/emphemeral_workload_test.yml
-    inventory: "{{ inventories.localhost.name }}"
-    credentials:
-      - "{{ credentials.azure_service_principal.name }}"
-      - "{{ credentials.controller.name }}"
-      - "{{ credentials.ssh.name }}"
-    become_enabled: true
-    job_slice_count: 1
-    state: present
-  when:
-    - (seed_lab_content | bool)
-    - credentials.azure_service_principal.name is defined
-    - credentials.ssh.name is defined
-    - credentials.controller.name is defined
-    - projects.azure_demo_project.name is defined
-    - inventories.localhost.name is defined
-  register: ephemeral_workload_template
   tags:
     - templates
     - azure
