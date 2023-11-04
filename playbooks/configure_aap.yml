@@ -7,4 +7,4 @@
   tasks:
     - name: Run Controller Configuration Role
       ansible.builtin.import_role:
-        name: controller
+        name: lab.controller_demo_config.controller

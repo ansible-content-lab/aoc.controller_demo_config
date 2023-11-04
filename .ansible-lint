@@ -6,5 +6,6 @@ verbosity: 1
 skip_list:
   - ignore-errors
   - galaxy[no-changelog]
+  - var-naming[no-role-prefix]
 
 offline: true
