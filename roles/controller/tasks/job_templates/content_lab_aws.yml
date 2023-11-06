@@ -60,16 +60,26 @@
     playbook: playbooks/create_vpc.yml
     project: "{{ projects.aws_lab_roles.name }}"
     extra_vars:
-      vpc_cidr: "{{ job_templates.aws.create_vpc.vpc_cidr }}"
-      vpc_subnets: "{{ job_templates.aws.create_vpc.vpc_subnets }}"
+      vpc_cidr: 172.16.0.0/22
+      vpc_subnets:
+        - name: vnet1
+          cidr: 172.16.0.0/24
+          az: us-east-1a
+        - name: vnet2
+          cidr: 172.16.1.0/24
+          az: us-east-1b
+        - name: vnet3
+          cidr: 172.16.2.0/24
+          az: us-east-1c
+        - name: vnet4
+          cidr: 172.16.3.0/24
+          az: us-east-1d
     ask_variables_on_launch: true
     credentials:
       - "{{ credentials.aws_account.name }}"
   when:
     - (seed_lab_content | bool)
     - job_templates.aws.create_vpc.name is defined
-    - job_templates.aws.create_vpc.vpc_cidr is defined
-    - job_templates.aws.create_vpc.vpc_subnets is defined
   register: create_rhel_vm_template
   tags:
     - templates
