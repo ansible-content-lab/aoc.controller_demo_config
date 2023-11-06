@@ -53,6 +53,47 @@
     - templates
     - aws
 
+- name: Content Lab - AWS - Create VPC
+  ansible.controller.job_template:
+    name: "{{ job_templates.aws.create_vpc.name }}"
+    inventory: "{{ inventories.localhost.name }}"
+    playbook: playbooks/create_vpc.yml
+    project: "{{ projects.aws_lab_roles.name }}"
+    extra_vars:
+      vpc_cidr: "{{ job_templates.aws.create_vpc.vpc_cidr }}"
+      vpc_subnets: "{{ job_templates.aws.create_vpc.vpc_subnets }}"
+    ask_variables_on_launch: true
+    credentials:
+      - "{{ credentials.aws_account.name }}"
+  when:
+    - (seed_lab_content | bool)
+    - job_templates.aws.create_vpc.name is defined
+    - job_templates.aws.create_vpc.vpc_cidr is defined
+    - job_templates.aws.create_vpc.vpc_subnets is defined
+  register: create_rhel_vm_template
+  tags:
+    - templates
+    - aws
+
+- name: Content Lab - AWS - Delete RHEL VM
+  ansible.controller.job_template:
+    name: "{{ job_templates.aws.delete_vpc.name }}"
+    inventory: "{{ inventories.localhost.name }}"
+    playbook: playbooks/delete_vpc.yml
+    project: "{{ projects.aws_lab_roles.name }}"
+    extra_vars:
+      aws_region: "{{ aws.region }}"
+    ask_variables_on_launch: true
+    credentials:
+      - "{{ credentials.aws_account.name }}"
+  when:
+    - (seed_lab_content | bool)
+    - job_templates.aws.delete_vpc.name is defined
+  register: create_rhel_vm_template
+  tags:
+    - templates
+    - aws
+
 - name: Content Lab - AWS - Create Peer Network
   ansible.controller.job_template:
     name: "{{ job_templates.aws.create_peer_network.name }}"
