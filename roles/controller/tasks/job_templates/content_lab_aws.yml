@@ -80,12 +80,12 @@
   when:
     - (seed_lab_content | bool)
     - job_templates.aws.create_vpc.name is defined
-  register: create_rhel_vm_template
+  register: create_vpc_template
   tags:
     - templates
     - aws
 
-- name: Content Lab - AWS - Delete RHEL VM
+- name: Content Lab - AWS - Delete VPC
   ansible.controller.job_template:
     name: "{{ job_templates.aws.delete_vpc.name }}"
     inventory: "{{ inventories.localhost.name }}"
@@ -99,7 +99,7 @@
   when:
     - (seed_lab_content | bool)
     - job_templates.aws.delete_vpc.name is defined
-  register: create_rhel_vm_template
+  register: delete_vpc_template
   tags:
     - templates
     - aws
