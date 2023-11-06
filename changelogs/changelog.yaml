@@ -72,3 +72,16 @@ releases:
         - Updated for changes to dependent collections.
       release_summary: Updates to dependent collections.
     release_date: "2023-11-03"
+  5.0.0:
+    changes:
+      breaking_changes:
+        - Changed namespace to "lab".
+        - Removed references to awx collection.
+        - Updated role syntax to use fully qualified collection names.
+      major_changes:
+        - Changed paths to account for lab.azure and lab.aws collections.
+        - Updated pre-commit dependencies.
+      release_summary: Version 5.0.0 release.
+    fragments:
+      - 1-playbook-refactor.yml
+    release_date: "2023-11-06"

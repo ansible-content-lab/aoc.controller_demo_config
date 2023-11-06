@@ -45,12 +45,16 @@ job_templates:
       name: Content Lab - AWS - Create Reports
     create_transit_network:
       name: Content Lab - AWS - Create Transit Network
+    create_vpc:
+      name: Content Lab - AWS - Create VPC
     delete_peer_network:
       name: Content Lab - AWS - Delete Peer Network
     delete_transit_network:
       name: Content Lab - AWS - Delete Transit Network
     delete_rhel_vm:
       name: Content Lab - AWS - Delete RHEL VM
+    delete_vpc:
+      name: Content Lab - AWS - Delete VPC
     vnet:
       subnet_name: subnet-test
       subnet_cidr: 10.0.200.0/24

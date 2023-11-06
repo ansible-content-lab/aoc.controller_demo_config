@@ -6,6 +6,27 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v5.0.0
+======
+
+Release Summary
+---------------
+
+Version 5.0.0 release.
+
+Major Changes
+-------------
+
+- Changed paths to account for lab.azure and lab.aws collections.
+- Updated pre-commit dependencies.
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Changed namespace to "lab".
+- Removed references to awx collection.
+- Updated role syntax to use fully qualified collection names.
+
 v4.2.0
 ======
 
