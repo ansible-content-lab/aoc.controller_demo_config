@@ -1,0 +1,9 @@
+---
+breaking_changes:
+  - Updated role syntax to use fully qualified collection names.
+  - Removed references to awx collection.
+  - Changed namespace to "lab".
+major_changes:
+  - Updated pre-commit dependencies.
+  - Changed paths to account for lab.azure and lab.aws ollections.
+release_summary: Version 5.0.0 release.
