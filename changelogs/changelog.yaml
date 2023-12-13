@@ -1,18 +1,16 @@
+---
 ancestor: 3.0.0
 releases:
   4.0.0:
     changes:
       breaking_changes:
-        - All variable names have been edited and refactored. See ``roles/controller/defaults/main.yml``
-          for new variables and structure.
+        - All variable names have been edited and refactored. See ``roles/controller/defaults/main.yml`` for new variables and structure.
       major_changes:
         - Flags to deploy validated content, content lab content, or both.
         - Separated the ability to deploy validated content and content lab content.
       minor_changes:
         - Introduced change log.
-      release_summary:
-        Refactored the collection with the intent of having a general
-        use as a PoC for seeding content into automation controller.
+      release_summary: Refactored the collection with the intent of having a general use as a PoC for seeding content into automation controller.
     fragments:
       - 1-seeded-content-refactor.yml
     release_date: "2023-07-19"
@@ -28,17 +26,13 @@ releases:
     changes:
       minor_changes:
         - Removed assertions prior to playbook run.
-      release_summary:
-        Removed assertions prior to playbook run that were no longer
-        needed.
+      release_summary: Removed assertions prior to playbook run that were no longer needed.
     release_date: "2023-07-19"
   4.0.3:
     changes:
       minor_changes:
         - Fixes to ensure that seeded content would deploy properly on AAP.
-      release_summary:
-        Fixes to ensure that seeded content would deploy properly on
-        AAP.
+      release_summary: Fixes to ensure that seeded content would deploy properly on AAP.
     fragments:
       - controller-fixes.yml
     release_date: "2023-07-19"
