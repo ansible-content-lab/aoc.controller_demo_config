@@ -6,8 +6,9 @@ azure:
   region: eastus
   resource_group: ansible_test
 credentials:
+  no_log: true
   ssh:
-    key_data: "{{ lookup('file', '/home/runner/.ssh/id_ed25519') }}"
+    key_data: "{% raw %}{{ lookup('file', '/home/runner/.ssh/id_ed25519') }}{% endraw %}"
 job_templates:
   demo:
     delete_demo_template: true

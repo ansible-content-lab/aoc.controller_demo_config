@@ -1,4 +1,9 @@
 ---
+- name: Configure Credential Types
+  ansible.builtin.include_tasks: credential_types.yml
+  tags:
+    - credential_types
+
 - name: Configure Credentials
   ansible.builtin.include_tasks: credentials.yml
   tags:

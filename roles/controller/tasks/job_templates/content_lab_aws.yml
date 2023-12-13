@@ -203,7 +203,7 @@
     playbook: playbooks/deploy_aap.yml
     project: "{{ content_lab_project_aws_deployment.name }}"
     extra_vars:
-      infrastructure_region:  "{{ aws.region }}"
+      infrastructure_region: "{{ aws.region }}"
       infrastructure_keypair_name: scott_aws_test_key
       infrastructure_tags:
         deployed_from: aap-seeded-content
@@ -230,11 +230,12 @@
       aap_admin_password: set_admin_password
       aap_run_installer: true
       aap_remove_ssh_key_from_install_server: true
-      aap_red_hat_username: set_red_hat_sso_username
-      aap_red_hat_password: set_red_hat_sso_password
+      aap_red_hat_username: "{% raw %}{{ lookup('env', 'RED_HAT_ACCOUNT') }}{% endraw %}"
+      aap_red_hat_password: "{% raw %}{{ lookup('env', 'RED_HAT_PASSWORD') }}{% endraw %}"
     ask_variables_on_launch: true
     credentials:
       - "{{ aws_account.name }}"
+      - "{{ red_hat_sso_credential.name }}"
   when:
     - (seed_lab_content | bool)
   register: create_rhel_vm_template
