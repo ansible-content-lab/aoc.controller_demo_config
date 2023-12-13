@@ -4,7 +4,7 @@
     name: Content Lab - AWS - Create RHEL VM
     inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_vm.yml
-    project: "{{ content_lab_project_aws.name }}"
+    project: "{{ content_lab_project_aws_content.name }}"
     extra_vars:
       create_vm_aws_region: "{{ aws.region }}"
       create_vm_vm_name: "{% raw %}create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
@@ -29,7 +29,7 @@
     name: Content Lab - AWS - Delete RHEL VM
     inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_vm.yml
-    project: "{{ content_lab_project_aws.name }}"
+    project: "{{ content_lab_project_aws_content.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
       vm_name: vm-name
@@ -48,7 +48,7 @@
     name: Content Lab - AWS - Create VPC
     inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_vpc.yml
-    project: "{{ content_lab_project_aws.name }}"
+    project: "{{ content_lab_project_aws_content.name }}"
     extra_vars:
       vpc_cidr: 172.16.0.0/22
       vpc_subnets:
@@ -79,7 +79,7 @@
     name: Content Lab - AWS - Delete VPC
     inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/delete_vpc.yml
-    project: "{{ content_lab_project_aws.name }}"
+    project: "{{ content_lab_project_aws_content.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
     ask_variables_on_launch: true
@@ -97,7 +97,7 @@
     name: Content Lab - AWS - Create Peer Network
     inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_peer_network.yml
-    project: "{{ content_lab_project_aws.name }}"
+    project: "{{ content_lab_project_aws_content.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
       dmz_ssh_key_name: "{% raw %}# provide key name{% endraw %}"
@@ -119,7 +119,7 @@
     name: Content Lab - AWS - Delete Peer Network
     inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/delete_peer_network.yml
-    project: "{{ content_lab_project_aws.name }}"
+    project: "{{ content_lab_project_aws_content.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
     ask_variables_on_launch: true
@@ -137,7 +137,7 @@
     name: Content Lab - AWS - Create Reports
     inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_reports.yml
-    project: "{{ content_lab_project_aws.name }}"
+    project: "{{ content_lab_project_aws_content.name }}"
     extra_vars:
       reports_aws_region: "{{ aws.region }}"
     ask_variables_on_launch: true
@@ -155,7 +155,7 @@
     name: Content Lab - AWS - Create Transit Network
     inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_transit_network.yml
-    project: "{{ content_lab_project_aws.name }}"
+    project: "{{ content_lab_project_aws_content.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
       dmz_instance_ami: ami-06640050dc3f556bb
@@ -183,9 +183,55 @@
     name: Content Lab - AWS - Delete Transit Network
     inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/delete_transit_network.yml
-    project: "{{ content_lab_project_aws.name }}"
+    project: "{{ content_lab_project_aws_content.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
+    ask_variables_on_launch: true
+    credentials:
+      - "{{ aws_account.name }}"
+  when:
+    - (seed_lab_content | bool)
+  register: create_rhel_vm_template
+  tags:
+    - templates
+    - aws
+
+- name: Content Lab - AWS - Deploy Self-Managed AAP
+  ansible.controller.job_template:
+    name: Content Lab - AWS - Deploy Self-Managed AAP
+    inventory: "{{ localhost_inventory.name }}"
+    playbook: playbooks/deploy_aap.yml
+    project: "{{ content_lab_project_aws_deployment.name }}"
+    extra_vars:
+      infrastructure_region:  "{{ aws.region }}"
+      infrastructure_keypair_name: scott_aws_test_key
+      infrastructure_tags:
+        deployed_from: aap-seeded-content
+      infrastructure_controller_instances: 2
+      infrastructure_controller_ami: set_rhel_ami
+      infrastructure_controller_shape: m5a.xlarge
+      infrastructure_execution_instances: 1
+      infrastructure_execution_ami: set_rhel_ami
+      infrastructure_execution_shape: m5a.xlarge
+      infrastructure_hub_instances: 1
+      infrastructure_hub_ami: set_rhel_ami
+      infrastructure_hub_shape: m5a.large
+      infrastructure_eda_instances: 1
+      infrastructure_eda_ami: set_rhel_ami
+      infrastructure_eda_controller_shape: m5a.xlarge
+      infrastructure_db_username: ansible
+      infrastructure_db_password: set_db_password
+      infrastructure_create_controller_lb: true
+      infrastructure_cert_path: "{% raw %}lookup('file', '/path/to/cert.pem'){% endraw %}"
+      infrastructure_cert_key_path: "{% raw %}lookup('file', '/path/to/key.pem'){% endraw %}"
+      infrastructure_cert_domain_name: set.domain.name
+      aap_installer_ssh_key: set_aws_key_name
+      aap_installer_ssh_key_src: "{% raw %}lookup('file', '/path/to/.ssh/key'){% endraw %}"
+      aap_admin_password: set_admin_password
+      aap_run_installer: true
+      aap_remove_ssh_key_from_install_server: true
+      aap_red_hat_username: set_red_hat_sso_username
+      aap_red_hat_password: set_red_hat_sso_password
     ask_variables_on_launch: true
     credentials:
       - "{{ aws_account.name }}"

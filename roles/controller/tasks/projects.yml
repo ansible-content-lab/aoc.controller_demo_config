@@ -78,7 +78,7 @@
     wait: true
   when:
     - (seed_lab_content | bool)
-  register: content_lab_project_aws
+  register: content_lab_project_aws_deployment
   tags:
     - projects
     - aws
@@ -96,7 +96,7 @@
     wait: true
   when:
     - (seed_lab_content | bool)
-  register: content_lab_project_aws
+  register: content_lab_project_aws_content
   tags:
     - projects
     - aws
