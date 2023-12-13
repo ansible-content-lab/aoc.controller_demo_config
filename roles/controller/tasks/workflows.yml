@@ -1,8 +1,8 @@
 ---
 - name: Create a workflow to create a RHEL VM, run an automation against the VM, and then destroy the VM
   ansible.controller.workflow_job_template:
-    name: "{{ workflows.ephemeral_workload.name }}"
-    inventory: "{{ inventories.localhost.name }}"
+    name: Content Lab - Linux - Ephemeral VM Workflow
+    inventory: "{{ localhost_inventory.name }}"
     workflow_nodes:
       - identifier: Create VM
         unified_job_template:
@@ -29,25 +29,21 @@
           type: job_template
   when:
     - (seed_lab_content | bool)
-    - workflows.ephemeral_workload.name is defined
-    - job_templates.azure.create_rhel_vm.name is defined
-    - job_templates.azure.dnf_update.name is defined
-    - job_templates.azure.delete_rhel_vm.name is defined
-    - inventories.localhost.name is defined
   tags:
     - workflows
     - azure
+  register: ephemeral_workload_workflow
 
 - name: Azure - Install log analytics
   ansible.controller.workflow_job_template:
-    name: "{{ workflows.install_log_analytics.name }}"
+    name: Content Lab - Azure - Install Log Analytics Workflow
     description: Create a lot analytics workspace and install the log analytics agent on attached VMs.
     workflow_nodes:
       - identifier: Create Log Analytics Workspace
         unified_job_template:
           name: "{{ job_templates.azure.create_log_analytics_ws.name }}"
           type: job_template
-          inventory: "{{ inventories.localhost.name }}"
+          inventory: "{{ localhost_inventory.name }}"
         related:
           success_nodes:
             - identifier: Install Log Analytics Agent
@@ -59,17 +55,14 @@
           inventory: Azure
   when:
     - (seed_lab_content | bool)
-    - workflows.install_log_analytics.name is defined
-    - job_templates.azure.create_log_analytics_ws.name is defined
-    - job_templates.azure.install_log_analytics.name is defined
-    - inventories.localhost.name is defined
   tags:
     - workflows
     - azure
+  register: install_log_analytics_workflow
 
 - name: Azure Arc - Replace Log Analytics with Azure Monitor
   ansible.controller.workflow_job_template:
-    name: "{{ workflows.arc_log_migration.name }}"
+    name: Content Lab - Azure - Arc Log Migration
     description: Migrate hosts from Azure Log Analytics Agent to Azure Monitor Agent with Azure Arc
     survey_enabled: true
     survey_spec:
@@ -116,10 +109,7 @@
           inventory: Azure
   when:
     - (seed_lab_content | bool)
-    - workflows.arc_log_migration.name is defined
-    - job_templates.azure.install_arc_agent.name is defined
-    - job_templates.azure.replace_log_analytics_with_azure_monitor.name is defined
-    - job_templates.azure.uninstall_log_analytics.name is defined
   tags:
     - workflows
     - azure
+  register: replace_log_analytics_workflow

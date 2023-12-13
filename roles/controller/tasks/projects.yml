@@ -13,12 +13,12 @@
 
 - name: Add Ansible Cloud Content Lab Azure Demo Project
   ansible.controller.project:
-    name: "{{ projects.azure_demo_project.name }}"
-    description: Azure Demo
-    default_environment: "{{ execution_environments.cloud_ee.name }}"
+    name: Ansible Cloud Content Lab - Ansible TMM Azure Content
+    description: Example Azure content from the Ansible TMM team.
+    default_environment: "{{ cloud_ee.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
-    scm_url: "{{ projects.azure_demo_project.url }}"
+    scm_url: https://github.com/ansible-cloud/azure.git
     state: present
     update_project: true
     wait: true
@@ -31,12 +31,12 @@
 
 - name: Add Ansible Cloud Content Lab Azure Project
   ansible.controller.project:
-    name: "{{ projects.azure_lab_roles.name }}"
-    description: Ansible Cloud Content Lab - Azure Roles
-    default_environment: "{{ execution_environments.cloud_ee.name }}"
+    name: Ansible Cloud Content Lab - Azure Content
+    description: Example Azure content from the Ansible Content Lab for Cloud Automation.
+    default_environment: "{{ cloud_ee.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
-    scm_url: "{{ projects.azure_lab_roles.url }}"
+    scm_url: https://github.com/ansible-content-lab/azure.infrastructure_config_demos.git
     state: present
     update_project: true
     wait: true
@@ -47,14 +47,32 @@
     - projects
     - azure
 
-- name: Add Ansible Cloud Content Lab AWS Project
+- name: Add Ansible Validated Content Project
   ansible.controller.project:
-    name: "{{ projects.aws_lab_roles.name }}"
-    description: Ansible Cloud Content Lab - AWS Roles
-    default_environment: "{{ execution_environments.cloud_ee.name }}"
+    name: Ansible Validated Content - Azure Demos
+    description: Ansible validated content examples for Ansible on Azure.
+    default_environment: "{{ execution_environments.cloud_services.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
-    scm_url: "{{ projects.aws_lab_roles.url }}"
+    scm_url: https://github.com/redhat-cop/cloud.azure_ops.git
+    state: present
+    update_project: true
+    wait: true
+  when:
+    - (seed_validated_content | bool)
+  register: seeded_content_project_azure
+  tags:
+    - projects
+    - azure
+
+- name: Add Ansible Cloud Content Lab AWS Deployment Project
+  ansible.controller.project:
+    name: Ansible Cloud Content Lab - AWS Deployment
+    description: Collection that contains automation for deploying a self-managed AAP instance on AWS.
+    default_environment: "{{ cloud_ee.name }}"
+    organization: "{{ awx_organization }}"  # Organization is required in projects
+    scm_type: git
+    scm_url: https://github.com/ansible-content-lab/aws_ansible_deployment.git
     state: present
     update_project: true
     wait: true
@@ -65,20 +83,20 @@
     - projects
     - aws
 
-- name: Add Ansible Cloud Seeded Content Project
+- name: Add Ansible Cloud Content Lab AWS Content Project
   ansible.controller.project:
-    name: "{{ projects.azure_seeded_content.name }}"
-    description: Ansible Automation Platform Cloud Seeded Content - Azure
-    default_environment: "{{ execution_environments.cloud_services.name }}"
+    name: Ansible Cloud Content Lab - AWS Content
+    description: Example AWS content from the Ansible Content Lab for Cloud Automation.
+    default_environment: "{{ cloud_ee.name }}"
     organization: "{{ awx_organization }}"  # Organization is required in projects
     scm_type: git
-    scm_url: "{{ projects.azure_seeded_content.url }}"
+    scm_url: https://github.com/ansible-content-lab/aws.infrastructure_config_demos.git
     state: present
     update_project: true
     wait: true
   when:
-    - (seed_validated_content | bool)
-  register: seeded_content_project_azure
+    - (seed_lab_content | bool)
+  register: content_lab_project_aws
   tags:
     - projects
-    - azure
+    - aws

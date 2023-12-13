@@ -1,30 +1,24 @@
 ---
 - name: Content Lab - AWS - Create RHEL VM
   ansible.controller.job_template:
-    name: "{{ job_templates.aws.create_rhel_vm.name }}"
-    inventory: "{{ inventories.localhost.name }}"
+    name: Content Lab - AWS - Create RHEL VM
+    inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_vm.yml
-    project: "{{ projects.aws_lab_roles.name }}"
+    project: "{{ content_lab_project_aws.name }}"
     extra_vars:
       create_vm_aws_region: "{{ aws.region }}"
       create_vm_vm_name: "{% raw %}create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       create_vm_aws_image_filter: "{% raw %}{{ default(omit) }}{% endraw %}"
       create_vm_aws_vpc_subnet_name: "{{ job_templates.aws.vnet.subnet_name }}"
       create_vm_aws_securitygroup_name: default
-      create_vm_aws_keypair_name: "{{ job_templates.aws.create_rhel_vm.keypair_name }}"
+      create_vm_aws_keypair_name: vm_keypair
       create_vm_aws_instance_size: t2.micro
       create_vm_vm_blueprint: rhel9
     ask_variables_on_launch: true
     credentials:
-      - "{{ credentials.aws_account.name }}"
+      - "{{ aws_account.name }}"
   when:
     - (seed_lab_content | bool)
-    - credentials.aws_account.name is defined
-    - projects.aws_lab_roles.name is defined
-    - inventories.localhost.name is defined
-    - job_templates.aws.create_rhel_vm.name is defined
-    - job_templates.aws.create_rhel_vm.keypair_name is defined
-    - job_templates.aws.vnet.subnet_name is defined
   register: create_rhel_vm_template
   tags:
     - templates
@@ -32,22 +26,18 @@
 
 - name: Content Lab - AWS - Delete RHEL VM
   ansible.controller.job_template:
-    name: "{{ job_templates.aws.delete_rhel_vm.name }}"
-    inventory: "{{ inventories.localhost.name }}"
+    name: Content Lab - AWS - Delete RHEL VM
+    inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_vm.yml
-    project: "{{ projects.aws_lab_roles.name }}"
+    project: "{{ content_lab_project_aws.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
       vm_name: vm-name
     ask_variables_on_launch: true
     credentials:
-      - "{{ credentials.aws_account.name }}"
+      - "{{ aws_account.name }}"
   when:
     - (seed_lab_content | bool)
-    - credentials.aws_account.name is defined
-    - projects.aws_lab_roles.name is defined
-    - inventories.localhost.name is defined
-    - job_templates.aws.delete_rhel_vm.name is defined
   register: create_rhel_vm_template
   tags:
     - templates
@@ -55,10 +45,10 @@
 
 - name: Content Lab - AWS - Create VPC
   ansible.controller.job_template:
-    name: "{{ job_templates.aws.create_vpc.name }}"
-    inventory: "{{ inventories.localhost.name }}"
+    name: Content Lab - AWS - Create VPC
+    inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_vpc.yml
-    project: "{{ projects.aws_lab_roles.name }}"
+    project: "{{ content_lab_project_aws.name }}"
     extra_vars:
       vpc_cidr: 172.16.0.0/22
       vpc_subnets:
@@ -76,10 +66,9 @@
           az: us-east-1d
     ask_variables_on_launch: true
     credentials:
-      - "{{ credentials.aws_account.name }}"
+      - "{{ aws_account.name }}"
   when:
     - (seed_lab_content | bool)
-    - job_templates.aws.create_vpc.name is defined
   register: create_vpc_template
   tags:
     - templates
@@ -87,18 +76,17 @@
 
 - name: Content Lab - AWS - Delete VPC
   ansible.controller.job_template:
-    name: "{{ job_templates.aws.delete_vpc.name }}"
-    inventory: "{{ inventories.localhost.name }}"
+    name: Content Lab - AWS - Delete VPC
+    inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/delete_vpc.yml
-    project: "{{ projects.aws_lab_roles.name }}"
+    project: "{{ content_lab_project_aws.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ credentials.aws_account.name }}"
+      - "{{ aws_account.name }}"
   when:
     - (seed_lab_content | bool)
-    - job_templates.aws.delete_vpc.name is defined
   register: delete_vpc_template
   tags:
     - templates
@@ -106,10 +94,10 @@
 
 - name: Content Lab - AWS - Create Peer Network
   ansible.controller.job_template:
-    name: "{{ job_templates.aws.create_peer_network.name }}"
-    inventory: "{{ inventories.localhost.name }}"
+    name: Content Lab - AWS - Create Peer Network
+    inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_peer_network.yml
-    project: "{{ projects.aws_lab_roles.name }}"
+    project: "{{ content_lab_project_aws.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
       dmz_ssh_key_name: "{% raw %}# provide key name{% endraw %}"
@@ -118,13 +106,9 @@
       ansible_ssh_private_key_file_dest_path: "{% raw %} default(omit) {% endraw %}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ credentials.aws_account.name }}"
+      - "{{ aws_account.name }}"
   when:
     - (seed_lab_content | bool)
-    - credentials.aws_account.name is defined
-    - projects.aws_lab_roles.name is defined
-    - inventories.localhost.name is defined
-    - job_templates.aws.create_peer_network.name is defined
   register: create_rhel_vm_template
   tags:
     - templates
@@ -132,21 +116,17 @@
 
 - name: Content Lab - AWS - Delete Peer Network
   ansible.controller.job_template:
-    name: "{{ job_templates.aws.delete_peer_network.name }}"
-    inventory: "{{ inventories.localhost.name }}"
+    name: Content Lab - AWS - Delete Peer Network
+    inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/delete_peer_network.yml
-    project: "{{ projects.aws_lab_roles.name }}"
+    project: "{{ content_lab_project_aws.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ credentials.aws_account.name }}"
+      - "{{ aws_account.name }}"
   when:
     - (seed_lab_content | bool)
-    - credentials.aws_account.name is defined
-    - projects.aws_lab_roles.name is defined
-    - inventories.localhost.name is defined
-    - job_templates.aws.delete_peer_network.name is defined
   register: create_rhel_vm_template
   tags:
     - templates
@@ -154,21 +134,17 @@
 
 - name: Content Lab - AWS - Create Reports
   ansible.controller.job_template:
-    name: "{{ job_templates.aws.create_reports.name }}"
-    inventory: "{{ inventories.localhost.name }}"
+    name: Content Lab - AWS - Create Reports
+    inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_reports.yml
-    project: "{{ projects.aws_lab_roles.name }}"
+    project: "{{ content_lab_project_aws.name }}"
     extra_vars:
       reports_aws_region: "{{ aws.region }}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ credentials.aws_account.name }}"
+      - "{{ aws_account.name }}"
   when:
     - (seed_lab_content | bool)
-    - credentials.aws_account.name is defined
-    - projects.aws_lab_roles.name is defined
-    - inventories.localhost.name is defined
-    - job_templates.aws.create_reports.name is defined
   register: create_rhel_vm_template
   tags:
     - templates
@@ -176,10 +152,10 @@
 
 - name: Content Lab - AWS - Create Transit Network
   ansible.controller.job_template:
-    name: "{{ job_templates.aws.create_transit_network.name }}"
-    inventory: "{{ inventories.localhost.name }}"
+    name: Content Lab - AWS - Create Transit Network
+    inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/create_transit_network.yml
-    project: "{{ projects.aws_lab_roles.name }}"
+    project: "{{ content_lab_project_aws.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
       dmz_instance_ami: ami-06640050dc3f556bb
@@ -194,13 +170,9 @@
       ansible_ssh_private_key_file: "{% raw %}# provide key data via credential{% endraw %}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ credentials.aws_account.name }}"
+      - "{{ aws_account.name }}"
   when:
     - (seed_lab_content | bool)
-    - credentials.aws_account.name is defined
-    - projects.aws_lab_roles.name is defined
-    - inventories.localhost.name is defined
-    - job_templates.aws.create_transit_network.name is defined
   register: create_rhel_vm_template
   tags:
     - templates
@@ -208,21 +180,17 @@
 
 - name: Content Lab - AWS - Delete Transit Network
   ansible.controller.job_template:
-    name: "{{ job_templates.aws.delete_transit_network.name }}"
-    inventory: "{{ inventories.localhost.name }}"
+    name: Content Lab - AWS - Delete Transit Network
+    inventory: "{{ localhost_inventory.name }}"
     playbook: playbooks/delete_transit_network.yml
-    project: "{{ projects.aws_lab_roles.name }}"
+    project: "{{ content_lab_project_aws.name }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ credentials.aws_account.name }}"
+      - "{{ aws_account.name }}"
   when:
     - (seed_lab_content | bool)
-    - credentials.aws_account.name is defined
-    - projects.aws_lab_roles.name is defined
-    - inventories.localhost.name is defined
-    - job_templates.aws.delete_transit_network.name is defined
   register: create_rhel_vm_template
   tags:
     - templates

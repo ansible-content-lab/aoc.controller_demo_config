@@ -1,36 +1,31 @@
 ---
 - name: Create localhost inventory
   ansible.controller.inventory:
-    name: "{{ inventories.localhost.name }}"
+    name: localhost
     description: localhost
     organization: "{{ awx_organization }}"
     state: present
   register: localhost_inventory
-  when:
-    - inventories.localhost.name is defined
   tags:
     - inventories
 
 - name: Add localhost host to inventory
   ansible.controller.host:
     name: localhost
-    inventory: "{{ inventories.localhost.name }}"
+    inventory: "{{ localhost_inventory.name }}"
     state: present
-  when:
-    - inventories.localhost.name is defined
   tags:
     - inventories
 
 - name: Create Azure Inventory
   ansible.controller.inventory:
-    name: "{{ inventories.azure.name }}"
+    name: Azure
     description: Azure Inventory
     organization: "{{ awx_organization }}"
     state: present
   register: azure_inventory
   when:
     - (seed_lab_content | bool)
-    - inventories.azure.name is defined
   tags:
     - inventories
     - azure
@@ -39,22 +34,18 @@
   ansible.controller.inventory_source:
     name: Azure Dynamic Inventory
     description: Creates inventory from Azure sources
-    inventory: "{{ inventories.azure.name }}"
-    credential: "{{ credentials.azure_service_principal.name }}"
-    execution_environment: "{{ execution_environments.cloud_services.name }}"
+    inventory: "{{ azure_inventory.name }}"
+    credential: "{{ azure_credential.name }}"
+    execution_environment: "{{ cloud_services_ee.name }}"
     overwrite: true
     update_on_launch: true
     organization: "{{ awx_organization }}"
     source: scm
-    source_project: "{{ projects.azure_lab_roles.name }}"
+    source_project: "{{ content_lab_project_azure.name }}"
     source_path: inventory/inventory.azure_rm.yml
     verbosity: 0
   when:
     - (seed_lab_content | bool)
-    - inventories.azure.name is defined
-    - credentials.azure_service_principal.name is defined
-    - execution_environments.cloud_services.name is defined
-    - projects.azure_lab_roles.name is defined
   tags:
     - inventories
     - azure
