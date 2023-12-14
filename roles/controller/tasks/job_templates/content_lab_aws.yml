@@ -222,9 +222,8 @@
       infrastructure_db_username: ansible
       infrastructure_db_password: set_db_password
       infrastructure_create_controller_lb: true
-      infrastructure_cert_path: "{% raw %}lookup('file', '/path/to/cert.pem'){% endraw %}"
-      infrastructure_cert_key_path: "{% raw %}lookup('file', '/path/to/key.pem'){% endraw %}"
-      infrastructure_cert_domain_name: set.domain.id | int
+      infrastructure_cert_local_folder_path: ~/
+      infrastructure_cert_domain_name: set.domain.name
       aap_installer_ssh_key: set_aws_key_name
       aap_installer_ssh_key_src: "{% raw %}lookup('file', '/path/to/.ssh/key'){% endraw %}"
       aap_admin_password: set_admin_password

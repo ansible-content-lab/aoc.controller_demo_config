@@ -1,0 +1,4 @@
+---
+release_summary: Updated AWS deployment template variables.
+minor_changes:
+  - Updated AWS deployment variables based on changes to playbook.
