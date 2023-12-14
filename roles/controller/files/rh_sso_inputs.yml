@@ -1,0 +1,14 @@
+---
+fields:
+  - id: username
+    type: string
+    label: Username
+    secret: false
+    help_text: The username for your Red Hat account.
+    multiline: false
+  - id: password
+    type: string
+    label: Password
+    secret: true
+    help_text: The password for your Red Hat account.
+    multiline: false

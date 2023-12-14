@@ -1,0 +1,4 @@
+---
+env:
+  RED_HAT_ACCOUNT: '{{ username }}'
+  RED_HAT_PASSWORD: '{{ password }}'

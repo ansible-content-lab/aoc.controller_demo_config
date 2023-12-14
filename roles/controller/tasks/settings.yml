@@ -10,7 +10,7 @@
   ansible.controller.settings:
     settings:
       SESSION_COOKIE_AGE: "{{ session_cookie_age }}"
-  when: 
+  when:
     - session_cookie_age is defined
     - (session_cookie_age | int) > 0
   tags:
