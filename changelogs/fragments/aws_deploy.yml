@@ -6,3 +6,4 @@ major_changes:
 minor_changes:
   - Added pre-commit.
   - Added yamlfmt.
+  - Updated readme with better instructions and layout.
