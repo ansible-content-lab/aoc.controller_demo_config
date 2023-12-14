@@ -6,6 +6,27 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v5.1.0
+======
+
+Release Summary
+---------------
+
+Added AWS Deployment collection and improvements.
+
+Major Changes
+-------------
+
+- Added the AWS deployment job template that will deploy a self-managed AAP infrastructure on AWS.
+- Reverted the templatization of variables that was redundant.  If you used these variables, then they will simply be ignored now.
+
+Minor Changes
+-------------
+
+- Added pre-commit.
+- Added yamlfmt.
+- Updated readme with better instructions and layout.
+
 v5.0.0
 ======
 

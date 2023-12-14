@@ -1,9 +1,0 @@
----
-release_summary: Added AWS Deployment collection and improvements.
-major_changes:
-  - Reverted the templatization of variables that was redundant.  If you used these variables, then they will simply be ignored now.
-  - Added the AWS deployment job template that will deploy a self-managed AAP infrastructure on AWS.
-minor_changes:
-  - Added pre-commit.
-  - Added yamlfmt.
-  - Updated readme with better instructions and layout.

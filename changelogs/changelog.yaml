@@ -1,81 +1,99 @@
----
 ancestor: 3.0.0
 releases:
   4.0.0:
     changes:
       breaking_changes:
-        - All variable names have been edited and refactored. See ``roles/controller/defaults/main.yml`` for new variables and structure.
+      - All variable names have been edited and refactored. See ``roles/controller/defaults/main.yml``
+        for new variables and structure.
       major_changes:
-        - Flags to deploy validated content, content lab content, or both.
-        - Separated the ability to deploy validated content and content lab content.
+      - Flags to deploy validated content, content lab content, or both.
+      - Separated the ability to deploy validated content and content lab content.
       minor_changes:
-        - Introduced change log.
-      release_summary: Refactored the collection with the intent of having a general use as a PoC for seeding content into automation controller.
+      - Introduced change log.
+      release_summary: Refactored the collection with the intent of having a general
+        use as a PoC for seeding content into automation controller.
     fragments:
-      - 1-seeded-content-refactor.yml
-    release_date: "2023-07-19"
+    - 1-seeded-content-refactor.yml
+    release_date: '2023-07-19'
   4.0.1:
     changes:
       minor_changes:
-        - Removed requirements.yml
+      - Removed requirements.yml
       release_summary: Removed requirements.yml to push dependency to EE.
     fragments:
-      - remove-requirements.yml
-    release_date: "2023-07-19"
+    - remove-requirements.yml
+    release_date: '2023-07-19'
   4.0.2:
     changes:
       minor_changes:
-        - Removed assertions prior to playbook run.
-      release_summary: Removed assertions prior to playbook run that were no longer needed.
-    release_date: "2023-07-19"
+      - Removed assertions prior to playbook run.
+      release_summary: Removed assertions prior to playbook run that were no longer
+        needed.
+    release_date: '2023-07-19'
   4.0.3:
     changes:
       minor_changes:
-        - Fixes to ensure that seeded content would deploy properly on AAP.
-      release_summary: Fixes to ensure that seeded content would deploy properly on AAP.
+      - Fixes to ensure that seeded content would deploy properly on AAP.
+      release_summary: Fixes to ensure that seeded content would deploy properly on
+        AAP.
     fragments:
-      - controller-fixes.yml
-    release_date: "2023-07-19"
+    - controller-fixes.yml
+    release_date: '2023-07-19'
   4.1.0:
     changes:
       breaking_changes:
-        - Changed variables that start with ``azure_`` to ``azure.``.
+      - Changed variables that start with ``azure_`` to ``azure.``.
       major_changes:
-        - Added AWS job templates.
-        - Added GitHub Workflows tests.
+      - Added AWS job templates.
+      - Added GitHub Workflows tests.
       minor_changes:
-        - Readme updates to account for the new content added.
+      - Readme updates to account for the new content added.
       release_summary: Adding AWS content to the cloud content lab seeded content.
     fragments:
-      - 2-added-aws-content.yml
-    release_date: "2023-07-22"
+    - 2-added-aws-content.yml
+    release_date: '2023-07-22'
   4.1.1:
     changes:
       minor_changes:
-        - Added azure tag to job templates.
-        - Bumped pre-commit tool versions.
+      - Added azure tag to job templates.
+      - Bumped pre-commit tool versions.
       release_summary: Added azure tags to job templates.
     fragments:
-      - 4-azure-tags.yml
-    release_date: "2023-08-08"
+    - 4-azure-tags.yml
+    release_date: '2023-08-08'
   4.2.0:
     changes:
       major_changes:
-        - Moved playbook to playbooks folder.
+      - Moved playbook to playbooks folder.
       minor_changes:
-        - Updated for changes to dependent collections.
+      - Updated for changes to dependent collections.
       release_summary: Updates to dependent collections.
-    release_date: "2023-11-03"
+    release_date: '2023-11-03'
   5.0.0:
     changes:
       breaking_changes:
-        - Changed namespace to "lab".
-        - Removed references to awx collection.
-        - Updated role syntax to use fully qualified collection names.
+      - Changed namespace to "lab".
+      - Removed references to awx collection.
+      - Updated role syntax to use fully qualified collection names.
       major_changes:
-        - Changed paths to account for lab.azure and lab.aws collections.
-        - Updated pre-commit dependencies.
+      - Changed paths to account for lab.azure and lab.aws collections.
+      - Updated pre-commit dependencies.
       release_summary: Version 5.0.0 release.
     fragments:
-      - 1-playbook-refactor.yml
-    release_date: "2023-11-06"
+    - 1-playbook-refactor.yml
+    release_date: '2023-11-06'
+  5.1.0:
+    changes:
+      major_changes:
+      - Added the AWS deployment job template that will deploy a self-managed AAP
+        infrastructure on AWS.
+      - Reverted the templatization of variables that was redundant.  If you used
+        these variables, then they will simply be ignored now.
+      minor_changes:
+      - Added pre-commit.
+      - Added yamlfmt.
+      - Updated readme with better instructions and layout.
+      release_summary: Added AWS Deployment collection and improvements.
+    fragments:
+    - aws_deploy.yml
+    release_date: '2023-12-14'
