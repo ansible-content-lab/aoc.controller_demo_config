@@ -2,9 +2,9 @@
 - name: Content Lab - AWS - Create RHEL VM
   ansible.controller.job_template:
     name: Content Lab - AWS - Create RHEL VM
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_vm.yml
-    project: "{{ content_lab_project_aws_content.name }}"
+    project: "{{ content_lab_project_aws_content.id | int }}"
     extra_vars:
       create_vm_aws_region: "{{ aws.region }}"
       create_vm_vm_name: "{% raw %}create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
@@ -16,7 +16,7 @@
       create_vm_vm_blueprint: rhel9
     ask_variables_on_launch: true
     credentials:
-      - "{{ aws_account.name }}"
+      - "{{ aws_account.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_rhel_vm_template
@@ -27,15 +27,15 @@
 - name: Content Lab - AWS - Delete RHEL VM
   ansible.controller.job_template:
     name: Content Lab - AWS - Delete RHEL VM
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_vm.yml
-    project: "{{ content_lab_project_aws_content.name }}"
+    project: "{{ content_lab_project_aws_content.id | int }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
       vm_name: vm-name
     ask_variables_on_launch: true
     credentials:
-      - "{{ aws_account.name }}"
+      - "{{ aws_account.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_rhel_vm_template
@@ -46,9 +46,9 @@
 - name: Content Lab - AWS - Create VPC
   ansible.controller.job_template:
     name: Content Lab - AWS - Create VPC
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_vpc.yml
-    project: "{{ content_lab_project_aws_content.name }}"
+    project: "{{ content_lab_project_aws_content.id | int }}"
     extra_vars:
       vpc_cidr: 172.16.0.0/22
       vpc_subnets:
@@ -66,7 +66,7 @@
           az: us-east-1d
     ask_variables_on_launch: true
     credentials:
-      - "{{ aws_account.name }}"
+      - "{{ aws_account.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_vpc_template
@@ -77,14 +77,14 @@
 - name: Content Lab - AWS - Delete VPC
   ansible.controller.job_template:
     name: Content Lab - AWS - Delete VPC
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/delete_vpc.yml
-    project: "{{ content_lab_project_aws_content.name }}"
+    project: "{{ content_lab_project_aws_content.id | int }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ aws_account.name }}"
+      - "{{ aws_account.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: delete_vpc_template
@@ -95,9 +95,9 @@
 - name: Content Lab - AWS - Create Peer Network
   ansible.controller.job_template:
     name: Content Lab - AWS - Create Peer Network
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_peer_network.yml
-    project: "{{ content_lab_project_aws_content.name }}"
+    project: "{{ content_lab_project_aws_content.id | int }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
       dmz_ssh_key_name: "{% raw %}# provide key name{% endraw %}"
@@ -106,7 +106,7 @@
       ansible_ssh_private_key_file_dest_path: "{% raw %} default(omit) {% endraw %}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ aws_account.name }}"
+      - "{{ aws_account.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_rhel_vm_template
@@ -117,14 +117,14 @@
 - name: Content Lab - AWS - Delete Peer Network
   ansible.controller.job_template:
     name: Content Lab - AWS - Delete Peer Network
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/delete_peer_network.yml
-    project: "{{ content_lab_project_aws_content.name }}"
+    project: "{{ content_lab_project_aws_content.id | int }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ aws_account.name }}"
+      - "{{ aws_account.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_rhel_vm_template
@@ -135,14 +135,14 @@
 - name: Content Lab - AWS - Create Reports
   ansible.controller.job_template:
     name: Content Lab - AWS - Create Reports
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_reports.yml
-    project: "{{ content_lab_project_aws_content.name }}"
+    project: "{{ content_lab_project_aws_content.id | int }}"
     extra_vars:
       reports_aws_region: "{{ aws.region }}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ aws_account.name }}"
+      - "{{ aws_account.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_rhel_vm_template
@@ -153,9 +153,9 @@
 - name: Content Lab - AWS - Create Transit Network
   ansible.controller.job_template:
     name: Content Lab - AWS - Create Transit Network
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_transit_network.yml
-    project: "{{ content_lab_project_aws_content.name }}"
+    project: "{{ content_lab_project_aws_content.id | int }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
       dmz_instance_ami: ami-06640050dc3f556bb
@@ -170,7 +170,7 @@
       ansible_ssh_private_key_file: "{% raw %}# provide key data via credential{% endraw %}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ aws_account.name }}"
+      - "{{ aws_account.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_rhel_vm_template
@@ -181,14 +181,14 @@
 - name: Content Lab - AWS - Delete Transit Network
   ansible.controller.job_template:
     name: Content Lab - AWS - Delete Transit Network
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/delete_transit_network.yml
-    project: "{{ content_lab_project_aws_content.name }}"
+    project: "{{ content_lab_project_aws_content.id | int }}"
     extra_vars:
       aws_region: "{{ aws.region }}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ aws_account.name }}"
+      - "{{ aws_account.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_rhel_vm_template
@@ -199,9 +199,9 @@
 - name: Content Lab - AWS - Deploy Self-Managed AAP
   ansible.controller.job_template:
     name: Content Lab - AWS - Deploy Self-Managed AAP
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/deploy_aap.yml
-    project: "{{ content_lab_project_aws_deployment.name }}"
+    project: "{{ content_lab_project_aws_deployment.id | int }}"
     extra_vars:
       infrastructure_region: "{{ aws.region }}"
       infrastructure_keypair_name: scott_aws_test_key
@@ -224,7 +224,7 @@
       infrastructure_create_controller_lb: true
       infrastructure_cert_path: "{% raw %}lookup('file', '/path/to/cert.pem'){% endraw %}"
       infrastructure_cert_key_path: "{% raw %}lookup('file', '/path/to/key.pem'){% endraw %}"
-      infrastructure_cert_domain_name: set.domain.name
+      infrastructure_cert_domain_name: set.domain.id | int
       aap_installer_ssh_key: set_aws_key_name
       aap_installer_ssh_key_src: "{% raw %}lookup('file', '/path/to/.ssh/key'){% endraw %}"
       aap_admin_password: set_admin_password
@@ -234,8 +234,8 @@
       aap_red_hat_password: "{% raw %}{{ lookup('env', 'RED_HAT_PASSWORD') }}{% endraw %}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ aws_account.name }}"
-      - "{{ red_hat_sso_credential.name }}"
+      - "{{ aws_account.id | int }}"
+      - "{{ red_hat_sso_credential.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_rhel_vm_template

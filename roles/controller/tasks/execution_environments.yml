@@ -4,8 +4,8 @@
     name: Cloud Services Execution Environment
     description: Red Hat Cloud Services EE
     organization: "{{ awx_organization | default('') }}"
-    image: registry.redhat.io/ansible-automation-platform-24/
-    credential: "{{ rh_credential.name }}"
+    image: registry.redhat.io/ansible-automation-platform-24/ee-cloud-services-rhel8:latest
+    credential: Red Hat Registry
     pull: always
     state: present
   register: cloud_services_ee
@@ -42,7 +42,6 @@
   when:
     - (seed_lab_content | bool)
     - cloud_ee.id is defined
-    - execution_environments.cloud_ee.set_default is defined
     - (execution_environments.cloud_ee.set_default | bool)
   tags:
     - ees

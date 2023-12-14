@@ -3,7 +3,7 @@
   ansible.controller.schedule:
     name: Content Lab - RHEL Ephemeral VM Workflow
     state: present
-    unified_job_template: "{{ ephemeral_workload_workflow.name }}"
+    unified_job_template: "{{ ephemeral_workload_workflow.id | int }}"
     rrule: "{{ query('ansible.controller.schedule_rrule', 'hour', start_date='2022-01-01 23:30:00', timezone='US/Eastern') }}"
     enabled: false
   register: result

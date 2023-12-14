@@ -2,11 +2,11 @@
 - name: Create a workflow to create a RHEL VM, run an automation against the VM, and then destroy the VM
   ansible.controller.workflow_job_template:
     name: Content Lab - Linux - Ephemeral VM Workflow
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     workflow_nodes:
       - identifier: Create VM
         unified_job_template:
-          name: "{{ job_templates.azure.create_rhel_vm.name }}"
+          name: "{{ create_rhel_vm_template.id | int }}"
           type: job_template
         related:
           success_nodes:
@@ -16,7 +16,7 @@
 
       - identifier: Run DNF Update
         unified_job_template:
-          name: "{{ job_templates.azure.dnf_update.name }}"
+          name: "{{ rhel_vm_update_template.id | int }}"
           type: job_template
         related:
           always_nodes:
@@ -25,14 +25,14 @@
       - identifier: Delete VM
         all_parents_must_converge: false
         unified_job_template:
-          name: "{{ job_templates.azure.delete_rhel_vm.name }}"
+          name: "{{ delete_rhel_vm_template.id | int }}"
           type: job_template
   when:
     - (seed_lab_content | bool)
+  register: ephemeral_workload_workflow
   tags:
     - workflows
     - azure
-  register: ephemeral_workload_workflow
 
 - name: Azure - Install log analytics
   ansible.controller.workflow_job_template:
@@ -41,24 +41,24 @@
     workflow_nodes:
       - identifier: Create Log Analytics Workspace
         unified_job_template:
-          name: "{{ job_templates.azure.create_log_analytics_ws.name }}"
+          name: "{{ create_log_analytics_workspace_template.id | int }}"
           type: job_template
-          inventory: "{{ localhost_inventory.name }}"
+          inventory: "{{ localhost_inventory.id | int }}"
         related:
           success_nodes:
             - identifier: Install Log Analytics Agent
 
       - identifier: Install Log Analytics Agent
         unified_job_template:
-          name: "{{ job_templates.azure.install_log_analytics.name }}"
+          name: "{{ install_log_analytics_agent_template.id | int }}"
           type: job_template
-          inventory: Azure
+          inventory: "{{ azure_inventory.id | int }}"
   when:
     - (seed_lab_content | bool)
+  register: install_log_analytics_workflow
   tags:
     - workflows
     - azure
-  register: install_log_analytics_workflow
 
 - name: Azure Arc - Replace Log Analytics with Azure Monitor
   ansible.controller.workflow_job_template:
@@ -85,18 +85,18 @@
     workflow_nodes:
       - identifier: Install Arc Agent
         unified_job_template:
-          name: "{{ job_templates.azure.install_arc_agent.name }}"
+          name: "{{ install_arc_agent_template.id | int }}"
           type: job_template
-          inventory: Azure
+          inventory: "{{ azure_inventory.id | int }}"
         related:
           success_nodes:
             - identifier: Replace Log Analytics with Azure Monitor
 
       - identifier: Replace Log Analytics with Azure Monitor
         unified_job_template:
-          name: "{{ job_templates.azure.replace_log_analytics_with_azure_monitor.name }}"
+          name: "{{ replace_log_analytics_with_azure_monitor_template.id | int }}"
           type: job_template
-          inventory: localhost
+          inventory: "{{ localhost_inventory.id | int }}"
         related:
           success_nodes:
             - identifier: Uninstall Log Analytics Agent
@@ -104,12 +104,12 @@
       - identifier: Uninstall Log Analytics Agent
         all_parents_must_converge: false
         unified_job_template:
-          name: "{{ job_templates.azure.uninstall_log_analytics.name }}"
+          name: "{{ uninstall_log_analytics_agent_template.id | int }}"
           type: job_template
-          inventory: Azure
+          inventory: "{{ azure_inventory.id | int }}"
   when:
     - (seed_lab_content | bool)
+  register: replace_log_analytics_workflow
   tags:
     - workflows
     - azure
-  register: replace_log_analytics_workflow

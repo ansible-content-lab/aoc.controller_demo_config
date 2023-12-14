@@ -12,7 +12,7 @@
 - name: Add localhost host to inventory
   ansible.controller.host:
     name: localhost
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     state: present
   tags:
     - inventories
@@ -34,14 +34,13 @@
   ansible.controller.inventory_source:
     name: Azure Dynamic Inventory
     description: Creates inventory from Azure sources
-    inventory: "{{ azure_inventory.name }}"
-    credential: "{{ azure_credential.name }}"
-    execution_environment: "{{ cloud_services_ee.name }}"
+    inventory: "{{ azure_inventory.id | int }}"
+    credential: "{{ azure_credential.id | int }}"
+    execution_environment: "{{ cloud_services_ee.id | int }}"
     overwrite: true
     update_on_launch: true
-    organization: "{{ awx_organization }}"
     source: scm
-    source_project: "{{ content_lab_project_azure.name }}"
+    source_project: "{{ content_lab_project_azure.id | int }}"
     source_path: inventory/inventory.azure_rm.yml
     verbosity: 0
   when:

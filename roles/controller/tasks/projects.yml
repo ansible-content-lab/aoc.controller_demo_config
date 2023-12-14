@@ -1,4 +1,5 @@
 ---
+# Do not directly wait for projects. If you do, then you will not get the actual record ID back from the request.
 - name: Delete Demo Project
   ansible.controller.project:
     name: Demo Project
@@ -15,13 +16,13 @@
   ansible.controller.project:
     name: Ansible Cloud Content Lab - Ansible TMM Azure Content
     description: Example Azure content from the Ansible TMM team.
-    default_environment: "{{ cloud_ee.name }}"
+    default_environment: "{{ cloud_ee.id | int }}"
     organization: "{{ awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-cloud/azure.git
     state: present
     update_project: true
-    wait: true
+    wait: false
   when:
     - (seed_lab_content | bool)
   register: content_lab_project_demo
@@ -33,13 +34,13 @@
   ansible.controller.project:
     name: Ansible Cloud Content Lab - Azure Content
     description: Example Azure content from the Ansible Content Lab for Cloud Automation.
-    default_environment: "{{ cloud_ee.name }}"
+    default_environment: "{{ cloud_ee.id | int }}"
     organization: "{{ awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-content-lab/azure.infrastructure_config_demos.git
     state: present
     update_project: true
-    wait: true
+    wait: false
   when:
     - (seed_lab_content | bool)
   register: content_lab_project_azure
@@ -51,16 +52,16 @@
   ansible.controller.project:
     name: Ansible Validated Content - Azure Demos
     description: Ansible validated content examples for Ansible on Azure.
-    default_environment: "{{ execution_environments.cloud_services.name }}"
+    default_environment: "{{ cloud_ee.id | int }}"
     organization: "{{ awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/redhat-cop/cloud.azure_ops.git
     state: present
     update_project: true
-    wait: true
+    wait: false
   when:
     - (seed_validated_content | bool)
-  register: seeded_content_project_azure
+  register: validated_content_project_azure
   tags:
     - projects
     - azure
@@ -69,13 +70,13 @@
   ansible.controller.project:
     name: Ansible Cloud Content Lab - AWS Deployment
     description: Collection that contains automation for deploying a self-managed AAP instance on AWS.
-    default_environment: "{{ cloud_ee.name }}"
+    default_environment: "{{ cloud_ee.id | int }}"
     organization: "{{ awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-content-lab/aws_ansible_deployment.git
     state: present
     update_project: true
-    wait: true
+    wait: false
   when:
     - (seed_lab_content | bool)
   register: content_lab_project_aws_deployment
@@ -87,16 +88,22 @@
   ansible.controller.project:
     name: Ansible Cloud Content Lab - AWS Content
     description: Example AWS content from the Ansible Content Lab for Cloud Automation.
-    default_environment: "{{ cloud_ee.name }}"
+    default_environment: "{{ cloud_ee.id | int }}"
     organization: "{{ awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-content-lab/aws.infrastructure_config_demos.git
     state: present
     update_project: true
-    wait: true
+    wait: false
   when:
     - (seed_lab_content | bool)
   register: content_lab_project_aws_content
   tags:
     - projects
     - aws
+
+- name: Sleep for 300 seconds to wait for project updates
+  ansible.builtin.wait_for:
+    timeout: 300
+  when:
+    - (projects.skip_wait is not defined) or (not projects.skip_wait)

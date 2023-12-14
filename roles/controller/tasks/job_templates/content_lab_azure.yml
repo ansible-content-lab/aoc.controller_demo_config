@@ -2,14 +2,14 @@
 - name: Content Lab - Azure - Create Resource Group
   ansible.controller.job_template:
     name: Content Lab - Azure - Create Resource Group
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_resource_group.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
       region: "{{ azure.region }}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
   when:
     - (seed_lab_content | bool)
   tags:
@@ -19,9 +19,9 @@
 - name: Content Lab - Azure - Create VNET
   ansible.controller.job_template:
     name: Content Lab - Azure - Create VNET
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_vnet.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
       region: "{{ azure.region }}"
@@ -31,7 +31,7 @@
       subnet_name: "{{ job_templates.azure.vnet.subnet_name }}"
       subnet_cidr: "{{ job_templates.azure.vnet.subnet_cidr }}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
   when:
     - (seed_lab_content | bool)
   tags:
@@ -41,9 +41,9 @@
 - name: Content Lab - Azure - Create RHEL VM
   ansible.controller.job_template:
     name: Content Lab - Azure - Create RHEL VM
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_vm.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
       region: "{{ azure.region }}"
@@ -63,7 +63,7 @@
           key_data: "{% raw %}{{ lookup('file', '/home/runner/.ssh/id_rsa_azure_demo.pub') }}{% endraw %}" # Can be populated through a custom credential or variable
     ask_variables_on_launch: true
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_rhel_vm_template
@@ -74,9 +74,9 @@
 - name: Content Lab - Azure - Delete RHEL VM
   ansible.controller.job_template:
     name: Content Lab - Azure - Delete RHEL VM
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/delete_vm.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
       vm_name: rhel9-test
@@ -84,7 +84,7 @@
       network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
       public_ip_name: "{% raw %}{{ vm_name }}-public-ip{% endraw %}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: delete_rhel_vm_template
@@ -95,9 +95,9 @@
 - name: Content Lab - Azure - Create Windows Server VM
   ansible.controller.job_template:
     name: Content Lab - Azure - Create Windows Server VM
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_vm.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
       region: "{{ azure.region }}"
@@ -113,7 +113,7 @@
       admin_password: ansible12345!
     ask_variables_on_launch: true
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_windows_vm_template
@@ -124,9 +124,9 @@
 - name: Content Lab - Azure - Delete Windows VM
   ansible.controller.job_template:
     name: Content Lab - Azure - Delete Windows VM
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/delete_vm.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
       vm_name: win2022-test
@@ -134,7 +134,7 @@
       network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
       public_ip_name: "{% raw %}{{ vm_name }}-public-ip{% endraw %}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: delete_windows_vm_template
@@ -145,14 +145,14 @@
 - name: Content Lab - Azure - Delete Resource Group
   ansible.controller.job_template:
     name: Content Lab - Azure - Delete Resource Group
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/delete_resource_group.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
       region: "{{ azure.region }}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: delete_resource_group_template
@@ -163,9 +163,9 @@
 - name: Content Lab - Azure - Create Network Peering Demo
   ansible.controller.job_template:
     name: Content Lab - Azure - Create Network Peering Demo
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_transit_network.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
       region: "{{ azure.region }}"
@@ -175,7 +175,7 @@
       ansible_ssh_private_key_file_dest_path: /home/runner/.ssh/id_rsa_azure_demo
     ask_variables_on_launch: true
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: create_network_peering_demo_template
@@ -186,15 +186,15 @@
 - name: Content Lab - Azure - Delete Network Peering Demo
   ansible.controller.job_template:
     name: Content Lab - Azure - Delete Network Peering Demo
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     playbook: playbooks/delete_transit_network.yml
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
       region: "{{ azure.region }}"
     ask_variables_on_launch: true
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: delete_network_peering_demo_template
@@ -204,14 +204,14 @@
 
 - name: Content Lab - Azure - Run DNF Update
   ansible.controller.job_template:
-    name: "{{ job_templates.azure.dnf_update.name }}"
+    name: Content Lab - Azure - Run DNF Update
     job_type: run
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     playbook: playbooks/update_rhel_vms.yml
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ azure_inventory.id | int }}"
     limit: rhel
     credentials:
-      - "{{ credentials.ssh.name }}"
+      - "{{ vm_credential.id | int }}"
     become_enabled: true
     job_slice_count: 5
     state: present
@@ -224,10 +224,10 @@
 
 - name: Content Lab - Azure - Install Arc Agent
   ansible.controller.job_template:
-    name: "{{ job_templates.azure.install_arc_agent.name }}"
-    inventory: "{{ azure_inventory.name }}"
+    name: Content Lab - Azure - Install Arc Agent
+    inventory: "{{ azure_inventory.id | int }}"
     playbook: playbooks/install_arc_agent.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
       region: "{{ azure.region }}"
@@ -236,8 +236,8 @@
       service_principal_id: "{% raw %}{{ lookup('env', 'AZURE_CLIENT_ID') }}{% endraw %}"
       service_principal_secret: "{% raw %}{{ lookup('env', 'AZURE_SECRET') }}{% endraw %}"
     credentials:
-      - "{{ credentials.ssh.name }}"
-      - "{{ azure_credential.name }}"
+      - "{{ vm_credential.id | int }}"
+      - "{{ azure_credential.id | int }}"
     limit: rhel
     become_enabled: true
     ask_inventory_on_launch: true
@@ -252,16 +252,16 @@
 - name: Content Lab - Azure - Enable Arc Extensions
   ansible.controller.job_template:
     name: Content Lab - Azure - Enable Arc Extensions
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ azure_inventory.id | int }}"
     playbook: playbooks/enable_arc_extension.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
       region: "{{ azure.region }}"
       arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
     ask_variables_on_launch: true
   when:
     - (seed_lab_content | bool)
@@ -273,16 +273,16 @@
 - name: Content Lab - Azure - Disable Arc Extensions
   ansible.controller.job_template:
     name: Content Lab - Azure - Disable Arc Extensions
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ azure_inventory.id | int }}"
     playbook: playbooks/disable_arc_extension.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       resource_group_name: "{{ azure.resource_group }}"
       region: "{{ azure.region }}"
       arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
     ask_variables_on_launch: true
   when:
     - (seed_lab_content | bool)
@@ -294,15 +294,15 @@
 - name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
   ansible.controller.job_template:
     name: Content Lab - Azure - Replace Log Analytics with Azure Monitor
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ azure_inventory.id | int }}"
     playbook: playbooks/replace_log_analytics_with_arc_linux.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     extra_vars:
       region: "{{ azure.region }}"
       resource_group: "{{ azure.resource_group }}"
       linux_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
     credentials:
-      - "{{ azure_credential.name }}"
+      - "{{ azure_credential.id | int }}"
   when:
     - (seed_lab_content | bool)
   register: replace_log_analytics_with_azure_monitor_template
@@ -313,14 +313,14 @@
 - name: Content Lab - Azure - Create Log Analytics Workspace
   ansible.controller.job_template:
     name: Content Lab - Azure - Create Log Analytics Workspace
-    inventory: "{{ localhost_inventory.name }}"
+    inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_log_analytics_workspace.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     credentials:
-      - "{{ credentials.ssh.name }}"
+      - "{{ vm_credential.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
-      workspace_name: "{{ job_templates.azure.create_log_analytics_ws.ws_name }}"
+      workspace_name: "{{ job_templates.azure.log_analytics.workspace }}"
     limit: rhel
   when:
     - (seed_lab_content | bool)
@@ -332,14 +332,14 @@
 - name: Content Lab - Azure - Install Log Analytics Agent
   ansible.controller.job_template:
     name: Content Lab - Azure - Install Log Analytics Agent
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ azure_inventory.id | int }}"
     playbook: playbooks/install_log_analytics_agent.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     credentials:
-      - "{{ credentials.ssh.name }}"
+      - "{{ vm_credential.id | int }}"
     extra_vars:
       resource_group: "{{ azure.resource_group }}"
-      workspace_name: "{{ job_templates.azure.create_log_analytics_ws.ws_name }}"
+      workspace_name: "{{ job_templates.azure.log_analytics.workspace }}"
     become_enabled: true
     limit: rhel
     ask_inventory_on_launch: true
@@ -354,16 +354,17 @@
 - name: Content Lab - Azure - Uninstall Log Analytics Agent
   ansible.controller.job_template:
     name: Content Lab - Azure - Uninstall Log Analytics Agent
-    inventory: "{{ azure_inventory.name }}"
+    inventory: "{{ azure_inventory.id | int }}"
     playbook: playbooks/uninstall_log_analytics_agent.yml
-    project: "{{ content_lab_project_azure.name }}"
+    project: "{{ content_lab_project_azure.id | int }}"
     credentials:
-      - "{{ credentials.ssh.name }}"
+      - "{{ vm_credential.id | int }}"
     become_enabled: true
     ask_inventory_on_launch: true
     ask_limit_on_launch: true
   when:
     - (seed_lab_content | bool)
+  register: uninstall_log_analytics_agent_template
   tags:
     - templates
     - azure

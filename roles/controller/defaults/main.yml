@@ -8,7 +8,10 @@ azure:
 credentials:
   no_log: true
   ssh:
-    key_data: "{% raw %}{{ lookup('file', '/home/runner/.ssh/id_ed25519') }}{% endraw %}"
+    key_data: "{% raw %}{{ lookup('file', '~/.ssh/id_ed25519') }}{% endraw %}"
+execution_environments:
+  cloud_ee:
+    set_default: true
 job_templates:
   demo:
     delete_demo_template: true
@@ -17,6 +20,8 @@ job_templates:
       subnet_name: subnet-test
       subnet_cidr: 10.0.200.0/24
   azure:
+    log_analytics:
+      workspace: ansible
     vnet:
       name: Content Lab - Azure - Create VNET
       route_table_name: vnet-rt
@@ -24,5 +29,7 @@ job_templates:
       vnet_cidr: 10.0.200.0/23
       subnet_name: subnet-test
       subnet_cidr: 10.0.200.0/24
+projects:
+  skip_wait: false
 seed_lab_content: false
 seed_validated_content: true
