@@ -7,6 +7,7 @@
     rrule: "{{ query('ansible.controller.schedule_rrule', 'hour', start_date='2022-01-01 23:30:00', timezone='US/Eastern') }}"
     enabled: false
   register: result
+  failed_when: false
   when:
     - (seed_lab_content | bool)
   tags:
