@@ -6,6 +6,19 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v5.1.1
+======
+
+Release Summary
+---------------
+
+Updated AWS deployment template variables.
+
+Minor Changes
+-------------
+
+- Updated AWS deployment variables based on changes to playbook.
+
 v5.1.0
 ======
 
