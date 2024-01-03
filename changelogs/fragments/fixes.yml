@@ -1,0 +1,4 @@
+---
+release_summary: Minor changes and bug fixes.
+minor_changes:
+  - Do not delete demo job by default.
