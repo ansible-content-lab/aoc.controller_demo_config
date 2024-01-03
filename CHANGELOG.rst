@@ -6,6 +6,20 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v5.1.2
+======
+
+Release Summary
+---------------
+
+Minor changes and bug fixes.
+
+Minor Changes
+-------------
+
+- Do not delete demo job by default.
+- Upgraded pre-commit checks.
+
 v5.1.1
 ======
 
