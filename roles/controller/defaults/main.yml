@@ -14,7 +14,7 @@ execution_environments:
     set_default: true
 job_templates:
   demo:
-    delete_demo_template: true
+    delete_demo_template: false
   aws:
     vnet:
       subnet_name: subnet-test
