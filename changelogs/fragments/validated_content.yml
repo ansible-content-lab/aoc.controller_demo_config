@@ -1,0 +1,10 @@
+---
+release_summary: Added AWS, Google Cloud, and Azure validated content examples.
+major_changes:
+  - Adding AWS CoP project
+  - Adding AWS CoP playbooks as job templates
+  - Adding Google Cloud CoP project
+  - Adding Google Cloud CoP playbooks as job templates
+  - Adding new Azure CoP playbooks as job templates
+minor_changes:
+  - Bumped pre-commit dependencies
