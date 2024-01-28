@@ -19,6 +19,7 @@
   register: web_application_demo
   tags:
     - templates
+    - azure
 
 - name: Validated Content - Azure web application migration demo
   ansible.controller.job_template:
@@ -41,3 +42,4 @@
   register: web_migration_demo
   tags:
     - templates
+    - azure

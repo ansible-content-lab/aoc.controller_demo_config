@@ -6,12 +6,13 @@
   tags:
     - templates
 
-- name: Include Validated Content Job Templates
-  ansible.builtin.include_tasks: job_templates/validated_content.yml
+- name: Include Azure Validated Content Job Templates
+  ansible.builtin.include_tasks: job_templates/validated_content_azure.yml
   when:
     - (seed_validated_content | bool)
   tags:
     - templates
+    - azure
 
 - name: Include Content Lab Azure Job Templates
   ansible.builtin.include_tasks: job_templates/content_lab_azure.yml
