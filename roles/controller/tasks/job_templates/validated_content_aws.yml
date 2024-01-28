@@ -1,0 +1,128 @@
+---
+- name: Validated Content - AWS migrate an existing on prem VM running on KVM hypervisor to AWS.
+  ansible.controller.job_template:
+    name: Validated Content - WS migrate an existing on prem VM running on KVM hypervisor to AWS
+    job_type: run
+    execution_environment: "{{ cloud_ee.id | int }}"
+    project: "{{ validated_content_project_aws.id | int }}"
+    playbook: playbooks/move_vm_from_on_prem_to_aws/move_vm_from_on_prem_to_aws.yml
+    ask_credential_on_launch: true
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    extra_vars:
+      source_vm_name: ""
+      image_name: ""
+      uri: ""
+      local_image_path: ""
+      overwrite: ""
+      bucket_name: ""
+      raw_image_path: ""
+      instance_name: ""
+      instance_type: ""
+      import_image_task_name: ""
+      keypair_name: ""
+      security_groups: ""
+      vpc_subnet_id: ""
+      volumes: ""
+    become_enabled: false
+    job_slice_count: 1
+    state: present
+  when:
+    - (seed_validated_content | bool)
+  register: aws_vm_migration
+  tags:
+    - templates
+    - aws
+
+- name: Validated Content - AWS upload file to S3
+  ansible.controller.job_template:
+    name: Validated Content - AWS upload file to S3
+    job_type: run
+    execution_environment: "{{ cloud_ee.id | int }}"
+    project: "{{ validated_content_project_aws.id | int }}"
+    playbook: playbooks/upload_file_to_s3.yaml
+    ask_credential_on_launch: true
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    extra_vars:
+      upload_file_to_s3_bucket_name: ""
+      upload_file_to_s3_file_path: ""
+    become_enabled: false
+    job_slice_count: 1
+    state: present
+  when:
+    - (seed_validated_content | bool)
+  register: aws_vm_migration
+  tags:
+    - templates
+    - aws
+
+- name: Validated Content - AWS restore CloudTrail
+  ansible.controller.job_template:
+    name: Validated Content - AWS restore CloudTrail
+    job_type: run
+    execution_environment: "{{ cloud_ee.id | int }}"
+    project: "{{ validated_content_project_aws.id | int }}"
+    playbook: playbooks/aws_restore_cloudtrail.yml
+    ask_credential_on_launch: true
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    extra_vars:
+      s3_bucket_name: ""
+      s3_key_prefix: "{{ default(omit) }}"
+      cloudtrail_name: ""
+      kms_key_alias: ""
+    become_enabled: false
+    job_slice_count: 1
+    state: present
+  when:
+    - (seed_validated_content | bool)
+  register: aws_vm_migration
+  tags:
+    - templates
+    - aws
+
+- name: Validated Content - AWS restore CloudTrail encryption
+  ansible.controller.job_template:
+    name: Validated Content - AWS restore CloudTrail encryption
+    job_type: run
+    execution_environment: "{{ cloud_ee.id | int }}"
+    project: "{{ validated_content_project_aws.id | int }}"
+    playbook: playbooks/aws_restore_cloudtrail_encryption.yml
+    ask_credential_on_launch: true
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    extra_vars:
+      cloudtrail_name: ""
+      kms_key_alias: ""
+    become_enabled: false
+    job_slice_count: 1
+    state: present
+  when:
+    - (seed_validated_content | bool)
+  register: aws_vm_migration
+  tags:
+    - templates
+    - aws
+
+- name: Validated Content - AWS restore CloudTrail encryption
+  ansible.controller.job_template:
+    name: Validated Content - AWS restore CloudTrail encryption
+    job_type: run
+    execution_environment: "{{ cloud_ee.id | int }}"
+    project: "{{ validated_content_project_aws.id | int }}"
+    playbook: playbooks/aws_restore_kms_key.yml
+    ask_credential_on_launch: true
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    extra_vars:
+      kms_key_alias: ""
+    become_enabled: false
+    job_slice_count: 1
+    state: present
+  when:
+    - (seed_validated_content | bool)
+  register: aws_vm_migration
+  tags:
+    - templates
+    - aws

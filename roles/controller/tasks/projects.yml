@@ -48,7 +48,25 @@
     - projects
     - azure
 
-- name: Add Ansible Validated Content Project
+- name: Add AWS Validated Content Project
+  ansible.controller.project:
+    name: Ansible Validated Content - AWS Demos
+    description: Ansible validated content examples for Ansible on AWS.
+    default_environment: "{{ cloud_ee.id | int }}"
+    organization: "{{ awx_organization }}" # Organization is required in projects
+    scm_type: git
+    scm_url: https://github.com/redhat-cop/cloud.aws_ops.git
+    state: present
+    update_project: true
+    wait: false
+  when:
+    - (seed_validated_content | bool)
+  register: validated_content_project_aws
+  tags:
+    - projects
+    - aws
+
+- name: Add Azure Validated Content Project
   ansible.controller.project:
     name: Ansible Validated Content - Azure Demos
     description: Ansible validated content examples for Ansible on Azure.
