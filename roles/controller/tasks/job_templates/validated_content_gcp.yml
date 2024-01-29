@@ -4,7 +4,7 @@
     name: Validated Content - Google Cloud upload file to cloud storage
     job_type: run
     execution_environment: "{{ cloud_ee.id | int }}"
-    project: "{{ validated_content_project_aws.id | int }}"
+    project: "{{ validated_content_project_gcp.id | int }}"
     playbook: playbooks/upload_file_to_cloud_storage/upload_file_to_cloud_storage.yaml
     ask_credential_on_launch: true
     ask_inventory_on_launch: true
@@ -27,7 +27,7 @@
     name: Validated Content - Google Cloud move VM from on-prem to cloud
     job_type: run
     execution_environment: "{{ cloud_ee.id | int }}"
-    project: "{{ validated_content_project_aws.id | int }}"
+    project: "{{ validated_content_project_gcp.id | int }}"
     playbook: playbooks/move_vm_from_on_prem_to_gcp/move_vm_from_on_prem_to_gcp.yml
     ask_credential_on_launch: true
     ask_inventory_on_launch: true

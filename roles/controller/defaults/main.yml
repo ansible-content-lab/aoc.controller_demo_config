@@ -6,7 +6,6 @@ azure:
   region: eastus
   resource_group: ansible_test
 credentials:
-  no_log: true
   ssh:
     key_data: "{% raw %}{{ lookup('file', '~/.ssh/id_ed25519') }}{% endraw %}"
 execution_environments:

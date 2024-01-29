@@ -97,7 +97,7 @@
     wait: false
   when:
     - (seed_validated_content | bool)
-  register: validated_content_project_azure
+  register: validated_content_project_gcp
   tags:
     - projects
     - gcp

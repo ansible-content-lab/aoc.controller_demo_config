@@ -69,7 +69,7 @@
     ask_variables_on_launch: true
     extra_vars:
       s3_bucket_name: ""
-      s3_key_prefix: "{{ default(omit) }}"
+      s3_key_prefix: ""
       cloudtrail_name: ""
       kms_key_alias: ""
     become_enabled: false

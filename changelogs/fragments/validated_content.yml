@@ -8,3 +8,5 @@ major_changes:
   - Adding new Azure CoP playbooks as job templates
 minor_changes:
   - Bumped pre-commit dependencies
+bugfixes:
+  - Credential no_log default when running in EEs
