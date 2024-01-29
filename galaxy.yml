@@ -1,7 +1,7 @@
 ---
 namespace: lab
 name: controller_demo_config
-version: 5.1.2
+version: 6.0.0
 authors:
   - Scott Harwell <sharwell@redhat.com>
 description: A collection of content for setting up Ansible on Cloud demos rapidly.

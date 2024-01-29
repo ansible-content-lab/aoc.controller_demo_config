@@ -3,14 +3,14 @@
   ansible.controller.execution_environment:
     name: Cloud Services Execution Environment
     description: Red Hat Cloud Services EE
-    organization: "{{ awx_organization | default('') }}"
+    organization: "{{ controller_awx_organization | default('') }}"
     image: registry.redhat.io/ansible-automation-platform-24/ee-cloud-services-rhel8:latest
     credential: Red Hat Registry
     pull: always
     state: present
   register: cloud_services_ee
   when:
-    - (seed_validated_content | bool)
+    - (controller_seed_validated_content | bool)
   tags:
     - ees
 
@@ -18,7 +18,7 @@
   ansible.builtin.set_fact:
     default_execution_environment: "{{ cloud_services_ee.id | int }}"
   when:
-    - (seed_validated_content | bool)
+    - (controller_seed_validated_content | bool)
     - cloud_services_ee.id is defined
   tags:
     - ees
@@ -32,7 +32,7 @@
     pull: always
   register: cloud_ee
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   tags:
     - ees
 
@@ -40,8 +40,8 @@
   ansible.builtin.set_fact:
     default_execution_environment: "{{ cloud_ee.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
     - cloud_ee.id is defined
-    - (execution_environments.cloud_ee.set_default | bool)
+    - (controller_execution_environments_cloud_ee_set_default | bool)
   tags:
     - ees

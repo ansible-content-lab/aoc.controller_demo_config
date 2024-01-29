@@ -1,0 +1,76 @@
+---
+- name: Validated Content - Azure web application deployment demo
+  ansible.controller.job_template:
+    name: Validated Content - Azure web application deployment demo
+    job_type: run
+    execution_environment: "{{ cloud_ee.id | int }}"
+    project: "{{ controller_projects_validated_azure_name }}"
+    playbook: playbooks/webapp.yml
+    ask_credential_on_launch: true
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    extra_vars:
+      controller_azure_resource_group: "<deployment resource group>"
+    become_enabled: false
+    job_slice_count: 1
+    state: present
+  when:
+    - (controller_seed_validated_content | bool)
+  register: web_application_demo
+  tags:
+    - templates
+    - azure
+
+- name: Validated Content - Azure web application deployment demo from containers
+  ansible.controller.job_template:
+    name: Validated Content - Azure web application deployment demo from containers
+    job_type: run
+    execution_environment: "{{ cloud_ee.id | int }}"
+    project: "{{ controller_projects_validated_azure_name }}"
+    playbook: playbooks/webapp_container.yml
+    ask_credential_on_launch: true
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    extra_vars:
+      azure_resource_group: ""
+      azure_region: ""
+      migrate_app: false
+      azure_virtual_network: ""
+      azure_vnet_address_prefixes_cidr: ""
+      azure_subnet: ""
+      azure_subnet_address_prefixes_cidr: ""
+      azure_security_group: ""
+      azure_app_force_update: false
+      azure_vm_os: Linux
+    become_enabled: false
+    job_slice_count: 1
+    state: present
+  when:
+    - (controller_seed_validated_content | bool)
+  register: web_application_demo
+  tags:
+    - templates
+    - azure
+
+- name: Validated Content - Azure web application migration demo
+  ansible.controller.job_template:
+    name: Validated Content - Azure web application migration demo
+    job_type: run
+    execution_environment: "{{ cloud_ee.id | int }}"
+    project: "{{ controller_projects_validated_azure_name }}"
+    playbook: playbooks/vmss_migrate.yml
+    ask_credential_on_launch: true
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    extra_vars:
+      source_resource_group: "<source resource group>"
+      destination_resource_group: "<destination resource group>"
+    become_enabled: false
+    job_slice_count: 1
+    state: present
+  when:
+    - (controller_seed_validated_content | bool)
+  register: web_migration_demo
+  tags:
+    - templates
+    - azure

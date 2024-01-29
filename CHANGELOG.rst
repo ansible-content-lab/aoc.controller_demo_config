@@ -6,6 +6,41 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v6.0.0
+======
+
+Release Summary
+---------------
+
+Added AWS, Google Cloud, and Azure validated content examples.
+
+Major Changes
+-------------
+
+- Adding AWS CoP playbooks as job templates
+- Adding AWS CoP project
+- Adding Google Cloud CoP playbooks as job templates
+- Adding Google Cloud CoP project
+- Adding new Azure CoP playbooks as job templates
+
+Minor Changes
+-------------
+
+- Begin variable migration to ansible-lint suggested `role_` syntax with new variables
+- Bumped pre-commit dependencies
+- Updated URL links on README files to correct broken links.
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Renamed nested variables to snake case to align with Ansible lint
+
+Bugfixes
+--------
+
+- Credential no_log default when running in EEs
+- Use name parameter for projects since IDs returned from operations are not guaranteed
+
 v5.1.2
 ======
 

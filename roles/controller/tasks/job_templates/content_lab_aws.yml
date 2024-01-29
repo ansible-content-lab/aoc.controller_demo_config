@@ -4,12 +4,12 @@
     name: Content Lab - AWS - Create RHEL VM
     inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_vm.yml
-    project: "{{ content_lab_project_aws_content.id | int }}"
+    project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      create_vm_aws_region: "{{ aws.region }}"
+      create_vm_aws_region: "{{ controller_aws_region }}"
       create_vm_vm_name: "{% raw %}create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       create_vm_aws_image_filter: "{% raw %}{{ default(omit) }}{% endraw %}"
-      create_vm_aws_vpc_subnet_name: "{{ job_templates.aws.vnet.subnet_name }}"
+      create_vm_aws_vpc_subnet_name: "{{ controller_job_templates_aws_vpc_subnet_name }}"
       create_vm_aws_securitygroup_name: default
       create_vm_aws_keypair_name: vm_keypair
       create_vm_aws_instance_size: t2.micro
@@ -18,7 +18,7 @@
     credentials:
       - "{{ aws_account.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: create_rhel_vm_template
   tags:
     - templates
@@ -29,15 +29,15 @@
     name: Content Lab - AWS - Delete RHEL VM
     inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_vm.yml
-    project: "{{ content_lab_project_aws_content.id | int }}"
+    project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
       vm_name: vm-name
     ask_variables_on_launch: true
     credentials:
       - "{{ aws_account.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: create_rhel_vm_template
   tags:
     - templates
@@ -48,7 +48,7 @@
     name: Content Lab - AWS - Create VPC
     inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_vpc.yml
-    project: "{{ content_lab_project_aws_content.id | int }}"
+    project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
       vpc_cidr: 172.16.0.0/22
       vpc_subnets:
@@ -68,7 +68,7 @@
     credentials:
       - "{{ aws_account.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: create_vpc_template
   tags:
     - templates
@@ -79,14 +79,14 @@
     name: Content Lab - AWS - Delete VPC
     inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/delete_vpc.yml
-    project: "{{ content_lab_project_aws_content.id | int }}"
+    project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
     ask_variables_on_launch: true
     credentials:
       - "{{ aws_account.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: delete_vpc_template
   tags:
     - templates
@@ -97,9 +97,9 @@
     name: Content Lab - AWS - Create Peer Network
     inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_peer_network.yml
-    project: "{{ content_lab_project_aws_content.id | int }}"
+    project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
       dmz_ssh_key_name: "{% raw %}# provide key name{% endraw %}"
       priv_network_ssh_key_name: "{% raw %}# provide key name{% endraw %}"
       vpc_priv_net_hosts_pattern: "{% raw %} default(omit) {% endraw %}"
@@ -108,7 +108,7 @@
     credentials:
       - "{{ aws_account.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: create_rhel_vm_template
   tags:
     - templates
@@ -119,14 +119,14 @@
     name: Content Lab - AWS - Delete Peer Network
     inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/delete_peer_network.yml
-    project: "{{ content_lab_project_aws_content.id | int }}"
+    project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
     ask_variables_on_launch: true
     credentials:
       - "{{ aws_account.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: create_rhel_vm_template
   tags:
     - templates
@@ -137,14 +137,14 @@
     name: Content Lab - AWS - Create Reports
     inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_reports.yml
-    project: "{{ content_lab_project_aws_content.id | int }}"
+    project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      reports_aws_region: "{{ aws.region }}"
+      reports_aws_region: "{{ controller_aws_region }}"
     ask_variables_on_launch: true
     credentials:
       - "{{ aws_account.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: create_rhel_vm_template
   tags:
     - templates
@@ -155,9 +155,9 @@
     name: Content Lab - AWS - Create Transit Network
     inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/create_transit_network.yml
-    project: "{{ content_lab_project_aws_content.id | int }}"
+    project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
       dmz_instance_ami: ami-06640050dc3f556bb
       priv_network_instance_ami: ami-06640050dc3f556bb
       dmz_ssh_key_name: dmz_key
@@ -172,7 +172,7 @@
     credentials:
       - "{{ aws_account.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: create_rhel_vm_template
   tags:
     - templates
@@ -183,14 +183,14 @@
     name: Content Lab - AWS - Delete Transit Network
     inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/delete_transit_network.yml
-    project: "{{ content_lab_project_aws_content.id | int }}"
+    project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
     ask_variables_on_launch: true
     credentials:
       - "{{ aws_account.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: create_rhel_vm_template
   tags:
     - templates
@@ -201,9 +201,9 @@
     name: Content Lab - AWS - Deploy Self-Managed AAP
     inventory: "{{ localhost_inventory.id | int }}"
     playbook: playbooks/deploy_aap.yml
-    project: "{{ content_lab_project_aws_deployment.id | int }}"
+    project: "{{ controller_projects_lab_aws_deployment_name }}"
     extra_vars:
-      infrastructure_region: "{{ aws.region }}"
+      infrastructure_region: "{{ controller_aws_region }}"
       infrastructure_keypair_name: scott_aws_test_key
       infrastructure_tags:
         deployed_from: aap-seeded-content
@@ -236,7 +236,7 @@
       - "{{ aws_account.id | int }}"
       - "{{ red_hat_sso_credential.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: create_rhel_vm_template
   tags:
     - templates

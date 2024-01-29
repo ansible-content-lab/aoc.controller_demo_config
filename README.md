@@ -31,7 +31,7 @@ You can also include it in a `requirements.yml` file and install it via `ansible
 ```yaml
 ---
 collections:
-  - name: https://github.com/ansible-content-lab/lab.controller_demo_config
+  - name: https://github.com/ansible-content-lab/aoc.controller_demo_config
     type: git
     version: main
 ```
@@ -40,17 +40,14 @@ collections:
 
 You may apply variables from any standard Ansible method.  This example will assume that you have created a directory called `env` and that a `vars.yaml` file in that directory.
 
-The example below sets some of the variables that are not passed in through running the ansible automation directly.  These variables are not secret or dynamically issued, so it can be easier to put these in a variables file.  See the [defaults.yml][defaults] file to view most of these types of variables that can be changed.
+The example below sets some of the variables that are not passed in through running the ansible automation directly.  These variables are not secret or dynamically issued, so it can be easier to put these in a variables file.  See the role's [defaults.yml][defaults] file to view most of these types of variables that can be changed.
 
 ```yaml
 ---
-seed_lab_content: true
-session_cookie_age: 28800
-credentials:
-  ssh:
-    key_data: "{{ lookup('file', '~/.ssh/id_rsa') }}"
-projects:
-  skip_wait: false
+controller_seed_lab_content: true
+controller_session_cookie_age: 28800
+controller_credentials_ssh_key_data: "{{ lookup('file', '~/.ssh/id_rsa') }}"
+controller_projects_wait: true
 ```
 
 ### Prepare Inventory
@@ -103,11 +100,12 @@ ansible-navigator run lab.controller_demo_config.configure_aap \
 
 GNU General Public License v3.0 or later
 
-See [LICENSE](https://github.com/ansible-content-lab/lab.controller_demo_config/blob/main/LICENSE) to see the full text.
+See [LICENSE][license] to see the full text.
 
 ## Author
 
 This collection was originally written by Scott Harwell and Hicham Mourad from the Ansible team at Red Hat.
 
-[readme]: https://github.com/ansible-content-lab/lab.controller_demo_config/blob/main/roles/controller/README.md
-[defaults]: https://github.com/ansible-content-lab/lab.controller_demo_config/blob/main/roles/controller/deafults/main.yml
+[readme]: https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/roles/controller/README.md
+[defaults]: https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/roles/controller/defaults/main.yml
+[license]: https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/LICENSE

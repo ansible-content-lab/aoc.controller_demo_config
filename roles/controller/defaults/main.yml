@@ -1,35 +1,27 @@
 ---
-awx_organization: Default
-aws:
-  region: us-east-1
-azure:
-  region: eastus
-  resource_group: ansible_test
-credentials:
-  no_log: true
-  ssh:
-    key_data: "{% raw %}{{ lookup('file', '~/.ssh/id_ed25519') }}{% endraw %}"
-execution_environments:
-  cloud_ee:
-    set_default: true
-job_templates:
-  demo:
-    delete_demo_template: false
-  aws:
-    vnet:
-      subnet_name: subnet-test
-      subnet_cidr: 10.0.200.0/24
-  azure:
-    log_analytics:
-      workspace: ansible
-    vnet:
-      name: Content Lab - Azure - Create VNET
-      route_table_name: vnet-rt
-      vnet_name: vnet-test
-      vnet_cidr: 10.0.200.0/23
-      subnet_name: subnet-test
-      subnet_cidr: 10.0.200.0/24
-projects:
-  skip_wait: false
-seed_lab_content: false
-seed_validated_content: true
+controller_awx_organization: Default
+controller_aws_region: us-east-1
+controller_azure_region: eastus
+controller_azure_resource_group: ansible_test
+controller_credentials_ssh_key_data: "{% raw %}{{ lookup('file', '~/.ssh/id_ed25519') }}{% endraw %}"
+controller_execution_environments_cloud_ee_set_default: true
+controller_job_templates_demo_delete_demo_template: false
+controller_job_templates_aws_vpc_subnet_name: subnet-test
+controller_job_templates_aws_vpc_subnet_cidr: 10.0.200.0/24
+controller_job_templates_azure_log_analytics_workspace: ansible
+controller_job_templates_azure_vnet_name: Content Lab - Azure - Create VNET
+controller_job_templates_azure_vnet_route_table_name: vnet-rt
+controller_job_templates_azure_vnet_vnet_name: vnet-test
+controller_job_templates_azure_vnet_vnet_cidr: 10.0.200.0/23
+controller_job_templates_azure_vnet_subnet_name: subnet-test
+controller_job_templates_azure_vnet_subnet_cidr: 10.0.200.0/24
+controller_projects_wait: true
+controller_projects_lab_azure_name: Ansible Cloud Content Lab - Azure Content
+controller_projects_lab_azure_tmm_name: Ansible Cloud Content Lab - Ansible TMM Azure Content
+controller_projects_lab_aws_deployment_name: Ansible Cloud Content Lab - AWS Deployment
+controller_projects_lab_aws_name: Ansible Cloud Content Lab - AWS Content
+controller_projects_validated_aws_name: Ansible Validated Content - AWS Demos
+controller_projects_validated_azure_name: Ansible Validated Content - Azure Demos
+controller_projects_validated_gcp_name: Ansible Validated Content - Google Cloud Demos
+controller_seed_lab_content: false
+controller_seed_validated_content: true

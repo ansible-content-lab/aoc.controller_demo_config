@@ -5,7 +5,7 @@
     name: Demo Project
     state: absent
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
     - delete_demo_project is defined
     - (delete_demo_project | bool)
   tags:
@@ -14,17 +14,17 @@
 
 - name: Add Ansible Cloud Content Lab Azure Demo Project
   ansible.controller.project:
-    name: Ansible Cloud Content Lab - Ansible TMM Azure Content
+    name: "{{ controller_projects_lab_azure_tmm_name }}"
     description: Example Azure content from the Ansible TMM team.
     default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-cloud/azure.git
     state: present
     update_project: true
-    wait: false
+    wait: "{{ controller_projects_wait }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: content_lab_project_demo
   tags:
     - projects
@@ -32,53 +32,35 @@
 
 - name: Add Ansible Cloud Content Lab Azure Project
   ansible.controller.project:
-    name: Ansible Cloud Content Lab - Azure Content
+    name: "{{ controller_projects_lab_azure_name }}"
     description: Example Azure content from the Ansible Content Lab for Cloud Automation.
     default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-content-lab/azure.infrastructure_config_demos.git
     state: present
     update_project: true
-    wait: false
+    wait: "{{ controller_projects_wait }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: content_lab_project_azure
-  tags:
-    - projects
-    - azure
-
-- name: Add Ansible Validated Content Project
-  ansible.controller.project:
-    name: Ansible Validated Content - Azure Demos
-    description: Ansible validated content examples for Ansible on Azure.
-    default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
-    scm_type: git
-    scm_url: https://github.com/redhat-cop/cloud.azure_ops.git
-    state: present
-    update_project: true
-    wait: false
-  when:
-    - (seed_validated_content | bool)
-  register: validated_content_project_azure
   tags:
     - projects
     - azure
 
 - name: Add Ansible Cloud Content Lab AWS Deployment Project
   ansible.controller.project:
-    name: Ansible Cloud Content Lab - AWS Deployment
+    name: "{{ controller_projects_lab_aws_deployment_name }}"
     description: Collection that contains automation for deploying a self-managed AAP instance on AWS.
     default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-content-lab/aws_ansible_deployment.git
     state: present
     update_project: true
-    wait: false
+    wait: "{{ controller_projects_wait }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: content_lab_project_aws_deployment
   tags:
     - projects
@@ -86,24 +68,72 @@
 
 - name: Add Ansible Cloud Content Lab AWS Content Project
   ansible.controller.project:
-    name: Ansible Cloud Content Lab - AWS Content
+    name: "{{ controller_projects_lab_aws_name }}"
     description: Example AWS content from the Ansible Content Lab for Cloud Automation.
     default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-content-lab/aws.infrastructure_config_demos.git
     state: present
     update_project: true
-    wait: false
+    wait: "{{ controller_projects_wait }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: content_lab_project_aws_content
   tags:
     - projects
     - aws
 
-- name: Sleep for 300 seconds to wait for project updates
-  ansible.builtin.wait_for:
-    timeout: 300
+- name: Add AWS Validated Content Project
+  ansible.controller.project:
+    name: "{{ controller_projects_validated_aws_name }}"
+    description: Ansible validated content examples for AWS.
+    default_environment: "{{ cloud_ee.id | int }}"
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
+    scm_type: git
+    scm_url: https://github.com/redhat-cop/cloud.aws_ops.git
+    state: present
+    update_project: true
+    wait: "{{ controller_projects_wait }}"
   when:
-    - (projects.skip_wait is not defined) or (not projects.skip_wait)
+    - (controller_seed_validated_content | bool)
+  register: validated_content_project_aws
+  tags:
+    - projects
+    - aws
+
+- name: Add Azure Validated Content Project
+  ansible.controller.project:
+    name: "{{ controller_projects_validated_azure_name }}"
+    description: Ansible validated content examples for Azure.
+    default_environment: "{{ cloud_ee.id | int }}"
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
+    scm_type: git
+    scm_url: https://github.com/redhat-cop/cloud.azure_ops.git
+    state: present
+    update_project: true
+    wait: "{{ controller_projects_wait }}"
+  when:
+    - (controller_seed_validated_content | bool)
+  register: validated_content_project_azure
+  tags:
+    - projects
+    - azure
+
+- name: Add Google Cloud Validated Content Project
+  ansible.controller.project:
+    name: "{{ controller_projects_validated_gcp_name }}"
+    description: Ansible validated content examples for Google Cloud.
+    default_environment: "{{ cloud_ee.id | int }}"
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
+    scm_type: git
+    scm_url: https://github.com/redhat-cop/cloud.gcp_ops.git
+    state: present
+    update_project: true
+    wait: "{{ controller_projects_wait }}"
+  when:
+    - (controller_seed_validated_content | bool)
+  register: validated_content_project_gcp
+  tags:
+    - projects
+    - gcp

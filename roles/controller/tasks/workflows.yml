@@ -28,7 +28,7 @@
           name: "{{ delete_rhel_vm_template.id | int }}"
           type: job_template
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: ephemeral_workload_workflow
   tags:
     - workflows
@@ -54,7 +54,7 @@
           type: job_template
           inventory: "{{ azure_inventory.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: install_log_analytics_workflow
   tags:
     - workflows
@@ -73,7 +73,7 @@
           variable: region
           required: true
           type: text
-          default: "{{ azure.region }}"
+          default: "{{ controller_azure_region }}"
         - question_name: What is the name of your resource group?
           variable: resource_group_name
           required: true
@@ -108,7 +108,7 @@
           type: job_template
           inventory: "{{ azure_inventory.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   register: replace_log_analytics_workflow
   tags:
     - workflows
