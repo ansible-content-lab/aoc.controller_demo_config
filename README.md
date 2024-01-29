@@ -40,7 +40,7 @@ collections:
 
 You may apply variables from any standard Ansible method.  This example will assume that you have created a directory called `env` and that a `vars.yaml` file in that directory.
 
-The example below sets some of the variables that are not passed in through running the ansible automation directly.  These variables are not secret or dynamically issued, so it can be easier to put these in a variables file.  See the [./blob/validated_content/roles/controller/defaults/main.yml][defaults] file to view most of these types of variables that can be changed.
+The example below sets some of the variables that are not passed in through running the ansible automation directly.  These variables are not secret or dynamically issued, so it can be easier to put these in a variables file.  See the role's [defaults.yml][defaults] file to view most of these types of variables that can be changed.
 
 ```yaml
 ---
@@ -106,5 +106,5 @@ See [LICENSE](https://github.com/ansible-content-lab/lab.controller_demo_config/
 
 This collection was originally written by Scott Harwell and Hicham Mourad from the Ansible team at Red Hat.
 
-[readme]: https://github.com/ansible-content-lab/lab.controller_demo_config/blob/main/roles/controller/README.md
-[defaults]: https://github.com/ansible-content-lab/lab.controller_demo_config/blob/main/roles/controller/deafults/main.yml
+[readme]: https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/roles/controller/README.md
+[defaults]: https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/roles/controller/defaults/main.yml
