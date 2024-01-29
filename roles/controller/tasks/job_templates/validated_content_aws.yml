@@ -1,7 +1,7 @@
 ---
 - name: Validated Content - AWS migrate an existing on prem VM running on KVM hypervisor to AWS.
   ansible.controller.job_template:
-    name: Validated Content - WS migrate an existing on prem VM running on KVM hypervisor to AWS
+    name: Validated Content - AWS migrate an existing on prem VM running on KVM hypervisor to AWS
     job_type: run
     execution_environment: "{{ cloud_ee.id | int }}"
     project: "{{ validated_content_project_aws.id | int }}"
