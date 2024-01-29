@@ -8,5 +8,9 @@ major_changes:
   - Adding new Azure CoP playbooks as job templates
 minor_changes:
   - Bumped pre-commit dependencies
+  - Begin variable migration to ansible-lint suggested `role_` syntax with new variables
+breaking_changes:
+  - Renamed nested variables to snake case to align with Ansible lint
 bugfixes:
   - Credential no_log default when running in EEs
+  - Use name parameter for projects since IDs returned from operations are not guaranteed

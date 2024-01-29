@@ -32,7 +32,7 @@
     pull: always
   register: cloud_ee
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   tags:
     - ees
 
@@ -40,7 +40,7 @@
   ansible.builtin.set_fact:
     default_execution_environment: "{{ cloud_ee.id | int }}"
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
     - cloud_ee.id is defined
     - (execution_environments.cloud_ee.set_default | bool)
   tags:

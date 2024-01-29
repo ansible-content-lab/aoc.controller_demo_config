@@ -4,7 +4,7 @@
     name: Validated Content - AWS migrate an existing on prem VM running on KVM hypervisor to AWS
     job_type: run
     execution_environment: "{{ cloud_ee.id | int }}"
-    project: "{{ validated_content_project_aws.id | int }}"
+    project: "{{ controller_projects_validated_aws_name }}"
     playbook: playbooks/move_vm_from_on_prem_to_aws/move_vm_from_on_prem_to_aws.yml
     ask_credential_on_launch: true
     ask_inventory_on_launch: true
@@ -39,7 +39,7 @@
     name: Validated Content - AWS upload file to S3
     job_type: run
     execution_environment: "{{ cloud_ee.id | int }}"
-    project: "{{ validated_content_project_aws.id | int }}"
+    project: "{{ controller_projects_validated_aws_name }}"
     playbook: playbooks/upload_file_to_s3.yaml
     ask_credential_on_launch: true
     ask_inventory_on_launch: true
@@ -62,7 +62,7 @@
     name: Validated Content - AWS restore CloudTrail
     job_type: run
     execution_environment: "{{ cloud_ee.id | int }}"
-    project: "{{ validated_content_project_aws.id | int }}"
+    project: "{{ controller_projects_validated_aws_name }}"
     playbook: playbooks/aws_restore_cloudtrail.yml
     ask_credential_on_launch: true
     ask_inventory_on_launch: true
@@ -87,7 +87,7 @@
     name: Validated Content - AWS restore CloudTrail encryption
     job_type: run
     execution_environment: "{{ cloud_ee.id | int }}"
-    project: "{{ validated_content_project_aws.id | int }}"
+    project: "{{ controller_projects_validated_aws_name }}"
     playbook: playbooks/aws_restore_cloudtrail_encryption.yml
     ask_credential_on_launch: true
     ask_inventory_on_launch: true
@@ -110,7 +110,7 @@
     name: Validated Content - AWS restore CloudTrail encryption
     job_type: run
     execution_environment: "{{ cloud_ee.id | int }}"
-    project: "{{ validated_content_project_aws.id | int }}"
+    project: "{{ controller_projects_validated_aws_name }}"
     playbook: playbooks/aws_restore_kms_key.yml
     ask_credential_on_launch: true
     ask_inventory_on_launch: true

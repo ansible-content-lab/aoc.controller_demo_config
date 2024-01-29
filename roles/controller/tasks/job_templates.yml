@@ -2,7 +2,7 @@
 - name: Include Demo Project Job Templates
   ansible.builtin.include_tasks: job_templates/demo.yml
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   tags:
     - templates
 
@@ -25,7 +25,7 @@
 - name: Include Content Lab Azure Job Templates
   ansible.builtin.include_tasks: job_templates/content_lab_azure.yml
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   tags:
     - templates
     - azure
@@ -33,7 +33,7 @@
 - name: Include Content Lab AWS Job Templates
   ansible.builtin.include_tasks: job_templates/content_lab_aws.yml
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   tags:
     - templates
     - aws

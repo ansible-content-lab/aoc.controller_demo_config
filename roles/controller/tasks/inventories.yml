@@ -25,7 +25,7 @@
     state: present
   register: azure_inventory
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   tags:
     - inventories
     - azure
@@ -40,11 +40,11 @@
     overwrite: true
     update_on_launch: true
     source: scm
-    source_project: "{{ content_lab_project_azure.id | int }}"
+    source_project: "{{ controller_projects_lab_azure_name }}"
     source_path: inventory/inventory.azure_rm.yml
     verbosity: 0
   when:
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   tags:
     - inventories
     - azure

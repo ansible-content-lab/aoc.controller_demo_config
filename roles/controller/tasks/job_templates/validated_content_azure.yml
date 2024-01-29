@@ -4,7 +4,7 @@
     name: Validated Content - Azure web application deployment demo
     job_type: run
     execution_environment: "{{ cloud_ee.id | int }}"
-    project: "{{ validated_content_project_azure.id | int }}"
+    project: "{{ controller_projects_validated_azure_name }}"
     playbook: playbooks/webapp.yml
     ask_credential_on_launch: true
     ask_inventory_on_launch: true
@@ -26,7 +26,7 @@
     name: Validated Content - Azure web application deployment demo from containers
     job_type: run
     execution_environment: "{{ cloud_ee.id | int }}"
-    project: "{{ validated_content_project_azure.id | int }}"
+    project: "{{ controller_projects_validated_azure_name }}"
     playbook: playbooks/webapp_container.yml
     ask_credential_on_launch: true
     ask_inventory_on_launch: true
@@ -57,7 +57,7 @@
     name: Validated Content - Azure web application migration demo
     job_type: run
     execution_environment: "{{ cloud_ee.id | int }}"
-    project: "{{ validated_content_project_azure.id | int }}"
+    project: "{{ controller_projects_validated_azure_name }}"
     playbook: playbooks/vmss_migrate.yml
     ask_credential_on_launch: true
     ask_inventory_on_launch: true

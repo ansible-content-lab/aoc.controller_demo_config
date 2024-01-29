@@ -6,6 +6,6 @@
   when:
     - job_templates.demo.delete_demo_template is defined
     - job_templates.demo.delete_demo_template
-    - (seed_lab_content | bool)
+    - (controller_seed_lab_content | bool)
   tags:
     - templates

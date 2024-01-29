@@ -44,13 +44,12 @@ The example below sets some of the variables that are not passed in through runn
 
 ```yaml
 ---
-seed_lab_content: true
+controller_seed_lab_content: true
 session_cookie_age: 28800
 credentials:
   ssh:
     key_data: "{{ lookup('file', '~/.ssh/id_rsa') }}"
-projects:
-  skip_wait: false
+controller_projects_wait: true
 ```
 
 ### Prepare Inventory
