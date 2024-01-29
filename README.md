@@ -45,10 +45,8 @@ The example below sets some of the variables that are not passed in through runn
 ```yaml
 ---
 controller_seed_lab_content: true
-session_cookie_age: 28800
-credentials:
-  ssh:
-    key_data: "{{ lookup('file', '~/.ssh/id_rsa') }}"
+controller_session_cookie_age: 28800
+controller_credentials_ssh_key_data: "{{ lookup('file', '~/.ssh/id_rsa') }}"
 controller_projects_wait: true
 ```
 

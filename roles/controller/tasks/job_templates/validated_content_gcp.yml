@@ -16,7 +16,7 @@
     job_slice_count: 1
     state: present
   when:
-    - (seed_validated_content | bool)
+    - (controller_seed_validated_content | bool)
   register: aws_vm_migration
   tags:
     - templates
@@ -41,7 +41,7 @@
     job_slice_count: 1
     state: present
   when:
-    - (seed_validated_content | bool)
+    - (controller_seed_validated_content | bool)
   register: aws_vm_migration
   tags:
     - templates

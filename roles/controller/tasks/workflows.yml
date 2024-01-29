@@ -73,7 +73,7 @@
           variable: region
           required: true
           type: text
-          default: "{{ azure.region }}"
+          default: "{{ controller_azure_region }}"
         - question_name: What is the name of your resource group?
           variable: resource_group_name
           required: true

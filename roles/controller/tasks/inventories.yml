@@ -3,7 +3,7 @@
   ansible.controller.inventory:
     name: localhost
     description: localhost
-    organization: "{{ awx_organization }}"
+    organization: "{{ controller_awx_organization }}"
     state: present
   register: localhost_inventory
   tags:
@@ -21,7 +21,7 @@
   ansible.controller.inventory:
     name: Azure
     description: Azure Inventory
-    organization: "{{ awx_organization }}"
+    organization: "{{ controller_awx_organization }}"
     state: present
   register: azure_inventory
   when:

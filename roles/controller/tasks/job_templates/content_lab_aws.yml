@@ -6,10 +6,10 @@
     playbook: playbooks/create_vm.yml
     project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      create_vm_aws_region: "{{ aws.region }}"
+      create_vm_aws_region: "{{ controller_aws_region }}"
       create_vm_vm_name: "{% raw %}create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       create_vm_aws_image_filter: "{% raw %}{{ default(omit) }}{% endraw %}"
-      create_vm_aws_vpc_subnet_name: "{{ job_templates.aws.vnet.subnet_name }}"
+      create_vm_aws_vpc_subnet_name: "{{ controller_job_templates_aws_vpc_subnet_name }}"
       create_vm_aws_securitygroup_name: default
       create_vm_aws_keypair_name: vm_keypair
       create_vm_aws_instance_size: t2.micro
@@ -31,7 +31,7 @@
     playbook: playbooks/create_vm.yml
     project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
       vm_name: vm-name
     ask_variables_on_launch: true
     credentials:
@@ -81,7 +81,7 @@
     playbook: playbooks/delete_vpc.yml
     project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
     ask_variables_on_launch: true
     credentials:
       - "{{ aws_account.id | int }}"
@@ -99,7 +99,7 @@
     playbook: playbooks/create_peer_network.yml
     project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
       dmz_ssh_key_name: "{% raw %}# provide key name{% endraw %}"
       priv_network_ssh_key_name: "{% raw %}# provide key name{% endraw %}"
       vpc_priv_net_hosts_pattern: "{% raw %} default(omit) {% endraw %}"
@@ -121,7 +121,7 @@
     playbook: playbooks/delete_peer_network.yml
     project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
     ask_variables_on_launch: true
     credentials:
       - "{{ aws_account.id | int }}"
@@ -139,7 +139,7 @@
     playbook: playbooks/create_reports.yml
     project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      reports_aws_region: "{{ aws.region }}"
+      reports_aws_region: "{{ controller_aws_region }}"
     ask_variables_on_launch: true
     credentials:
       - "{{ aws_account.id | int }}"
@@ -157,7 +157,7 @@
     playbook: playbooks/create_transit_network.yml
     project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
       dmz_instance_ami: ami-06640050dc3f556bb
       priv_network_instance_ami: ami-06640050dc3f556bb
       dmz_ssh_key_name: dmz_key
@@ -185,7 +185,7 @@
     playbook: playbooks/delete_transit_network.yml
     project: "{{ controller_projects_lab_aws_name }}"
     extra_vars:
-      aws_region: "{{ aws.region }}"
+      aws_region: "{{ controller_aws_region }}"
     ask_variables_on_launch: true
     credentials:
       - "{{ aws_account.id | int }}"
@@ -203,7 +203,7 @@
     playbook: playbooks/deploy_aap.yml
     project: "{{ controller_projects_lab_aws_deployment_name }}"
     extra_vars:
-      infrastructure_region: "{{ aws.region }}"
+      infrastructure_region: "{{ controller_aws_region }}"
       infrastructure_keypair_name: scott_aws_test_key
       infrastructure_tags:
         deployed_from: aap-seeded-content

@@ -6,8 +6,8 @@
     playbook: playbooks/create_resource_group.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
-      region: "{{ azure.region }}"
+      resource_group: "{{ controller_azure_resource_group }}"
+      region: "{{ controller_azure_region }}"
     credentials:
       - "{{ azure_credential.id | int }}"
   when:
@@ -23,13 +23,13 @@
     playbook: playbooks/create_vnet.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
-      region: "{{ azure.region }}"
-      route_table_name: "{{ job_templates.azure.vnet.route_table_name }}"
-      vnet_name: "{{ job_templates.azure.vnet.vnet_name }}"
-      vnet_cidr: "{{ job_templates.azure.vnet.vnet_cidr }}"
-      subnet_name: "{{ job_templates.azure.vnet.subnet_name }}"
-      subnet_cidr: "{{ job_templates.azure.vnet.subnet_cidr }}"
+      resource_group: "{{ controller_azure_resource_group }}"
+      region: "{{ controller_azure_region }}"
+      route_table_name: "{{ controller_job_templates_azure_vnet_route_table_name }}"
+      vnet_name: "{{ controller_job_templates_azure_vnet_vnet_name }}"
+      vnet_cidr: "{{ controller_job_templates_azure_vnet_vnet_cidr }}"
+      subnet_name: "{{ controller_job_templates_azure_vnet_subnet_name }}"
+      subnet_cidr: "{{ controller_job_templates_azure_vnet_subnet_cidr }}"
     credentials:
       - "{{ azure_credential.id | int }}"
   when:
@@ -45,16 +45,16 @@
     playbook: playbooks/create_vm.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
-      region: "{{ azure.region }}"
+      resource_group: "{{ controller_azure_resource_group }}"
+      region: "{{ controller_azure_region }}"
       os_type: Linux
       vm_name: "{% raw %}create-rhel-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       vm_blueprint: rhel9
       nic_name: create-rhel-test-nic
       network_sec_group_name: create-rhel-test-sg
       public_ip_name: create-rhel-test-public-ip
-      vnet_name: "{{ job_templates.azure.vnet.vnet_name }}"
-      subnet_name: "{{ job_templates.azure.vnet.subnet_name }}"
+      vnet_name: "{{ controller_job_templates_azure_vnet_vnet_name }}"
+      subnet_name: "{{ controller_job_templates_azure_vnet_subnet_name }}"
       create_public_ip: true
       admin_user: azureuser
       admin_password: ansible12345!
@@ -78,7 +78,7 @@
     playbook: playbooks/delete_vm.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
+      resource_group: "{{ controller_azure_resource_group }}"
       vm_name: rhel9-test
       nic_name: "{% raw %}{{ vm_name }}-nic{% endraw %}"
       network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
@@ -99,15 +99,15 @@
     playbook: playbooks/create_vm.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
-      region: "{{ azure.region }}"
+      resource_group: "{{ controller_azure_resource_group }}"
+      region: "{{ controller_azure_region }}"
       os_type: Windows
       vm_name: "{% raw %}create-win-test-{{ lookup('community.general.random_string', length=4, special=false) }}{% endraw %}"
       nic_name: create-win-test-nic
       network_sec_group_name: create-win-test-sg
       public_ip_name: create-win-test-public-ip
-      vnet_name: "{{ job_templates.azure.vnet.vnet_name }}"
-      subnet_name: "{{ job_templates.azure.vnet.subnet_name }}"
+      vnet_name: "{{ controller_job_templates_azure_vnet_vnet_name }}"
+      subnet_name: "{{ controller_job_templates_azure_vnet_subnet_name }}"
       create_public_ip: true
       admin_user: azureuser
       admin_password: ansible12345!
@@ -128,7 +128,7 @@
     playbook: playbooks/delete_vm.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
+      resource_group: "{{ controller_azure_resource_group }}"
       vm_name: win2022-test
       nic_name: "{% raw %}{{ vm_name }}-nic{% endraw %}"
       network_sec_group_name: "{% raw %}{{ vm_name }}-sg{% endraw %}"
@@ -149,8 +149,8 @@
     playbook: playbooks/delete_resource_group.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
-      region: "{{ azure.region }}"
+      resource_group: "{{ controller_azure_resource_group }}"
+      region: "{{ controller_azure_region }}"
     credentials:
       - "{{ azure_credential.id | int }}"
   when:
@@ -167,8 +167,8 @@
     playbook: playbooks/create_transit_network.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
-      region: "{{ azure.region }}"
+      resource_group: "{{ controller_azure_resource_group }}"
+      region: "{{ controller_azure_region }}"
       priv_network_hosts_pattern: 172.16.*
       priv_network_ssh_user: azureuser
       ansible_ssh_private_key_file_local_path: /home/runner/.ssh/id_rsa_azure_demo # Must exist locally or be mapped in an EE
@@ -190,8 +190,8 @@
     playbook: playbooks/delete_transit_network.yml
     inventory: "{{ localhost_inventory.id | int }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
-      region: "{{ azure.region }}"
+      resource_group: "{{ controller_azure_resource_group }}"
+      region: "{{ controller_azure_region }}"
     ask_variables_on_launch: true
     credentials:
       - "{{ azure_credential.id | int }}"
@@ -229,8 +229,8 @@
     playbook: playbooks/install_arc_agent.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
-      region: "{{ azure.region }}"
+      resource_group: "{{ controller_azure_resource_group }}"
+      region: "{{ controller_azure_region }}"
       tenant_id: "{% raw %}{{ lookup('env', 'AZURE_TENANT') }}{% endraw %}"
       subscription_id: "{% raw %}{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}{% endraw %}"
       service_principal_id: "{% raw %}{{ lookup('env', 'AZURE_CLIENT_ID') }}{% endraw %}"
@@ -256,8 +256,8 @@
     playbook: playbooks/enable_arc_extension.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
-      region: "{{ azure.region }}"
+      resource_group: "{{ controller_azure_resource_group }}"
+      region: "{{ controller_azure_region }}"
       arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
@@ -277,8 +277,8 @@
     playbook: playbooks/disable_arc_extension.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      resource_group_name: "{{ azure.resource_group }}"
-      region: "{{ azure.region }}"
+      resource_group_name: "{{ controller_azure_resource_group }}"
+      region: "{{ controller_azure_region }}"
       arc_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
       extension: azure_monitor_agent # this name is from the extension variable mapping in the content lab collection
     credentials:
@@ -298,8 +298,8 @@
     playbook: playbooks/replace_log_analytics_with_arc_linux.yml
     project: "{{ controller_projects_lab_azure_name }}"
     extra_vars:
-      region: "{{ azure.region }}"
-      resource_group: "{{ azure.resource_group }}"
+      region: "{{ controller_azure_region }}"
+      resource_group: "{{ controller_azure_resource_group }}"
       linux_hosts: "{% raw %}{{ hostvars.values() | selectattr('group_names','contains', 'arc') | map(attribute='inventory_hostname') | list }}{% endraw %}"
     credentials:
       - "{{ azure_credential.id | int }}"
@@ -319,8 +319,8 @@
     credentials:
       - "{{ vm_credential.id | int }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
-      workspace_name: "{{ job_templates.azure.log_analytics.workspace }}"
+      resource_group: "{{ controller_azure_resource_group }}"
+      workspace_name: "{{ controller_job_templates_azure_log_analytics_workspace }}"
     limit: rhel
   when:
     - (controller_seed_lab_content | bool)
@@ -338,8 +338,8 @@
     credentials:
       - "{{ vm_credential.id | int }}"
     extra_vars:
-      resource_group: "{{ azure.resource_group }}"
-      workspace_name: "{{ job_templates.azure.log_analytics.workspace }}"
+      resource_group: "{{ controller_azure_resource_group }}"
+      workspace_name: "{{ controller_job_templates_azure_log_analytics_workspace }}"
     become_enabled: true
     limit: rhel
     ask_inventory_on_launch: true

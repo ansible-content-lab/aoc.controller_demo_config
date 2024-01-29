@@ -17,7 +17,7 @@
     name: "{{ controller_projects_lab_azure_tmm_name }}"
     description: Example Azure content from the Ansible TMM team.
     default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-cloud/azure.git
     state: present
@@ -35,7 +35,7 @@
     name: "{{ controller_projects_lab_azure_name }}"
     description: Example Azure content from the Ansible Content Lab for Cloud Automation.
     default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-content-lab/azure.infrastructure_config_demos.git
     state: present
@@ -53,7 +53,7 @@
     name: "{{ controller_projects_lab_aws_deployment_name }}"
     description: Collection that contains automation for deploying a self-managed AAP instance on AWS.
     default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-content-lab/aws_ansible_deployment.git
     state: present
@@ -71,7 +71,7 @@
     name: "{{ controller_projects_lab_aws_name }}"
     description: Example AWS content from the Ansible Content Lab for Cloud Automation.
     default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/ansible-content-lab/aws.infrastructure_config_demos.git
     state: present
@@ -89,14 +89,14 @@
     name: "{{ controller_projects_validated_aws_name }}"
     description: Ansible validated content examples for AWS.
     default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/redhat-cop/cloud.aws_ops.git
     state: present
     update_project: true
     wait: "{{ controller_projects_wait }}"
   when:
-    - (seed_validated_content | bool)
+    - (controller_seed_validated_content | bool)
   register: validated_content_project_aws
   tags:
     - projects
@@ -107,14 +107,14 @@
     name: "{{ controller_projects_validated_azure_name }}"
     description: Ansible validated content examples for Azure.
     default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/redhat-cop/cloud.azure_ops.git
     state: present
     update_project: true
     wait: "{{ controller_projects_wait }}"
   when:
-    - (seed_validated_content | bool)
+    - (controller_seed_validated_content | bool)
   register: validated_content_project_azure
   tags:
     - projects
@@ -125,14 +125,14 @@
     name: "{{ controller_projects_validated_gcp_name }}"
     description: Ansible validated content examples for Google Cloud.
     default_environment: "{{ cloud_ee.id | int }}"
-    organization: "{{ awx_organization }}" # Organization is required in projects
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
     scm_type: git
     scm_url: https://github.com/redhat-cop/cloud.gcp_ops.git
     state: present
     update_project: true
     wait: "{{ controller_projects_wait }}"
   when:
-    - (seed_validated_content | bool)
+    - (controller_seed_validated_content | bool)
   register: validated_content_project_gcp
   tags:
     - projects

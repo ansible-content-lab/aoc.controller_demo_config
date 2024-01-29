@@ -9,7 +9,7 @@
 - name: Include Azure Validated Content Job Templates
   ansible.builtin.include_tasks: job_templates/validated_content_azure.yml
   when:
-    - (seed_validated_content | bool)
+    - (controller_seed_validated_content | bool)
   tags:
     - templates
     - azure
@@ -17,7 +17,7 @@
 - name: Include AWS Validated Content Job Templates
   ansible.builtin.include_tasks: job_templates/validated_content_aws.yml
   when:
-    - (seed_validated_content | bool)
+    - (controller_seed_validated_content | bool)
   tags:
     - templates
     - aws
