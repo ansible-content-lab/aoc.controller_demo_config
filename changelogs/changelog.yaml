@@ -114,3 +114,26 @@ releases:
     fragments:
     - fixes.yml
     release_date: '2024-01-03'
+  6.0.0:
+    changes:
+      breaking_changes:
+      - Renamed nested variables to snake case to align with Ansible lint
+      bugfixes:
+      - Credential no_log default when running in EEs
+      - Use name parameter for projects since IDs returned from operations are not
+        guaranteed
+      major_changes:
+      - Adding AWS CoP playbooks as job templates
+      - Adding AWS CoP project
+      - Adding Google Cloud CoP playbooks as job templates
+      - Adding Google Cloud CoP project
+      - Adding new Azure CoP playbooks as job templates
+      minor_changes:
+      - Begin variable migration to ansible-lint suggested `role_` syntax with new
+        variables
+      - Bumped pre-commit dependencies
+      - Updated URL links on README files to correct broken links.
+      release_summary: Added AWS, Google Cloud, and Azure validated content examples.
+    fragments:
+    - validated_content.yml
+    release_date: '2024-01-29'
