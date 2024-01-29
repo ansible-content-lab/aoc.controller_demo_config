@@ -6,6 +6,7 @@ This role configures the following components in Ansible Automation Controller t
 - Execution Environments
 - Inventories
 - Projects
+- Settings
 - Templates
 - Workflows
 
@@ -18,7 +19,7 @@ This role configures the following components in Ansible Automation Controller t
 | `Red Hat Registry`              | A credential to `console.redhat.com` that will allow retrieval of certified execution environments.        |
 | `AWS Account`                   | Credential used by the AWS collection for Ansible to communicate with AWS.                                 |
 | `Azure Service Principal`       | Credential used by the Azure collection for Ansible to communicate with Microsoft Azure.                   |
-| `Azure VM SSH Credential`       | An SSH credential used to connect to and configure VMs on Azure.                                           |
+| `VM SSH Credential`             | An SSH credential used to connect to and configure VMs.                                                    |
 | `Ansible Automation Controller` | A credential to communicate with an instance of Ansible Automation Platform that this role will configure. |
 
 ### Execution Environments
@@ -39,19 +40,23 @@ This role configures the following components in Ansible Automation Controller t
 
 Job templates are configured to pull from Ansible Cloud Content Lab and Validated Content projects:
 
-- [Ansible Cloud Content Lab - Azure Demo](https://github.com/ansible-cloud/azure)
-- [Ansible Cloud Content Lab - Azure Roles](https://github.com/ansible-content-lab/azure.infrastructure_config_demos)
-- [Ansible Cloud Content Lab - AWS Roles](https://github.com/ansible-content-lab/aws.infrastructure_config_demos)
-- [Ansible Validated Content - Azure Demos](https://github.com/redhat-cop/cloud.azure_ops)
+- [Red Hat Sales Demos][sales_demo]
+- [Content Lab AWS Content][lab_aws]
+- [Content Lab Azure Content][lab_azure]
+- [Validated Content AWS][validated_aws]
+- [Validated Content Azure][validated_azure]
+- [Validated Content GCP][validated_gcp]
 
 ### Projects
 
-| Name                                      | Description                                                                       |
-| ----------------------------------------- | --------------------------------------------------------------------------------- |
-| `Ansible - Azure Demo`                    | A project with playbooks used to demonstrate basic Azure operations.              |
-| `Ansible Cloud Content Lab - Azure Roles` | A project that configures the examples in the Azure Cloud Content Lab collection. |
-| `Ansible Cloud Content Lab - AWS Roles`   | A project that configures the examples in the AWS Cloud Content Lab collection.   |
-| `Azure - CoP Validated Content`           | Validated content from the Ansible CoP team that provides Azure example content.  |
+| Name                                      | Description                                                                             |
+| ----------------------------------------- | --------------------------------------------------------------------------------------- |
+| `Ansible - Azure Demo`                    | A project with playbooks used to demonstrate basic Azure operations.                    |
+| `Ansible Cloud Content Lab - Azure Roles` | A project that configures the examples in the Azure Cloud Content Lab collection.       |
+| `Ansible Cloud Content Lab - AWS Roles`   | A project that configures the examples in the AWS Cloud Content Lab collection.         |
+| `AWS - CoP Validated Content`             | Validated content from the Ansible CoP team that provides AWS example content.          |
+| `Azure - CoP Validated Content`           | Validated content from the Ansible CoP team that provides Azure example content.        |
+| `Google Cloud - CoP Validated Content`    | Validated content from the Ansible CoP team that provides Google Cloud example content. |
 
 ### Workflows
 
@@ -92,5 +97,11 @@ Set the environment variables on your local machine that are required for creden
 
 ## Dependencies
 
-- `awx.awx`
 - `ansible.controller`
+
+[sales_demo]: https://github.com/ansible-cloud/azure
+[lab_azure]: https://github.com/ansible-content-lab/azure.infrastructure_config_demos
+[lab_aws]: https://github.com/ansible-content-lab/aws.infrastructure_config_demos
+[validated_azure]: https://github.com/redhat-cop/cloud.azure_ops
+[validated_aws]: https://github.com/redhat-cop/cloud.aws_ops
+[validated_gcp]: https://github.com/redhat-cop/cloud.gcp_ops

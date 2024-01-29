@@ -100,7 +100,7 @@ ansible-navigator run lab.controller_demo_config.configure_aap \
 
 GNU General Public License v3.0 or later
 
-See [LICENSE](https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/LICENSE) to see the full text.
+See [LICENSE][license] to see the full text.
 
 ## Author
 
@@ -108,3 +108,4 @@ This collection was originally written by Scott Harwell and Hicham Mourad from t
 
 [readme]: https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/roles/controller/README.md
 [defaults]: https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/roles/controller/defaults/main.yml
+[license]: https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/LICENSE
