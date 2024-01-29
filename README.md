@@ -31,7 +31,7 @@ You can also include it in a `requirements.yml` file and install it via `ansible
 ```yaml
 ---
 collections:
-  - name: https://github.com/ansible-content-lab/lab.controller_demo_config
+  - name: https://github.com/ansible-content-lab/aoc.controller_demo_config
     type: git
     version: main
 ```
@@ -100,7 +100,7 @@ ansible-navigator run lab.controller_demo_config.configure_aap \
 
 GNU General Public License v3.0 or later
 
-See [LICENSE](https://github.com/ansible-content-lab/lab.controller_demo_config/blob/main/LICENSE) to see the full text.
+See [LICENSE](https://github.com/ansible-content-lab/aoc.controller_demo_config/blob/main/LICENSE) to see the full text.
 
 ## Author
 
