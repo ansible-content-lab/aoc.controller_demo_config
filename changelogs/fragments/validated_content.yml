@@ -9,6 +9,7 @@ major_changes:
 minor_changes:
   - Bumped pre-commit dependencies
   - Begin variable migration to ansible-lint suggested `role_` syntax with new variables
+  - Updated URL links on README files to correct broken links.
 breaking_changes:
   - Renamed nested variables to snake case to align with Ansible lint
 bugfixes:
