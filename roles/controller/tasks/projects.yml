@@ -84,6 +84,24 @@
     - projects
     - aws
 
+- name: Add Ansible Cloud Content Lab Linux Project
+  ansible.controller.project:
+    name: "{{ controller_projects_lab_linux_name }}"
+    description: Example Linux content from the Ansible Content Lab for Cloud Automation.
+    default_environment: "{{ cloud_ee.id | int }}"
+    organization: "{{ controller_awx_organization }}" # Organization is required in projects
+    scm_type: git
+    scm_url: https://github.com/ansible-content-lab/lab.linux.git
+    state: present
+    update_project: true
+    wait: "{{ controller_projects_wait }}"
+  when:
+    - (controller_seed_validated_content | bool)
+  register: content_lab_project_linux_content
+  tags:
+    - projects
+    - linux
+
 - name: Add AWS Validated Content Project
   ansible.controller.project:
     name: "{{ controller_projects_validated_aws_name }}"

@@ -20,6 +20,7 @@ controller_projects_lab_azure_name: Ansible Cloud Content Lab - Azure Content
 controller_projects_lab_azure_tmm_name: Ansible Cloud Content Lab - Ansible TMM Azure Content
 controller_projects_lab_aws_deployment_name: Ansible Cloud Content Lab - AWS Deployment
 controller_projects_lab_aws_name: Ansible Cloud Content Lab - AWS Content
+controller_projects_lab_linux_name: Ansible Cloud Content Lab - Linux Content
 controller_projects_validated_aws_name: Ansible Validated Content - AWS Demos
 controller_projects_validated_azure_name: Ansible Validated Content - Azure Demos
 controller_projects_validated_gcp_name: Ansible Validated Content - Google Cloud Demos

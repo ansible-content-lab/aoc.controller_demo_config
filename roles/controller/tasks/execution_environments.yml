@@ -1,4 +1,18 @@
 ---
+- name: Add vanilla execution environment
+  ansible.controller.execution_environment:
+    name: Vanilla Latest EE
+    description: Vanilla Latest EE
+    organization: "{{ controller_awx_organization | default('') }}"
+    image: quay.io/scottharwell/default-ee
+    pull: always
+    state: present
+  register: latest_ee
+  when:
+    - (controller_seed_validated_content | bool)
+  tags:
+    - ees
+
 - name: Add EE Cloud Services Execution Environment
   ansible.controller.execution_environment:
     name: Cloud Services Execution Environment
