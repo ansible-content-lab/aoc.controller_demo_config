@@ -37,3 +37,11 @@
   tags:
     - templates
     - aws
+
+- name: Include Content Lab Linux Job Templates
+  ansible.builtin.include_tasks: job_templates/content_lab_linux.yml
+  when:
+    - (controller_seed_lab_content | bool)
+  tags:
+    - templates
+    - linux

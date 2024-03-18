@@ -1,0 +1,58 @@
+---
+- name: Content Lab - Linux - Append Text File
+  ansible.controller.job_template:
+    name: Content Lab - Linux - Append Text File
+    playbook: playbooks/append_text_file.yml
+    project: "{{ controller_projects_lab_linux_name }}"
+    extra_vars:
+      file_path: /tmp/aap_text.txt
+      prepend_newline: true
+      append_newline: true
+      text: |
+        Enter some text to append to the file.
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    become_enabled: true
+    execution_environment: "{{ latest_ee.id | int }}"
+  when:
+    - (controller_seed_lab_content | bool)
+  register: linux_append_text
+  tags:
+    - templates
+    - linux
+
+- name: Content Lab - Linux - Set Systemd Service State
+  ansible.controller.job_template:
+    name: Content Lab - Linux - Set Systemd Service State
+    playbook: playbooks/systemd_service_state.yml
+    project: "{{ controller_projects_lab_linux_name }}"
+    extra_vars:
+      state: started
+      service_name: firewalld
+    ask_inventory_on_launch: true
+    ask_variables_on_launch: true
+    become_enabled: true
+    execution_environment: "{{ latest_ee.id | int }}"
+  when:
+    - (controller_seed_lab_content | bool)
+  register: linux_systemd_service
+  tags:
+    - templates
+    - linux
+
+- name: Content Lab - Linux - Upgrade packages
+  ansible.controller.job_template:
+    name: Content Lab - Linux - Upgrade packages
+    playbook: playbooks/upgrade_packages.yml
+    project: "{{ controller_projects_lab_linux_name }}"
+    ask_inventory_on_launch: true
+    ask_limit_on_launch: true
+    ask_variables_on_launch: false
+    become_enabled: true
+    execution_environment: "{{ latest_ee.id | int }}"
+  when:
+    - (controller_seed_lab_content | bool)
+  register: linux_systemd_service
+  tags:
+    - templates
+    - linux
