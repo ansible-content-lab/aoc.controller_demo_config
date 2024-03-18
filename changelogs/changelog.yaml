@@ -137,3 +137,14 @@ releases:
     fragments:
     - validated_content.yml
     release_date: '2024-01-29'
+  6.1.0:
+    changes:
+      minor_changes:
+      - Added "vanilla" EE that contains the latest version of ansible core with no
+        collections for light weight testing.
+      - Added example linux job templates and project.
+      - Moved multiple settings for AD auth into a single task.
+      release_summary: Small tweaks and bug fixes
+    fragments:
+    - 11-ad_auth.yml
+    release_date: '2024-03-18'
