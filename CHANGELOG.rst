@@ -6,6 +6,21 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v6.1.0
+======
+
+Release Summary
+---------------
+
+Small tweaks and bug fixes
+
+Minor Changes
+-------------
+
+- Added "vanilla" EE that contains the latest version of ansible core with no collections for light weight testing.
+- Added example linux job templates and project.
+- Moved multiple settings for AD auth into a single task.
+
 v6.0.0
 ======
 
