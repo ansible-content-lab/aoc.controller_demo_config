@@ -1,0 +1,5 @@
+---
+release_summary: Remove python deps because they broke cloud EE build.
+major_changes:
+  - Removed `requirements.txt`
+  - Added `requirements.yml`
