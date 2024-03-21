@@ -6,6 +6,20 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v6.2.0
+======
+
+Release Summary
+---------------
+
+Remove python deps because they broke cloud EE build.
+
+Major Changes
+-------------
+
+- Added `requirements.yml`
+- Removed `requirements.txt`
+
 v6.1.0
 ======
 
