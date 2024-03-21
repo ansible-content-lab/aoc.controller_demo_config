@@ -148,3 +148,12 @@ releases:
     fragments:
     - 11-ad_auth.yml
     release_date: '2024-03-18'
+  6.2.0:
+    changes:
+      major_changes:
+      - Added `requirements.yml`
+      - Removed `requirements.txt`
+      release_summary: Remove python deps because they broke cloud EE build.
+    fragments:
+    - requirements.yml
+    release_date: '2024-03-21'
