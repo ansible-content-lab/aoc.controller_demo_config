@@ -6,6 +6,19 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v6.3.0
+======
+
+Release Summary
+---------------
+
+Remove requirements file causing sync issues.
+
+Minor Changes
+-------------
+
+- Removed requirements file.
+
 v6.2.0
 ======
 

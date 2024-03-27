@@ -157,3 +157,11 @@ releases:
     fragments:
     - requirements.yml
     release_date: '2024-03-21'
+  6.3.0:
+    changes:
+      minor_changes:
+      - Removed requirements file.
+      release_summary: Remove requirements file causing sync issues.
+    fragments:
+    - requirements.yml
+    release_date: '2024-03-27'
