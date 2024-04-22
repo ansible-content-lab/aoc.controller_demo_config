@@ -25,6 +25,13 @@
   tags:
     - settings
 
+- name: Set the subscription usage flag
+  ansible.controller.settings:
+    settings:
+      SUBSCRIPTION_USAGE_MODEL: "{{ controller_subscription_usage_model }}"
+  tags:
+    - settings
+
 - name: Set the Azure AD Client ID for SSO
   ansible.controller.settings:
     settings:
