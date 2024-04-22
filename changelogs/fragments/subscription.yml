@@ -1,4 +1,0 @@
----
-release_summary: Minor enhancements and improvements.
-minor_changes:
-  - Updated settings to explicitly set the `SUBSCRIPTION_USAGE_MODEL` flag to default to cloud marketplace purchases of AAP.  This flag changes the subscription settings UI based on if you purchased AAP from hyperscaler marketplaces. Change `controller_subscription_usage_model` to `unique_managed_hosts` if you have not deployed AAP from a hyperscaler marketplace.

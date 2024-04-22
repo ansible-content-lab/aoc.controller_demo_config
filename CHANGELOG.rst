@@ -6,6 +6,19 @@ Aoc.Controller_Demo_Config Release Notes
 
 This changelog describes changes after version 3.0.0.
 
+v6.4.0
+======
+
+Release Summary
+---------------
+
+Minor enhancements and improvements.
+
+Minor Changes
+-------------
+
+- Updated settings to explicitly set the `SUBSCRIPTION_USAGE_MODEL` flag to default to cloud marketplace purchases of AAP.  This flag changes the subscription settings UI based on if you purchased AAP from hyperscaler marketplaces. Change `controller_subscription_usage_model` to `unique_managed_hosts` if you have not deployed AAP from a hyperscaler marketplace.
+
 v6.3.0
 ======
 

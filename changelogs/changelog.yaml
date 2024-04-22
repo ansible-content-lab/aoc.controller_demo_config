@@ -165,3 +165,15 @@ releases:
     fragments:
     - requirements.yml
     release_date: '2024-03-27'
+  6.4.0:
+    changes:
+      minor_changes:
+      - Updated settings to explicitly set the `SUBSCRIPTION_USAGE_MODEL` flag to
+        default to cloud marketplace purchases of AAP.  This flag changes the subscription
+        settings UI based on if you purchased AAP from hyperscaler marketplaces. Change
+        `controller_subscription_usage_model` to `unique_managed_hosts` if you have
+        not deployed AAP from a hyperscaler marketplace.
+      release_summary: Minor enhancements and improvements.
+    fragments:
+    - subscription.yml
+    release_date: '2024-04-22'
