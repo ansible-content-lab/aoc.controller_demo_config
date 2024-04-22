@@ -26,3 +26,4 @@ controller_projects_validated_azure_name: Ansible Validated Content - Azure Demo
 controller_projects_validated_gcp_name: Ansible Validated Content - Google Cloud Demos
 controller_seed_lab_content: false
 controller_seed_validated_content: true
+controller_subscription_usage_model: "" # empty string for purchases from cloud marketplaces, 'unique_managed_hosts' for any other deployment
